@@ -11,7 +11,7 @@
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38bdf8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
   [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
   
-  [Live Demo](https://vercel.com/utachicodes-projects/v0-finance-platform-saa-s) • [Documentation](#documentation) • [Report Bug](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues) • [Request Feature](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues)
+  [Live Demo](https://mafalia-credit-scoring.vercel.app/) • [Documentation](#documentation) • [Report Bug](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues) • [Request Feature](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues)
 </div>
 
 ---
