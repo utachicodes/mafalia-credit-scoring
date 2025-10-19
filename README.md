@@ -5,20 +5,21 @@
   
   ### AI-Powered Credit Scoring & Loan Management Platform for Senegal
   
-
+  [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/utachicodes-projects/v0-finance-platform-saa-s)
+  [![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/7TCyoGUFuA6)
   [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38bdf8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
   [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
   
-  [Live Demo](https://mafalia-credit-scoring.vercel.app/) • [Documentation](#documentation) • [Report Bug](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues) • [Request Feature](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues)
+  [Live Demo](https://vercel.com/utachicodes-projects/v0-finance-platform-saa-s) • [Documentation](#documentation) • [Report Bug](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues) • [Request Feature](https://github.com/utachicodes/mafalia-credit-scoring-hk/issues)
 </div>
 
 ---
 
 ## 🌟 Overview
 
-**Mafalia Credit Scoring** is a cutting-edge AI-powered financial platform designed specifically for businesses in Senegal. It revolutionizes credit scoring and loan management by combining advanced artificial intelligence with real-time financial data analysis, Mobile Money integration, and transparent credit assessment.
+**Mafalia** is a cutting-edge AI-powered financial platform designed specifically for businesses in Senegal. It revolutionizes credit scoring and loan management by combining advanced artificial intelligence with real-time financial data analysis, Mobile Money integration, and transparent credit assessment.
 
 ### 🎯 Key Highlights
 
@@ -255,9 +256,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Mafalia** - Your Smart Finance Partner
 
 - **GitHub**: [@utachicodes](https://github.com/utachicodes)
-- **Email**: abdoullahaljersi@gmail.com
+- **Email**: contact@mafalia.com
 
 ---
 
+## 🙏 Acknowledgments
+
+- Built with [v0.app](https://v0.app) by Vercel
+- Deployed on [Vercel](https://vercel.com)
+- UI components from [shadcn/ui](https://ui.shadcn.com)
+- 3D graphics powered by [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
+
+---
+
+<div align="center">
+  <p>Made with ❤️ for businesses in Senegal</p>
+  <p>
+    <a href="https://vercel.com/utachicodes-projects/v0-finance-platform-saa-s">Live Demo</a> •
+    <a href="https://v0.app/chat/projects/7TCyoGUFuA6">Build on v0</a> •
+    <a href="https://github.com/utachicodes/mafalia-credit-scoring-hk/issues">Report Issues</a>
   </p>
 </div>
