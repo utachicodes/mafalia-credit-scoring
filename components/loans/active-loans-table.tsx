@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Eye, MoreVertical } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function ActiveLoansTable() {
   const loans = [
@@ -88,7 +89,7 @@ export function ActiveLoansTable() {
                       <span className="font-semibold text-foreground">{loan.id}</span>
                       <Badge variant={getStatusColor(loan.status)}>{loan.status}</Badge>
                     </div>
-                    <div className="text-2xl font-bold text-foreground">${loan.amount.toLocaleString()}</div>
+                    <div className="text-2xl font-bold text-foreground">{formatCFA(loan.amount)}</div>
                     <div className="text-sm text-muted-foreground">
                       {loan.rate}% APR • {loan.term} months
                     </div>
@@ -116,7 +117,7 @@ export function ActiveLoansTable() {
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Repayment Progress</span>
                         <span className="font-medium text-foreground">
-                          ${(loan.disbursed - loan.outstanding).toLocaleString()} / ${loan.disbursed.toLocaleString()}
+                          {formatCFA(loan.disbursed - loan.outstanding)} / {formatCFA(loan.disbursed)}
                         </span>
                       </div>
                       <Progress value={repaidPercentage} className="h-2" />
@@ -125,13 +126,11 @@ export function ActiveLoansTable() {
                     <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border">
                       <div>
                         <div className="text-sm text-muted-foreground">Outstanding</div>
-                        <div className="text-lg font-semibold text-foreground">
-                          ${loan.outstanding.toLocaleString()}
-                        </div>
+                        <div className="text-lg font-semibold text-foreground">{formatCFA(loan.outstanding)}</div>
                       </div>
                       <div>
                         <div className="text-sm text-muted-foreground">Next Payment</div>
-                        <div className="text-lg font-semibold text-foreground">${loan.paymentAmount}</div>
+                        <div className="text-lg font-semibold text-foreground">{formatCFA(loan.paymentAmount)}</div>
                         <div className="text-xs text-muted-foreground">{loan.nextPayment}</div>
                       </div>
                     </div>

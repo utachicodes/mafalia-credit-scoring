@@ -4,15 +4,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Search, ArrowUpRight, ArrowDownRight } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function TransactionHistory() {
   const transactions = [
     {
       id: "TXN-2025-1234",
       type: "received",
-      from: "John Doe",
+      from: "Mamadou Ndiaye",
       amount: 2500,
-      provider: "M-Pesa",
+      provider: "Wave",
       date: "Dec 28, 2025",
       time: "14:32",
       status: "completed",
@@ -20,7 +21,7 @@ export function TransactionHistory() {
     {
       id: "TXN-2025-1233",
       type: "sent",
-      from: "Jane Smith",
+      from: "Awa Diop",
       amount: 1800,
       provider: "Orange Money",
       date: "Dec 28, 2025",
@@ -30,9 +31,9 @@ export function TransactionHistory() {
     {
       id: "TXN-2025-1232",
       type: "received",
-      from: "ABC Corp",
+      from: "Société Baobab",
       amount: 5000,
-      provider: "MTN Mobile Money",
+      provider: "Free Money",
       date: "Dec 27, 2025",
       time: "16:45",
       status: "completed",
@@ -40,9 +41,9 @@ export function TransactionHistory() {
     {
       id: "TXN-2025-1231",
       type: "sent",
-      from: "Supplier XYZ",
+      from: "Fournisseur Ndiaye & Fils",
       amount: 3200,
-      provider: "M-Pesa",
+      provider: "Wave",
       date: "Dec 27, 2025",
       time: "09:20",
       status: "completed",
@@ -50,7 +51,7 @@ export function TransactionHistory() {
     {
       id: "TXN-2025-1230",
       type: "received",
-      from: "Client ABC",
+      from: "Client Sene Services",
       amount: 4500,
       provider: "Orange Money",
       date: "Dec 26, 2025",
@@ -60,9 +61,9 @@ export function TransactionHistory() {
     {
       id: "TXN-2025-1229",
       type: "sent",
-      from: "Vendor 123",
+      from: "Commerçant Diallo",
       amount: 1500,
-      provider: "MTN Mobile Money",
+      provider: "Wari",
       date: "Dec 26, 2025",
       time: "10:30",
       status: "pending",
@@ -115,7 +116,7 @@ export function TransactionHistory() {
                     transaction.type === "received" ? "text-green-600 dark:text-green-400" : "text-foreground"
                   }`}
                 >
-                  {transaction.type === "received" ? "+" : "-"}${transaction.amount.toLocaleString()}
+                  {`${transaction.type === "received" ? "+" : "-"}${formatCFA(transaction.amount)}`}
                 </div>
                 <Badge variant={transaction.status === "completed" ? "default" : "secondary"}>
                   {transaction.status}

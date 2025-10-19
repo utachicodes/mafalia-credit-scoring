@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { TrendingUp, TrendingDown } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function MonthlyComparison() {
   const comparisons = [
@@ -26,7 +27,9 @@ export function MonthlyComparison() {
               <div className="space-y-1">
                 <div className="font-medium text-foreground">{item.metric}</div>
                 <div className="text-sm text-muted-foreground">
-                  ${item.current.toLocaleString()} vs ${item.previous.toLocaleString()}
+                  {item.metric === "Default Rate"
+                    ? `${item.current}% vs ${item.previous}%`
+                    : `${formatCFA(item.current)} vs ${formatCFA(item.previous)}`}
                 </div>
               </div>
               <div

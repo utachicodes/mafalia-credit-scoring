@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { useLanguage } from "@/components/language-provider"
 import { DollarSign, TrendingUp, Wallet, Clock } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function QuickStatsGrid() {
   const { t } = useLanguage()
@@ -10,7 +11,7 @@ export function QuickStatsGrid() {
   const stats = [
     {
       label: t("dashboard.available.credit"),
-      value: "$125,000",
+      value: 125000,
       change: "+12%",
       trend: "up",
       icon: DollarSign,
@@ -28,7 +29,7 @@ export function QuickStatsGrid() {
     },
     {
       label: t("dashboard.receivables"),
-      value: "$45,200",
+      value: 45200,
       change: "-5%",
       trend: "down",
       icon: TrendingUp,
@@ -68,7 +69,9 @@ export function QuickStatsGrid() {
               </div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+              <div className="text-2xl font-bold text-foreground">
+                {typeof stat.value === "number" ? formatCFA(stat.value) : stat.value}
+              </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </div>
           </CardContent>

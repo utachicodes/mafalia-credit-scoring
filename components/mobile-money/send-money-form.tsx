@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Send } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function SendMoneyForm() {
   const [formData, setFormData] = useState({
@@ -37,9 +38,10 @@ export function SendMoneyForm() {
                 <SelectValue placeholder="Select provider" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="mpesa">M-Pesa</SelectItem>
+                <SelectItem value="wave">Wave</SelectItem>
                 <SelectItem value="orange">Orange Money</SelectItem>
-                <SelectItem value="mtn">MTN Mobile Money</SelectItem>
+                <SelectItem value="free">Free Money</SelectItem>
+                <SelectItem value="wari">Wari</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -49,7 +51,7 @@ export function SendMoneyForm() {
             <Input
               id="recipient"
               type="tel"
-              placeholder="+254 712 345 678"
+              placeholder="+221 77 123 45 67"
               value={formData.recipient}
               onChange={(e) => setFormData({ ...formData, recipient: e.target.value })}
               required
@@ -57,11 +59,11 @@ export function SendMoneyForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount">Amount ($)</Label>
+            <Label htmlFor="amount">Amount (FCFA)</Label>
             <Input
               id="amount"
               type="number"
-              placeholder="100"
+              placeholder="10000"
               value={formData.amount}
               onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
               required
@@ -81,12 +83,12 @@ export function SendMoneyForm() {
           <div className="rounded-lg bg-muted/50 p-3 space-y-1">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Transaction Fee</span>
-              <span className="font-medium text-foreground">$2.50</span>
+              <span className="font-medium text-foreground">{formatCFA(250)}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Total</span>
               <span className="font-semibold text-foreground">
-                ${formData.amount ? (Number.parseFloat(formData.amount) + 2.5).toFixed(2) : "0.00"}
+                {formatCFA(formData.amount ? Number.parseInt(formData.amount, 10) + 250 : 0)}
               </span>
             </div>
           </div>

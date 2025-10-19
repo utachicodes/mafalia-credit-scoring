@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { Search, Eye, Send, MoreVertical } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function ClientReceivablesTable() {
   const clients = [
     {
-      name: "ABC Corporation",
+      name: "Société Baobab",
       totalOwed: 15000,
       paid: 10000,
       outstanding: 5000,
@@ -21,7 +22,7 @@ export function ClientReceivablesTable() {
       status: "partial",
     },
     {
-      name: "XYZ Enterprises",
+      name: "Ndiaye & Fils",
       totalOwed: 8500,
       paid: 0,
       outstanding: 8500,
@@ -31,7 +32,7 @@ export function ClientReceivablesTable() {
       status: "overdue",
     },
     {
-      name: "Tech Solutions Ltd",
+      name: "Tech Sénégal SARL",
       totalOwed: 12000,
       paid: 12000,
       outstanding: 0,
@@ -41,7 +42,7 @@ export function ClientReceivablesTable() {
       status: "paid",
     },
     {
-      name: "Global Trading Co",
+      name: "Marché Sandaga Co",
       totalOwed: 9700,
       paid: 4000,
       outstanding: 5700,
@@ -51,7 +52,7 @@ export function ClientReceivablesTable() {
       status: "partial",
     },
     {
-      name: "Retail Partners Inc",
+      name: "Boutique Diop",
       totalOwed: 6200,
       paid: 0,
       outstanding: 6200,
@@ -135,7 +136,7 @@ export function ClientReceivablesTable() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Payment Progress</span>
                     <span className="font-medium text-foreground">
-                      ${client.paid.toLocaleString()} / ${client.totalOwed.toLocaleString()}
+                      {formatCFA(client.paid)} / {formatCFA(client.totalOwed)}
                     </span>
                   </div>
                   <Progress value={paidPercentage} className="h-2" />
@@ -144,7 +145,7 @@ export function ClientReceivablesTable() {
                 <div className="grid grid-cols-3 gap-4 pt-2 border-t border-border">
                   <div>
                     <div className="text-sm text-muted-foreground">Outstanding</div>
-                    <div className="text-lg font-semibold text-foreground">${client.outstanding.toLocaleString()}</div>
+                    <div className="text-lg font-semibold text-foreground">{formatCFA(client.outstanding)}</div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Next Due</div>

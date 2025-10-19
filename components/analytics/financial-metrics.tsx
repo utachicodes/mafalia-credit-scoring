@@ -2,12 +2,13 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { TrendingUp, TrendingDown, DollarSign, Percent, Target, Activity } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function FinancialMetrics() {
   const metrics = [
     {
       label: "Total Revenue",
-      value: "$328,500",
+      value: 328500,
       change: "+12.5%",
       trend: "up",
       icon: DollarSign,
@@ -16,7 +17,7 @@ export function FinancialMetrics() {
     },
     {
       label: "Net Profit",
-      value: "$89,200",
+      value: 89200,
       change: "+8.3%",
       trend: "up",
       icon: TrendingUp,
@@ -34,7 +35,7 @@ export function FinancialMetrics() {
     },
     {
       label: "Operating Expenses",
-      value: "$239,300",
+      value: 239300,
       change: "+5.7%",
       trend: "up",
       icon: Activity,
@@ -52,7 +53,7 @@ export function FinancialMetrics() {
     },
     {
       label: "Cash Flow",
-      value: "$125,400",
+      value: 125400,
       change: "+15.8%",
       trend: "up",
       icon: DollarSign,
@@ -80,7 +81,9 @@ export function FinancialMetrics() {
               </div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-bold text-foreground">{metric.value}</div>
+              <div className="text-2xl font-bold text-foreground">
+                {typeof metric.value === "number" ? formatCFA(metric.value) : metric.value}
+              </div>
               <div className="text-sm text-muted-foreground">{metric.label}</div>
             </div>
           </CardContent>

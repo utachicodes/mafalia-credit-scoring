@@ -4,29 +4,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Smartphone, CheckCircle2, Settings } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function MobileMoneyProviders() {
   const providers = [
     {
-      name: "M-Pesa",
-      account: "+254 712 345 678",
-      balance: "$18,450",
+      name: "Wave",
+      account: "+221 77 123 45 67",
+      balance: 18450,
       status: "active",
       transactions: 156,
       color: "bg-green-600",
     },
     {
       name: "Orange Money",
-      account: "+225 07 12 34 56 78",
-      balance: "$12,830",
+      account: "+221 78 234 56 78",
+      balance: 12830,
       status: "active",
       transactions: 89,
       color: "bg-orange-600",
     },
     {
-      name: "MTN Mobile Money",
-      account: "+233 24 123 4567",
-      balance: "$14,000",
+      name: "Free Money",
+      account: "+221 76 345 67 89",
+      balance: 14000,
       status: "active",
       transactions: 124,
       color: "bg-yellow-600",
@@ -62,7 +63,7 @@ export function MobileMoneyProviders() {
               <div className="space-y-2 pt-2 border-t border-border">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Balance</span>
-                  <span className="text-lg font-bold text-foreground">{provider.balance}</span>
+                  <span className="text-lg font-bold text-foreground">{formatCFA(provider.balance)}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Transactions</span>

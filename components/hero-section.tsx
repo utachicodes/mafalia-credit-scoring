@@ -12,7 +12,7 @@ function FCFASign3D() {
     <Float speed={1.5} rotationIntensity={1} floatIntensity={0.8}>
       <Center>
         <Text3D
-          font="/fonts/Inter_Bold.json"
+          font="https://threejs.org/examples/fonts/helvetiker_bold.typeface.json"
           size={3.5}
           height={0.6}
           curveSegments={32}
@@ -135,7 +135,24 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
           </div>
 
           <div className="relative h-[500px] lg:h-[700px] animate-in fade-in slide-in-from-right duration-700 delay-300">
-            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+            <Canvas
+              dpr={[1, 1.5]}
+              camera={{ position: [0, 0, 8], fov: 45 }}
+              gl={{
+                powerPreference: "high-performance",
+                antialias: true,
+                preserveDrawingBuffer: false,
+                failIfMajorPerformanceCaveat: false,
+              }}
+              onCreated={(state: any) => {
+                const canvas = state?.gl?.domElement as HTMLCanvasElement | undefined
+                if (!canvas) return
+                const handleContextLost = (e: Event) => {
+                  e.preventDefault()
+                }
+                canvas.addEventListener("webglcontextlost", handleContextLost as EventListener, false)
+              }}
+            >
               <Suspense fallback={null}>
                 <ambientLight intensity={0.3} />
                 <spotLight position={[15, 15, 15]} angle={0.2} penumbra={1} intensity={2} castShadow />

@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useLanguage } from "@/components/language-provider"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function LoanApplicationForm() {
   const { t } = useLanguage()
@@ -35,11 +36,11 @@ export function LoanApplicationForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="amount">Loan Amount ($)</Label>
+              <Label htmlFor="amount">Loan Amount (FCFA)</Label>
               <Input
                 id="amount"
                 type="number"
-                placeholder="25000"
+                placeholder="5000000"
                 value={formData.amount}
                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                 required
@@ -98,10 +99,11 @@ export function LoanApplicationForm() {
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Estimated Monthly Payment</span>
               <span className="font-semibold text-foreground">
-                $
-                {formData.amount && formData.term
-                  ? Math.round((Number.parseInt(formData.amount) * 1.125) / Number.parseInt(formData.term))
-                  : 0}
+                {formatCFA(
+                  formData.amount && formData.term
+                    ? Math.round((Number.parseInt(formData.amount, 10) * 1.125) / Number.parseInt(formData.term, 10))
+                    : 0
+                )}
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">

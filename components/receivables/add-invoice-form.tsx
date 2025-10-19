@@ -37,21 +37,21 @@ export function AddInvoiceForm() {
                 <SelectValue placeholder="Select client" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="abc">ABC Corporation</SelectItem>
-                <SelectItem value="xyz">XYZ Enterprises</SelectItem>
-                <SelectItem value="tech">Tech Solutions Ltd</SelectItem>
-                <SelectItem value="global">Global Trading Co</SelectItem>
-                <SelectItem value="retail">Retail Partners Inc</SelectItem>
+                <SelectItem value="baobab">Société Baobab</SelectItem>
+                <SelectItem value="ndiaye">Ndiaye & Fils</SelectItem>
+                <SelectItem value="tech-sn">Tech Sénégal SARL</SelectItem>
+                <SelectItem value="sandaga">Marché Sandaga Co</SelectItem>
+                <SelectItem value="diop">Boutique Diop</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount">Amount ($)</Label>
+            <Label htmlFor="amount">Amount (FCFA)</Label>
             <Input
               id="amount"
               type="number"
-              placeholder="5000"
+              placeholder="500000"
               value={formData.amount}
               onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
               required

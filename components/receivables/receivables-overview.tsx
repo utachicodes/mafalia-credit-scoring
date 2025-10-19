@@ -2,12 +2,13 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { DollarSign, Clock, AlertCircle, CheckCircle2 } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function ReceivablesOverview() {
   const stats = [
     {
       label: "Total Outstanding",
-      value: "$45,200",
+      value: 45200,
       change: "12 invoices",
       icon: DollarSign,
       color: "text-primary",
@@ -15,7 +16,7 @@ export function ReceivablesOverview() {
     },
     {
       label: "Overdue",
-      value: "$8,450",
+      value: 8450,
       change: "3 invoices",
       icon: AlertCircle,
       color: "text-red-600 dark:text-red-400",
@@ -23,7 +24,7 @@ export function ReceivablesOverview() {
     },
     {
       label: "Due Soon",
-      value: "$12,300",
+      value: 12300,
       change: "Within 7 days",
       icon: Clock,
       color: "text-yellow-600 dark:text-yellow-400",
@@ -31,7 +32,7 @@ export function ReceivablesOverview() {
     },
     {
       label: "Collected This Month",
-      value: "$32,100",
+      value: 32100,
       change: "18 payments",
       icon: CheckCircle2,
       color: "text-green-600 dark:text-green-400",
@@ -49,7 +50,7 @@ export function ReceivablesOverview() {
                 <stat.icon className={`h-6 w-6 ${stat.color}`} />
               </div>
               <div className="space-y-1">
-                <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                <div className="text-2xl font-bold text-foreground">{formatCFA(stat.value)}</div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
                 <div className="text-xs text-muted-foreground">{stat.change}</div>
               </div>

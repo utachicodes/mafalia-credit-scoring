@@ -2,13 +2,14 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Wallet, TrendingUp, ArrowUpRight, ArrowDownRight } from "lucide-react"
+import { formatCFA } from "@/lib/currency-utils"
 
 export function AccountBalances() {
   const balances = [
     {
       label: "Total Balance",
-      value: "$45,280",
-      change: "+$2,340",
+      value: 45280,
+      change: `+${formatCFA(2340)}`,
       trend: "up",
       icon: Wallet,
       color: "text-primary",
@@ -16,7 +17,7 @@ export function AccountBalances() {
     },
     {
       label: "Incoming",
-      value: "$12,450",
+      value: 12450,
       change: "This month",
       trend: "neutral",
       icon: ArrowDownRight,
@@ -25,7 +26,7 @@ export function AccountBalances() {
     },
     {
       label: "Outgoing",
-      value: "$8,920",
+      value: 8920,
       change: "This month",
       trend: "neutral",
       icon: ArrowUpRight,
@@ -34,7 +35,7 @@ export function AccountBalances() {
     },
     {
       label: "Pending",
-      value: "$3,150",
+      value: 3150,
       change: "5 transactions",
       trend: "neutral",
       icon: TrendingUp,
@@ -54,7 +55,7 @@ export function AccountBalances() {
               </div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-bold text-foreground">{balance.value}</div>
+              <div className="text-2xl font-bold text-foreground">{formatCFA(balance.value)}</div>
               <div className="text-sm text-muted-foreground">{balance.label}</div>
               <div className="text-xs text-muted-foreground">{balance.change}</div>
             </div>
