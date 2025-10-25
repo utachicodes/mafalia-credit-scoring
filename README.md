@@ -187,6 +187,33 @@ The platform implements a sophisticated credit scoring system based on the follo
 
 ---
 
+### Criteria-Based Scoring (Configurable)
+
+This project includes a configurable, criteria-based scoring module aligned with business requirements.
+
+- Library files:
+  - `lib/criteria.ts`: types (`Criterion`, `CriterionId`, `ScoreInput`).
+  - `lib/default-criteria.ts`: default criteria list and weights.
+  - `lib/criteria-scoring.ts`: helpers `applyWeightOverrides()`, `normalizeWeights()`, `computeScore()`.
+  - `lib/example-score-input.ts`: quick example inputs for testing.
+- UI preview route: `app/scoring/page.tsx` (visit `/scoring`).
+
+Notes:
+- The default weights currently sum to 117.5%. The helper normalizes weights to 100% automatically.
+- Each criterion expects a sub-score in [0,1]. Final score is in [0,1] and can be multiplied by 100.
+- You can override weights per segment/client with `applyWeightOverrides()` before computing:
+
+```typescript
+import { defaultCriteria } from "@/lib/default-criteria";
+import { applyWeightOverrides, computeScore } from "@/lib/criteria-scoring";
+
+const overrides = { avg_revenue_6_12m: 20, tx_count: 8 } as const;
+const tailored = applyWeightOverrides(defaultCriteria, overrides);
+const score01 = computeScore(tailored, { avg_revenue_6_12m: 0.7, tx_count: 0.5 });
+```
+
+---
+
 ## 🎨 Design System
 
 ### Color Palette
@@ -230,6 +257,7 @@ const { t } = useLanguage()
 | `/analytics` | Financial analytics and reports |
 | `/mobile-money` | Mobile Money integration hub |
 | `/receivables` | Client receivables tracking |
+| `/scoring` | Preview and test configurable criteria-based scoring |
 
 ---
 

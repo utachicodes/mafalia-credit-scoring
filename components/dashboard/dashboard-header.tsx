@@ -25,6 +25,9 @@ export function DashboardHeader() {
               <Link href="/loans" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                 {t("nav.loans")}
               </Link>
+              <Link href="/loans/requests" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Loan Requests
+              </Link>
               <Link href="/analytics" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                 {t("nav.analytics")}
               </Link>
@@ -33,6 +36,24 @@ export function DashboardHeader() {
               </Link>
               <Link href="/mobile-money" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                 Mobile Money
+              </Link>
+              <Link href="/transactions" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Transactions
+              </Link>
+              <Link href="/kyc" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                KYC
+              </Link>
+              <Link href="/security" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Sécurité
+              </Link>
+              <Link href="/clients" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Clients
+              </Link>
+              <Link href="/lenders" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Lenders
+              </Link>
+              <Link href="/scoring" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Scoring
               </Link>
             </nav>
           </div>

@@ -1,0 +1,85 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  LENDER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  id        String              @id @default(cuid())
+  name      String
+  type      String
+  location  String
+  joinedAt  DateTime
+  loans     LoanRequest[]
+  tx        Transaction[]
+  months    MonthlyFinancial[]
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  clientId  String
+  date      DateTime
+  amount    Int
+  method    String
+  direction String
+  client    Client   @relation(fields: [clientId], references: [id])
+  @@index([clientId, date])
+}
+
+model LoanRequest {
+  id         String   @id @default(cuid())
+  clientId   String
+  amount     Int
+  termMonths Int
+  createdAt  DateTime @default(now())
+  status     String
+  purpose    String?
+  client     Client   @relation(fields: [clientId], references: [id])
+  @@index([clientId, createdAt])
+}
+
+model MonthlyFinancial {
+  id        String   @id @default(cuid())
+  clientId  String
+  ym        String
+  revenue   Int
+  txCount   Int
+  expenses  Int
+  cash      Int
+  wave      Int
+  orange    Int
+  card      Int
+  client    Client   @relation(fields: [clientId], references: [id])
+  @@unique([clientId, ym])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  at         DateTime @default(now())
+  userId     String?
+  role       String
+  endpoint   String
+  method     String
+  resourceId String?
+  ip         String?
+  meta       Json?
+}

@@ -4,6 +4,7 @@ import { QuickStatsGrid } from "@/components/dashboard/quick-stats-grid"
 import { RecentLoans } from "@/components/dashboard/recent-loans"
 import { CashFlowChart } from "@/components/dashboard/cash-flow-chart"
 import { CreditRatingBreakdown } from "@/components/dashboard/credit-rating-breakdown"
+import { ConfigurableScoreCard } from "@/components/dashboard/configurable-score-card"
 
 export default function DashboardPage() {
   return (
@@ -13,6 +14,7 @@ export default function DashboardPage() {
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
             <CreditScoreCard />
+            <ConfigurableScoreCard />
             <QuickStatsGrid />
             <CashFlowChart />
           </div>
