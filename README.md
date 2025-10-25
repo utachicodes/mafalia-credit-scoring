@@ -203,14 +203,14 @@ Notes:
 - Each criterion expects a sub-score in [0,1]. Final score is in [0,1] and can be multiplied by 100.
 - You can override weights per segment/client with `applyWeightOverrides()` before computing:
 
-```typescript
+\`\`\`typescript
 import { defaultCriteria } from "@/lib/default-criteria";
 import { applyWeightOverrides, computeScore } from "@/lib/criteria-scoring";
 
 const overrides = { avg_revenue_6_12m: 20, tx_count: 8 } as const;
 const tailored = applyWeightOverrides(defaultCriteria, overrides);
 const score01 = computeScore(tailored, { avg_revenue_6_12m: 0.7, tx_count: 0.5 });
-```
+\`\`\`
 
 ---
 

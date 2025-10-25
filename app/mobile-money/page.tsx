@@ -1,15 +1,14 @@
-import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { MobileMoneyHeader } from "@/components/mobile-money/mobile-money-header"
 import { MobileMoneyProviders } from "@/components/mobile-money/mobile-money-providers"
 import { TransactionHistory } from "@/components/mobile-money/transaction-history"
 import { SendMoneyForm } from "@/components/mobile-money/send-money-form"
 import { AccountBalances } from "@/components/mobile-money/account-balances"
+import { AppLayout } from "@/components/app-layout"
 
 export default function MobileMoneyPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <DashboardHeader />
-      <main className="container mx-auto px-4 py-8 space-y-8">
+    <AppLayout>
+      <div className="space-y-6">
         <MobileMoneyHeader />
         <AccountBalances />
         <MobileMoneyProviders />
@@ -19,7 +18,7 @@ export default function MobileMoneyPage() {
           </div>
           <SendMoneyForm />
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   )
 }

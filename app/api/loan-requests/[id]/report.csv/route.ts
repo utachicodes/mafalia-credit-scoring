@@ -1,35 +1,45 @@
-import { NextResponse } from "next/server";
-import { clients, loanRequests } from "@/lib/mock-data";
-import { mockLastSixMonthsFinancials } from "@/lib/mock-data";
+import { NextResponse } from "next/server"
+import { createClient } from "@/lib/supabase/server"
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
-  const lr = loanRequests.find((x) => x.id === id);
-  if (!lr) return new NextResponse("Not found", { status: 404 });
-  const client = clients.find((c) => c.id === lr.clientId);
-  if (!client) return new NextResponse("Client not found", { status: 404 });
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const supabase = await createClient()
 
-  const financials = mockLastSixMonthsFinancials(client.id);
-  const headers = ["month","revenue","txCount","expenses","cash","wave","orange_money","card"];
-  const lines = [headers.join(",")];
-  for (const m of financials) {
-    const row = [
-      m.month,
-      m.revenue,
-      m.txCount,
-      m.expenses,
-      m.paymentBreakdown.cash || 0,
-      m.paymentBreakdown.wave || 0,
-      m.paymentBreakdown.orange_money || 0,
-      m.paymentBreakdown.card || 0,
-    ];
-    lines.push(row.join(","));
+  // Fetch loan request
+  const { data: loanRequest } = await supabase.from("loan_requests").select("*").eq("id", id).single()
+
+  if (!loanRequest) {
+    return new NextResponse("Not found", { status: 404 })
   }
-  const body = lines.join("\n");
+
+  // Fetch client
+  const { data: client } = await supabase.from("clients").select("*").eq("id", loanRequest.client_id).single()
+
+  if (!client) {
+    return new NextResponse("Client not found", { status: 404 })
+  }
+
+  // Fetch financials
+  const { data: months } = await supabase
+    .from("monthly_financials")
+    .select("*")
+    .eq("client_id", client.id)
+    .order("year_month", { ascending: false })
+    .limit(6)
+
+  const headers = ["month", "revenue", "txCount", "expenses", "cash", "wave", "orange_money", "card"]
+  const lines = [headers.join(",")]
+
+  for (const m of months || []) {
+    const row = [m.year_month, m.revenue, m.tx_count, m.expenses, m.cash || 0, m.wave || 0, m.orange || 0, m.card || 0]
+    lines.push(row.join(","))
+  }
+
+  const body = lines.join("\n")
   return new NextResponse(body, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": `attachment; filename=loan-report-${id}.csv`,
     },
-  });
+  })
 }
