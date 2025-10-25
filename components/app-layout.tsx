@@ -126,7 +126,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <aside
         className={`fixed inset-y-0 left-0 z-50 ${compact ? "w-20" : "w-64"} border-r border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 transform transition-transform duration-200 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0`}
+        }`}
       >
         <div className="h-16 px-3 flex items-center justify-between border-b border-border/60">
           <Link href="/" className="flex items-center gap-2 w-full">
@@ -176,8 +176,17 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
       </aside>
 
+      {/* Overlay when sidebar is open (click to close) */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 lg:bg-transparent"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden
+        />
+      )}
+
       {/* Main */}
-      <div className={`${compact ? "lg:ml-20" : "lg:ml-64"}`}> 
+      <div className={`${sidebarOpen ? (compact ? "lg:ml-20" : "lg:ml-64") : "lg:ml-0"}`}> 
         <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="px-4 lg:px-6">
             <div className="flex h-16 items-center justify-between gap-3">
@@ -220,13 +229,7 @@ export function AppLayout({ children }: AppLayoutProps) {
                   <DropdownMenuTrigger asChild>
                     <button aria-label="Open profile menu"><UserAvatar size={36} /></button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-44">
-                    <DropdownMenuItem asChild>
-                      <Link href="/auth/login">Login</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/auth/sign-up">Sign up</Link>
-                    </DropdownMenuItem>
+                  <DropdownMenuContent align="end" className="w-40">
                     <DropdownMenuItem
                       onClick={async () => {
                         const supabase = createClient()

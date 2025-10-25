@@ -63,18 +63,7 @@ export default function LoginPage() {
               <CardDescription>Entrez vos identifiants pour accéder à votre compte</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <Button variant="outline" type="button">Google</Button>
-                  <Button variant="outline" type="button">Github</Button>
-                </div>
-                <div className="relative text-center">
-                  <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
-                  <div className="relative inline-block bg-background px-3 text-xs text-muted-foreground">ou continuer avec</div>
-                </div>
-              </div>
-
-              <form onSubmit={handleLogin} className="mt-4 space-y-5">
+              <form onSubmit={handleLogin} className="space-y-5">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">

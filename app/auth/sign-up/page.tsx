@@ -72,10 +72,6 @@ export default function SignUpPage() {
               <CardDescription>Rejoignez Mafalia aujourd'hui</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <Button variant="outline" type="button">Google</Button>
-                <Button variant="outline" type="button">Github</Button>
-              </div>
               <form onSubmit={handleSignUp} className="space-y-5">
                 <div className="grid gap-2">
                   <Label htmlFor="name">Nom complet</Label>
