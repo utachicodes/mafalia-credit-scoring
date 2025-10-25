@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, Lock, FileCheck2, Globe } from "lucide-react"
+import { AppLayout } from "@/components/app-layout"
 
 export default function SecurityStandardsPage() {
   const items = [
@@ -44,7 +45,8 @@ export default function SecurityStandardsPage() {
   ]
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
+    <AppLayout>
+      <div className="space-y-6">
       <div className="flex items-center gap-2 text-muted-foreground">
         <Shield className="h-5 w-5" />
         <h1 className="text-2xl font-bold">Normes de sécurité (Sénégal)</h1>
@@ -90,6 +92,6 @@ export default function SecurityStandardsPage() {
           </Card>
         ))}
       </div>
-    </div>
+    </AppLayout>
   )
 }

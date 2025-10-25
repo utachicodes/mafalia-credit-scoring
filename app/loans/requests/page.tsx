@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { loanRequests as initialLoanRequests, clients } from "@/lib/mock-data";
 import type { LoanRequest, LoanRequestStatus } from "@/lib/domain-types";
 import { buildScoreInputForClient, estimateRepaymentCapacity } from "@/lib/scoring-mapper";
+import { AppLayout } from "@/components/app-layout";
 
 const STATUSES: LoanRequestStatus[] = ["pending", "approved", "rejected"];
 
@@ -29,7 +30,8 @@ export default function LoanRequestsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
+    <AppLayout>
+      <div className="space-y-6">
       <h1 className="text-2xl font-semibold">Loan Requests</h1>
 
       <div className="flex gap-2">
@@ -94,6 +96,7 @@ export default function LoanRequestsPage() {
           </tbody>
         </table>
       </div>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

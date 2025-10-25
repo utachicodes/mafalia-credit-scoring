@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { ShieldCheck } from "lucide-react"
+import { AppLayout } from "@/components/app-layout"
 
 export default function KYCPage() {
   const [form, setForm] = useState({
@@ -34,7 +35,8 @@ export default function KYCPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
+    <AppLayout>
+      <div className="space-y-6">
       <div className="flex items-center gap-2 text-muted-foreground">
         <ShieldCheck className="h-5 w-5" />
         <h1 className="text-2xl font-bold">Inscription KYC</h1>
@@ -138,6 +140,7 @@ export default function KYCPage() {
           </form>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </AppLayout>
   )
 }
