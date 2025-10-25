@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -27,11 +27,14 @@ import {
   Search,
   Menu,
   X,
+  PanelLeft,
+  PanelRight,
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import { UserAvatar } from "@/components/user-avatar"
+import { createClient } from "@/lib/supabase/client"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -39,6 +42,7 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   const pathname = usePathname()
+  const router = useRouter()
   const { language, setLanguage, t } = useLanguage()
   const { theme, setTheme } = useTheme()
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -160,8 +164,14 @@ export function AppLayout({ children }: AppLayoutProps) {
           ))}
         </nav>
         <div className="border-t border-border/60 p-2 flex items-center justify-center">
-          <Button variant="ghost" size="sm" onClick={() => setCompact((c) => !c)} className="w-full">
-            {compact ? "Expand" : "Compact"}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setCompact((c) => !c)}
+            title={compact ? "Expand" : "Compact"}
+            aria-label={compact ? "Expand sidebar" : "Compact sidebar"}
+          >
+            {compact ? <PanelRight className="h-4 w-4" /> : <PanelLeft className="h-4 w-4" />}
           </Button>
         </div>
       </aside>
@@ -205,7 +215,30 @@ export function AppLayout({ children }: AppLayoutProps) {
                   <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
                 </Button>
 
-                <UserAvatar size={36} />
+                {/* Profile menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button aria-label="Open profile menu"><UserAvatar size={36} /></button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-44">
+                    <DropdownMenuItem asChild>
+                      <Link href="/auth/login">Login</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/auth/sign-up">Sign up</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={async () => {
+                        const supabase = createClient()
+                        await supabase.auth.signOut()
+                        router.push("/auth/login")
+                        router.refresh()
+                      }}
+                    >
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>
