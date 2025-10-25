@@ -108,7 +108,7 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
                 variant="outline"
                 className="h-14 px-8 text-lg font-semibold border-2 hover:bg-primary/5 hover:border-primary hover:scale-105 transition-all bg-transparent"
               >
-                {t("hero.cta.secondary")}
+                <a href="/analytics">{t("hero.cta.secondary")}</a>
               </Button>
             </div>
 

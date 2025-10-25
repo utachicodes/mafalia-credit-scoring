@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Smartphone, CheckCircle2, Settings } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
+import Link from "next/link"
 
 export function MobileMoneyProviders() {
   const providers = [
@@ -71,9 +72,11 @@ export function MobileMoneyProviders() {
                 </div>
               </div>
 
-              <Button variant="outline" size="sm" className="w-full gap-2 bg-transparent">
-                <Settings className="h-4 w-4" />
-                Manage
+              <Button asChild variant="outline" size="sm" className="w-full gap-2 bg-transparent">
+                <Link href={`/mobile-money/providers/manage?provider=${encodeURIComponent(provider.name)}`}>
+                  <Settings className="h-4 w-4" />
+                  Manage
+                </Link>
               </Button>
             </div>
           ))}

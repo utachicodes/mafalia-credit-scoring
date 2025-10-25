@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/language-provider"
 import { Plus, Download } from "lucide-react"
+import Link from "next/link"
 
 export function LoansHeader() {
   const { t } = useLanguage()
@@ -14,13 +15,17 @@ export function LoansHeader() {
         <p className="text-muted-foreground mt-1">Manage and apply for business loans</p>
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="outline" className="gap-2 bg-transparent">
-          <Download className="h-4 w-4" />
-          Export
+        <Button asChild variant="outline" className="gap-2 bg-transparent">
+          <Link href="/loans/export">
+            <Download className="h-4 w-4" />
+            Export
+          </Link>
         </Button>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          New Application
+        <Button asChild className="gap-2">
+          <Link href="/loans/new">
+            <Plus className="h-4 w-4" />
+            New Application
+          </Link>
         </Button>
       </div>
     </div>

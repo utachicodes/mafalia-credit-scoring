@@ -197,10 +197,19 @@ export function AppLayout({ children }: AppLayoutProps) {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="hidden md:flex items-center relative">
+                <form
+                  className="hidden md:flex items-center relative"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const form = e.currentTarget as HTMLFormElement;
+                    const data = new FormData(form);
+                    const q = (data.get("q") as string) || "";
+                    router.push(`/search?q=${encodeURIComponent(q)}`);
+                  }}
+                >
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input placeholder="Search..." className="pl-9 w-48 lg:w-64 h-9" />
-                </div>
+                  <Input name="q" placeholder="Search..." className="pl-9 w-48 lg:w-64 h-9" />
+                </form>
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -219,10 +228,25 @@ export function AppLayout({ children }: AppLayoutProps) {
                   <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 </Button>
 
-                <Button variant="ghost" size="icon" className="h-9 w-9 relative">
-                  <Bell className="h-4 w-4" />
-                  <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-9 w-9 relative">
+                      <Bell className="h-4 w-4" />
+                      <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-64">
+                    <DropdownMenuItem asChild>
+                      <Link href="/loans/requests">New loan request received</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/transactions">Transaction settled</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/security">Review security updates</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
                 {/* Profile menu */}
                 <DropdownMenu>
