@@ -47,50 +47,51 @@ export default function SecurityStandardsPage() {
   return (
     <AppLayout>
       <div className="space-y-6">
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <Shield className="h-5 w-5" />
-        <h1 className="text-2xl font-bold">Normes de sécurité (Sénégal)</h1>
-      </div>
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Shield className="h-5 w-5" />
+          <h1 className="text-2xl font-bold">Normes de sécurité (Sénégal)</h1>
+        </div>
 
-      <Card className="border-border">
-        <CardHeader>
-          <CardTitle>Référentiel & Portée</CardTitle>
-          <CardDescription>
-            Alignement sur les directives BCEAO pour l'UMOA et les bonnes pratiques de la banque numérique au Sénégal.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Cette application applique des contrôles techniques et organisationnels couvrant la confidentialité,
-            l'intégrité et la disponibilité des données financières. Les processus KYC/AML et la protection des
-            consommateurs sont au cœur du dispositif de conformité.
-          </p>
-        </CardContent>
-      </Card>
+        <Card className="border-border">
+          <CardHeader>
+            <CardTitle>Référentiel & Portée</CardTitle>
+            <CardDescription>
+              Alignement sur les directives BCEAO pour l'UMOA et les bonnes pratiques de la banque numérique au Sénégal.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Cette application applique des contrôles techniques et organisationnels couvrant la confidentialité,
+              l'intégrité et la disponibilité des données financières. Les processus KYC/AML et la protection des
+              consommateurs sont au cœur du dispositif de conformité.
+            </p>
+          </CardContent>
+        </Card>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {items.map((s, i) => (
-          <Card key={i} className="border-border">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                  <s.icon className="h-6 w-6 text-primary" />
+        <div className="grid gap-6 md:grid-cols-2">
+          {items.map((s, i) => (
+            <Card key={i} className="border-border">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                    <s.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <CardTitle>{s.title}</CardTitle>
+                    <CardDescription>Contrôles et pratiques recommandées</CardDescription>
+                  </div>
                 </div>
-                <div>
-                  <CardTitle>{s.title}</CardTitle>
-                  <CardDescription>Contrôles et pratiques recommandées</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc pl-5 space-y-2 text-sm text-foreground">
-                {s.points.map((p, idx) => (
-                  <li key={idx}>{p}</li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
+              </CardHeader>
+              <CardContent>
+                <ul className="list-disc pl-5 space-y-2 text-sm text-foreground">
+                  {s.points.map((p, idx) => (
+                    <li key={idx}>{p}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </AppLayout>
   )
