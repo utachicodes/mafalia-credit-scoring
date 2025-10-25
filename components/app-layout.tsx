@@ -30,7 +30,8 @@ import {
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { UserAvatar } from "@/components/user-avatar"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -40,180 +41,178 @@ export function AppLayout({ children }: AppLayoutProps) {
   const pathname = usePathname()
   const { language, setLanguage, t } = useLanguage()
   const { theme, setTheme } = useTheme()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [compact, setCompact] = useState(false)
 
-  const navItems = [
-    { href: "/dashboard", label: t("nav.dashboard"), icon: LayoutDashboard },
-    { href: "/loans", label: t("nav.loans"), icon: CreditCard },
-    { href: "/loans/requests", label: "Loan Requests", icon: FileText },
-    { href: "/analytics", label: t("nav.analytics"), icon: TrendingUp },
-    { href: "/receivables", label: t("nav.receivables"), icon: Receipt },
-    { href: "/mobile-money", label: "Mobile Money", icon: Smartphone },
-    { href: "/transactions", label: "Transactions", icon: Receipt },
-    { href: "/clients", label: "Clients", icon: Users },
-    { href: "/lenders", label: "Lenders", icon: Building2 },
-    { href: "/scoring", label: "Scoring", icon: Target },
-    { href: "/kyc", label: "KYC", icon: CheckCircle },
-    { href: "/security", label: "Sécurité", icon: Shield },
+  useEffect(() => {
+    const savedOpen = localStorage.getItem("mafalia_sidebar_open")
+    const savedCompact = localStorage.getItem("mafalia_sidebar_compact")
+    if (savedOpen !== null) {
+      setSidebarOpen(savedOpen === "true")
+    } else {
+      setSidebarOpen(window.innerWidth >= 1024) // default open on desktop
+    }
+    if (savedCompact !== null) {
+      setCompact(savedCompact === "true")
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("mafalia_sidebar_open", String(sidebarOpen))
+  }, [sidebarOpen])
+
+  useEffect(() => {
+    localStorage.setItem("mafalia_sidebar_compact", String(compact))
+  }, [compact])
+
+  // Grouped navigation
+  const navSections = [
+    {
+      title: "Operations",
+      items: [
+        { href: "/dashboard", label: t("nav.dashboard"), icon: LayoutDashboard },
+        { href: "/loans", label: t("nav.loans"), icon: CreditCard },
+        { href: "/loans/requests", label: "Loan Requests", icon: FileText },
+        { href: "/receivables", label: t("nav.receivables"), icon: Receipt },
+        { href: "/mobile-money", label: "Mobile Money", icon: Smartphone },
+        { href: "/transactions", label: "Transactions", icon: Receipt },
+        { href: "/clients", label: "Clients", icon: Users },
+        { href: "/lenders", label: "Lenders", icon: Building2 },
+      ],
+    },
+    {
+      title: "Analytics",
+      items: [
+        { href: "/analytics", label: t("nav.analytics"), icon: TrendingUp },
+        { href: "/scoring", label: "Scoring", icon: Target },
+      ],
+    },
+    {
+      title: "Admin",
+      items: [
+        { href: "/kyc", label: "KYC", icon: CheckCircle },
+        { href: "/security", label: "Sécurité", icon: Shield },
+      ],
+    },
   ]
+
+  // Keyboard shortcut Cmd/Ctrl+B to toggle sidebar
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const isToggle = (e.key === "b" || e.key === "B") && (e.metaKey || e.ctrlKey)
+      if (isToggle) {
+        e.preventDefault()
+        setSidebarOpen((s) => !s)
+      }
+    }
+    window.addEventListener("keydown", handler)
+    return () => window.removeEventListener("keydown", handler)
+  }, [])
+
+  // Auto-close sidebar on route change in mobile
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      setSidebarOpen(false)
+    }
+  }, [pathname])
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 lg:px-6">
-          <div className="flex h-16 items-center justify-between gap-4">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 shrink-0">
-              <Image
-                src="/mafalia-logo.png"
-                alt="Mafalia"
-                width={120}
-                height={48}
-                className="h-9 w-auto transition-transform hover:scale-105"
-              />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center max-w-4xl">
-              {navItems.slice(0, 6).map((item) => {
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 ${compact ? "w-20" : "w-64"} border-r border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 transform transition-transform duration-200 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
+        <div className="h-16 px-3 flex items-center justify-between border-b border-border/60">
+          <Link href="/" className="flex items-center gap-2 w-full">
+            <Image src="/mafalia-logo.png" alt="Mafalia" width={compact ? 36 : 110} height={40} className="h-8 w-auto mx-auto" />
+          </Link>
+          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+        <nav className="px-2 py-3 space-y-4 overflow-y-auto" style={{ height: "calc(100vh - 7.5rem)" }}>
+          {navSections.map((section) => (
+            <div key={section.title} className="space-y-1">
+              {!compact && (
+                <div className="px-3 text-[10px] uppercase tracking-wider text-muted-foreground/70">{section.title}</div>
+              )}
+              {section.items.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`
-                      flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all
-                      ${
-                        isActive
-                          ? "bg-primary text-primary-foreground shadow-sm"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                      }
-                    `}
+                    className={`flex items-center ${compact ? "justify-center" : "gap-3"} px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                    }`}
+                    onClick={() => setSidebarOpen(false)}
+                    title={compact ? item.label : undefined}
                   >
                     <Icon className="h-4 w-4" />
-                    <span>{item.label}</span>
+                    {!compact && <span>{item.label}</span>}
                   </Link>
                 )
               })}
+            </div>
+          ))}
+        </nav>
+        <div className="border-t border-border/60 p-2 flex items-center justify-center">
+          <Button variant="ghost" size="sm" onClick={() => setCompact((c) => !c)} className="w-full">
+            {compact ? "Expand" : "Compact"}
+          </Button>
+        </div>
+      </aside>
 
-              {/* More dropdown for additional items */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    More
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  {navItems.slice(6).map((item) => {
-                    const Icon = item.icon
-                    return (
-                      <DropdownMenuItem key={item.href} asChild>
-                        <Link href={item.href} className="flex items-center gap-2">
-                          <Icon className="h-4 w-4" />
-                          {item.label}
-                        </Link>
-                      </DropdownMenuItem>
-                    )
-                  })}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </nav>
-
-            {/* Right side actions */}
-            <div className="flex items-center gap-2">
-              {/* Search */}
-              <div className="hidden md:flex items-center relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Search..."
-                  className="pl-9 w-48 lg:w-64 h-9 bg-muted/50 border-border/50 focus:bg-background transition-colors"
-                />
+      {/* Main */}
+      <div className={`${compact ? "lg:ml-20" : "lg:ml-64"}`}> 
+        <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="px-4 lg:px-6">
+            <div className="flex h-16 items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" onClick={() => setSidebarOpen((s) => !s)}>
+                  {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </Button>
               </div>
 
-              {/* Language Switcher */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-muted/50 transition-colors">
-                    <Globe className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setLanguage("en")}>
-                    English {language === "en" && "✓"}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setLanguage("fr")}>
-                    Français {language === "fr" && "✓"}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex items-center gap-2">
+                <div className="hidden md:flex items-center relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input placeholder="Search..." className="pl-9 w-48 lg:w-64 h-9" />
+                </div>
 
-              {/* Theme Switcher */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="h-9 w-9 hover:bg-muted/50 transition-colors"
-              >
-                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-9 w-9">
+                      <Globe className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setLanguage("en")}>English {language === "en" && "✓"}</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLanguage("fr")}>Français {language === "fr" && "✓"}</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-              {/* Notifications */}
-              <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-muted/50 transition-colors relative">
-                <Bell className="h-4 w-4" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary animate-pulse" />
-              </Button>
+                <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+                  <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                </Button>
 
-              {/* User Avatar */}
-              <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-sm ring-2 ring-background">
-                <span className="text-xs font-semibold text-primary-foreground">JD</span>
+                <Button variant="ghost" size="icon" className="h-9 w-9 relative">
+                  <Bell className="h-4 w-4" />
+                  <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
+                </Button>
+
+                <UserAvatar size={36} />
               </div>
-
-              {/* Mobile Menu Toggle */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="lg:hidden h-9 w-9"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </Button>
             </div>
           </div>
-        </div>
+        </header>
 
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-border/40 bg-background/95 backdrop-blur-xl">
-            <nav className="container mx-auto px-4 py-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
-              {navItems.map((item) => {
-                const Icon = item.icon
-                const isActive = pathname === item.href
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`
-                      flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                      ${
-                        isActive
-                          ? "bg-primary text-primary-foreground shadow-sm"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                      }
-                    `}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
-                  </Link>
-                )
-              })}
-            </nav>
-          </div>
-        )}
-      </header>
-
-      <main className="container mx-auto px-4 lg:px-6 py-6 lg:py-8">{children}</main>
+        <main className="container mx-auto px-4 lg:px-6 py-6 lg:py-8">{children}</main>
+      </div>
     </div>
   )
 }
