@@ -13,7 +13,7 @@ export default async function AuthErrorPage({
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
           <div className="flex justify-center mb-4">
-            <Image src="/mafalia-logo.png" alt="Mafalia" width={120} height={40} />
+            <Image src="/logo.svg" alt="Mafalia" width={120} height={40} />
           </div>
           <Card>
             <CardHeader>

@@ -130,7 +130,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       >
         <div className="h-16 px-3 flex items-center justify-between border-b border-border/60">
           <Link href="/" className="flex items-center gap-2 w-full">
-            <Image src="/mafalia-logo.png" alt="Mafalia" width={compact ? 36 : 110} height={40} className="h-8 w-auto mx-auto" />
+            <Image src="/logo.svg" alt="Mafalia" width={compact ? 36 : 110} height={40} className="h-8 w-auto mx-auto" />
           </Link>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />

@@ -46,7 +46,7 @@ export function CreditScoreCard() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Image src="/mafalia-logo.png" alt="Mafalia" width={40} height={40} className="object-contain" />
+            <Image src="/logo.svg" alt="Mafalia" width={40} height={40} className="object-contain" />
             <div>
               <CardTitle className="text-2xl">{t("dashboard.credit.score")}</CardTitle>
               <CardDescription className="flex items-center gap-1">

@@ -11,11 +11,14 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import Image from "next/image"
-import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react"
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Building2, Phone } from "lucide-react"
 
 export default function LoginPage() {
+  const [institution, setInstitution] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [phone, setPhone] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -28,6 +31,9 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      if (password !== confirmPassword) {
+        throw new Error("Les mots de passe ne correspondent pas")
+      }
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -48,7 +54,7 @@ export default function LoginPage() {
       <div className="relative hidden md:flex items-center justify-center p-10 bg-gradient-to-b from-primary/20 via-background to-background">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent pointer-events-none" />
         <div className="relative z-10 max-w-md text-center space-y-6">
-          <Image src="/mafalia-logo.png" alt="Mafalia" width={160} height={54} className="mx-auto" />
+          <Image src="/logo.svg" alt="Mafalia" width={160} height={54} className="mx-auto" />
           <h2 className="text-2xl md:text-3xl font-semibold">Votre finance, plus simple.</h2>
           <p className="text-muted-foreground">Accédez à votre tableau de bord, suivez vos flux, et obtenez un scoring précis.</p>
         </div>
@@ -60,10 +66,17 @@ export default function LoginPage() {
           <Card className="border-border/60 shadow-lg">
             <CardHeader className="space-y-1">
               <CardTitle className="text-2xl">Connexion</CardTitle>
-              <CardDescription>Entrez vos identifiants pour accéder à votre compte</CardDescription>
+              <CardDescription>Entrez les informations de votre institution de crédit pour accéder</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-5">
+                <div className="grid gap-2">
+                  <Label htmlFor="institution">Institution de Crédit</Label>
+                  <div className="relative">
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input id="institution" type="text" placeholder="Ex: Al Rahma" required value={institution} onChange={(e) => setInstitution(e.target.value)} className="pl-10" />
+                  </div>
+                </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
@@ -84,15 +97,25 @@ export default function LoginPage() {
                     </button>
                   </div>
                 </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="confirmPassword">Mot de passe à nouveau</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input id="confirmPassword" type={showPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="pl-10 pr-10" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="phone">Numéro de téléphone</Label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input id="phone" type="tel" placeholder="Ex: +221 77 123 45 67" required value={phone} onChange={(e) => setPhone(e.target.value)} className="pl-10" />
+                  </div>
+                </div>
                 {error && <p className="text-sm text-destructive">{error}</p>}
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Connexion..." : (<span className="inline-flex items-center gap-2">Se connecter <ArrowRight className="h-4 w-4" /></span>)}
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">En vous connectant, vous acceptez nos conditions.</p>
-                <div className="text-center text-sm">
-                  Pas encore de compte ? {" "}
-                  <Link href="/auth/sign-up" className="underline underline-offset-4 text-primary">S'inscrire</Link>
-                </div>
               </form>
             </CardContent>
           </Card>

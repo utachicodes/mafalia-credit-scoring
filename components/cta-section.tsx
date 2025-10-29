@@ -8,34 +8,26 @@ export function CTASection() {
   const { t } = useLanguage()
 
   return (
-    <section className="py-20 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="container mx-auto px-4">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary/80 p-12 md:p-20">
-          <div className="relative z-10 mx-auto max-w-3xl text-center space-y-6">
-            <h2 className="text-balance text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl lg:text-5xl">
-              Ready to Transform Your Business?
+        <div className="rounded-2xl border border-border bg-background p-10 md:p-14 text-center">
+          <div className="mx-auto max-w-3xl space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              Ready to get started with Mafalia?
             </h2>
-            <p className="text-pretty text-lg text-primary-foreground/90 md:text-xl">
-              Join thousands of businesses already using Mafalia to manage their finances smarter
+            <p className="text-base md:text-lg text-muted-foreground">
+              {"Set up scoring and loan workflows in minutes. No fluff, just the tools you need."}
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button size="lg" variant="secondary" className="gap-2">
+            <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <Button size="lg" className="gap-2">
                 {t("hero.cta.primary")}
                 <ArrowRight className="h-4 w-4" />
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
-              >
+              <Button size="lg" variant="outline">
                 {t("hero.cta.secondary")}
               </Button>
             </div>
           </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 -z-0 h-64 w-64 rounded-full bg-primary-foreground/10 blur-3xl" />
-          <div className="absolute bottom-0 left-0 -z-0 h-64 w-64 rounded-full bg-primary-foreground/10 blur-3xl" />
         </div>
       </div>
     </section>

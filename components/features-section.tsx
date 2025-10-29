@@ -70,7 +70,7 @@ export function FeaturesSection() {
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute top-10 right-10 opacity-5">
-        <Image src="/mafalia-logo.png" alt="" width={300} height={120} className="w-64" />
+        <Image src="/logo.svg" alt="" width={300} height={120} className="w-64" />
       </div>
 
       <div className="container mx-auto px-4">

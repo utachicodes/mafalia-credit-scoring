@@ -30,7 +30,7 @@ export function Navigation({ showContent = false }: NavigationProps) {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center">
-            <Image src="/mafalia-logo.png" alt="Mafalia" width={120} height={48} className="h-10 w-auto" />
+            <Image src="/logo.svg" alt="Mafalia" width={120} height={48} className="h-10 w-auto" />
           </Link>
 
           {showContent && (

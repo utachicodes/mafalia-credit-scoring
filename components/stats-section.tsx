@@ -85,7 +85,7 @@ export function StatsSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-muted/30 to-background" />
 
       <div className="absolute bottom-10 left-10 opacity-5">
-        <Image src="/mafalia-logo.png" alt="" width={300} height={120} className="w-64" />
+        <Image src="/logo.svg" alt="" width={300} height={120} className="w-64" />
       </div>
 
       <div className="container mx-auto px-4 relative">

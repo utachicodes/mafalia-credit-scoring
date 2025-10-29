@@ -29,7 +29,7 @@ export function LoanCalculator() {
           <div className="flex-1">
             <CardTitle className="flex items-center gap-2">
               Loan Calculator
-              <Image src="/mafalia-logo.png" alt="" width={20} height={20} className="object-contain" />
+              <Image src="/logo.svg" alt="" width={20} height={20} className="object-contain" />
             </CardTitle>
             <CardDescription>Estimate your payments</CardDescription>
           </div>
