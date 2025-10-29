@@ -6,7 +6,6 @@ import { Bell, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import Image from "next/image"
-import { UserAvatar } from "@/components/user-avatar"
 
 export function DashboardHeader() {
   const { t } = useLanguage()
@@ -69,7 +68,9 @@ export function DashboardHeader() {
             <Button variant="ghost" size="icon">
               <Bell className="h-5 w-5" />
             </Button>
-            <UserAvatar size={32} />
+            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+              <span className="text-sm font-medium text-primary-foreground">JD</span>
+            </div>
           </div>
         </div>
       </div>

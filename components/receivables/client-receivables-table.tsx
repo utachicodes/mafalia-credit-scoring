@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress"
 import { Search, Eye, Send, MoreVertical } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { formatCFA } from "@/lib/currency-utils"
-import Link from "next/link"
 
 export function ClientReceivablesTable() {
   const clients = [
@@ -120,21 +119,15 @@ export function ClientReceivablesTable() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem asChild>
-                        <Link href={`/receivables/client?name=${encodeURIComponent(client.name)}`} className="flex items-center">
-                          <Eye className="h-4 w-4 mr-2" />
-                          View Details
-                        </Link>
+                      <DropdownMenuItem>
+                        <Eye className="h-4 w-4 mr-2" />
+                        View Details
                       </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href={`/receivables/reminders/new?client=${encodeURIComponent(client.name)}`} className="flex items-center">
-                          <Send className="h-4 w-4 mr-2" />
-                          Send Reminder
-                        </Link>
+                      <DropdownMenuItem>
+                        <Send className="h-4 w-4 mr-2" />
+                        Send Reminder
                       </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href={`/receivables/payments/new?client=${encodeURIComponent(client.name)}`}>Record Payment</Link>
-                      </DropdownMenuItem>
+                      <DropdownMenuItem>Record Payment</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -168,15 +161,15 @@ export function ClientReceivablesTable() {
                       {client.nextDue}
                     </div>
                   </div>
-                  <div className="flex items-end justify-end gap-2">
+                  <div className="flex items-end justify-end">
                     {client.status === "overdue" && (
-                      <Button asChild size="sm" variant="destructive">
-                        <Link href={`/receivables/reminders/new?client=${encodeURIComponent(client.name)}`}>Send Reminder</Link>
+                      <Button size="sm" variant="destructive">
+                        Send Reminder
                       </Button>
                     )}
                     {client.status === "partial" && (
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={`/receivables/payments/new?client=${encodeURIComponent(client.name)}`}>Record Payment</Link>
+                      <Button size="sm" variant="outline">
+                        Record Payment
                       </Button>
                     )}
                   </div>

@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useLanguage } from "@/components/language-provider"
 import { formatCFA } from "@/lib/currency-utils"
 import { ArrowDownRight, ArrowUpRight, Calendar } from "lucide-react"
-import { AppLayout } from "@/components/app-layout"
 
 interface Txn {
   id: string
@@ -94,107 +93,105 @@ export default function TransactionsPage() {
   const months = Object.keys(groupByMonth)
 
   return (
-    <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <Calendar className="h-5 w-5" />
-          <h1 className="text-2xl font-bold">Historique des transactions (6 mois)</h1>
-        </div>
+    <div className="container mx-auto px-4 py-8 space-y-6">
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <Calendar className="h-5 w-5" />
+        <h1 className="text-2xl font-bold">Historique des transactions (6 mois)</h1>
+      </div>
 
-        <Card className="border-border">
-          <CardHeader>
-            <CardTitle>Filtres</CardTitle>
-            <CardDescription>Affinez par opérateur, type et recherche</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-3">
-            <div>
-              <Select value={provider} onValueChange={setProvider}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Opérateur" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">Tous</SelectItem>
-                  <SelectItem value="Wave">Wave</SelectItem>
-                  <SelectItem value="Orange Money">Orange Money</SelectItem>
-                  <SelectItem value="Free Money">Free Money</SelectItem>
-                  <SelectItem value="Wari">Wari</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Select value={type} onValueChange={setType}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">Tous</SelectItem>
-                  <SelectItem value="received">Reçus</SelectItem>
-                  <SelectItem value="sent">Envoyés</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Input placeholder="Rechercher par nom ou ID..." value={search} onChange={(e) => setSearch(e.target.value)} />
-            </div>
-          </CardContent>
-        </Card>
+      <Card className="border-border">
+        <CardHeader>
+          <CardTitle>Filtres</CardTitle>
+          <CardDescription>Affinez par opérateur, type et recherche</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 md:grid-cols-3">
+          <div>
+            <Select value={provider} onValueChange={setProvider}>
+              <SelectTrigger>
+                <SelectValue placeholder="Opérateur" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">Tous</SelectItem>
+                <SelectItem value="Wave">Wave</SelectItem>
+                <SelectItem value="Orange Money">Orange Money</SelectItem>
+                <SelectItem value="Free Money">Free Money</SelectItem>
+                <SelectItem value="Wari">Wari</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Select value={type} onValueChange={setType}>
+              <SelectTrigger>
+                <SelectValue placeholder="Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">Tous</SelectItem>
+                <SelectItem value="received">Reçus</SelectItem>
+                <SelectItem value="sent">Envoyés</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Input placeholder="Rechercher par nom ou ID..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          </div>
+        </CardContent>
+      </Card>
 
-        <div className="space-y-8">
-          {months.map((month) => (
-            <Card key={month} className="border-border">
-              <CardHeader>
-                <CardTitle className="capitalize">{month}</CardTitle>
-                <CardDescription>
-                  {groupByMonth[month].length} transaction{groupByMonth[month].length > 1 ? "s" : ""}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {groupByMonth[month].map((tx) => {
-                    const d = new Date(tx.date)
-                    return (
-                      <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg border border-border">
-                        <div className="flex items-center gap-4">
-                          <div
-                            className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                              tx.type === "received" ? "bg-green-600/10 dark:bg-green-400/10" : "bg-chart-3/10"
-                            }`}
-                          >
-                            {tx.type === "received" ? (
-                              <ArrowDownRight className="h-5 w-5 text-green-600 dark:text-green-400" />
-                            ) : (
-                              <ArrowUpRight className="h-5 w-5 text-chart-3" />
-                            )}
-                          </div>
-                          <div className="space-y-1">
-                            <div className="font-medium text-foreground">{tx.counterparty}</div>
-                            <div className="text-sm text-muted-foreground">
-                              {tx.provider} • {tx.id}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })}
-                            </div>
-                          </div>
+      <div className="space-y-8">
+        {months.map((month) => (
+          <Card key={month} className="border-border">
+            <CardHeader>
+              <CardTitle className="capitalize">{month}</CardTitle>
+              <CardDescription>
+                {groupByMonth[month].length} transaction{groupByMonth[month].length > 1 ? "s" : ""}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {groupByMonth[month].map((tx) => {
+                  const d = new Date(tx.date)
+                  return (
+                    <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg border border-border">
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`flex h-10 w-10 items-center justify-center rounded-full ${
+                            tx.type === "received" ? "bg-green-600/10 dark:bg-green-400/10" : "bg-chart-3/10"
+                          }`}
+                        >
+                          {tx.type === "received" ? (
+                            <ArrowDownRight className="h-5 w-5 text-green-600 dark:text-green-400" />
+                          ) : (
+                            <ArrowUpRight className="h-5 w-5 text-chart-3" />
+                          )}
                         </div>
-                        <div className="text-right space-y-1">
-                          <div
-                            className={`text-lg font-bold ${
-                              tx.type === "received" ? "text-green-600 dark:text-green-400" : "text-foreground"
-                            }`}
-                          >
-                            {`${tx.type === "received" ? "+" : "-"}${formatCFA(tx.amount)}`}
+                        <div className="space-y-1">
+                          <div className="font-medium text-foreground">{tx.counterparty}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {tx.provider} • {tx.id}
                           </div>
-                          <Badge variant={tx.status === "completed" ? "default" : "secondary"}>{tx.status}</Badge>
+                          <div className="text-xs text-muted-foreground">
+                            {d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })}
+                          </div>
                         </div>
                       </div>
-                    )
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                      <div className="text-right space-y-1">
+                        <div
+                          className={`text-lg font-bold ${
+                            tx.type === "received" ? "text-green-600 dark:text-green-400" : "text-foreground"
+                          }`}
+                        >
+                          {`${tx.type === "received" ? "+" : "-"}${formatCFA(tx.amount)}`}
+                        </div>
+                        <Badge variant={tx.status === "completed" ? "default" : "secondary"}>{tx.status}</Badge>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-    </AppLayout>
+    </div>
   )
 }
