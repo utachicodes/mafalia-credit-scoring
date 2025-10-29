@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { clients, loanRequests } from "@/lib/mock-data";
 import type { Client } from "@/lib/domain-types";
-import { AppLayout } from "@/components/app-layout";
 
 type TypeFilter = Client["type"] | "all";
 
@@ -31,8 +30,7 @@ export default function LenderDashboardPage() {
   }, [type, minAmount, maxAmount, startDate, endDate]);
 
   return (
-    <AppLayout>
-      <div className="space-y-6">
+    <div className="container mx-auto px-4 py-8 space-y-6">
       <h1 className="text-2xl font-semibold">Lender Dashboard</h1>
 
       <div className="grid gap-4 md:grid-cols-5 border rounded-lg p-4">
@@ -105,7 +103,6 @@ export default function LenderDashboardPage() {
           </tbody>
         </table>
       </div>
-      </div>
-    </AppLayout>
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import { CashFlowChart } from "@/components/dashboard/cash-flow-chart"
 import { CreditRatingBreakdown } from "@/components/dashboard/credit-rating-breakdown"
 import { ConfigurableScoreCard } from "@/components/dashboard/configurable-score-card"
 import { AppLayout } from "@/components/app-layout"
+import { PremiumCTA } from "@/components/premium-cta"
 
 export default function DashboardPage() {
   return (
@@ -27,6 +28,16 @@ export default function DashboardPage() {
             <RecentLoans />
           </div>
         </div>
+
+        <PremiumCTA
+          titleEn="Ready to apply for your loan?"
+          titleFr="Prêt à demander votre prêt?"
+          descriptionEn="Get instant credit scoring and receive your loan decision in under 2 minutes with our AI-powered platform."
+          descriptionFr="Obtenez une notation de crédit instantanée et recevez votre décision de prêt en moins de 2 minutes avec notre plateforme alimentée par l'IA."
+          buttonTextEn="Start Application"
+          buttonTextFr="Commencer la demande"
+          href="/loans"
+        />
       </div>
     </AppLayout>
   )

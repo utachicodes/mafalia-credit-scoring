@@ -5,7 +5,6 @@ import { defaultCriteria } from "@/lib/default-criteria";
 import { computeScore } from "@/lib/criteria-scoring";
 import type { ScoreInput } from "@/lib/criteria";
 import { exampleScoreInput } from "@/lib/example-score-input";
-import { AppLayout } from "@/components/app-layout";
 
 export default function ScoringPage() {
   const [inputs, setInputs] = useState<ScoreInput>({});
@@ -15,8 +14,7 @@ export default function ScoringPage() {
   const finalScore100 = Math.round(finalScore01 * 100);
 
   return (
-    <AppLayout>
-      <div className="max-w-3xl mx-auto space-y-6">
+    <div className="p-6 max-w-3xl mx-auto space-y-6">
       <h1 className="text-2xl font-semibold">Credit Scoring Preview</h1>
       <p className="text-sm text-muted-foreground">
         Saisissez des sous-scores [0,1] pour chaque critère. Les pondérations sont normalisées si la somme ≠ 100%.
@@ -72,7 +70,6 @@ export default function ScoringPage() {
         <div className="text-lg font-semibold">Score final: {finalScore100} / 100</div>
         <div className="text-xs text-muted-foreground">Valeur: {finalScore01.toFixed(4)} (0-1)</div>
       </div>
-      </div>
-    </AppLayout>
+    </div>
   );
 }
