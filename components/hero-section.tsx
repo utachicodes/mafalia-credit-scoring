@@ -46,13 +46,11 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
-        <div
-          className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/10 via-primary/5 to-transparent animate-pulse"
-          style={{ animationDuration: "4s" }}
-        />
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-primary/5 to-transparent rounded-full blur-3xl" />
+      <div className="absolute inset-0 -z-10 rounded-3xl">
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-neutral-100 dark:from-neutral-950 dark:via-[#16090a] dark:to-neutral-950" />
+        <div className="absolute inset-0 [background-image:radial-gradient(hsl(0_0%_50%/.08)_1px,transparent_1px)] [background-size:24px_24px] dark:opacity-30 opacity-20" />
+        <div className="absolute -right-32 -top-32 h-[60%] w-[60%] bg-red-600/20 dark:bg-red-700/30 blur-3xl rounded-full" />
+        <div className="absolute -left-32 -bottom-32 h-[50%] w-[50%] bg-red-900/10 dark:bg-red-900/30 blur-3xl rounded-full" />
       </div>
 
       <div className="container mx-auto px-4 py-12">
@@ -94,7 +92,7 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
             <div className="flex flex-col gap-4 sm:flex-row">
               <Button
                 size="lg"
-                className="gap-2 h-14 px-8 text-lg font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all"
+                className="gap-2 h-14 px-8 text-lg font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-105 transition-all dark:bg-red-600 dark:text-white dark:hover:bg-red-500 dark:shadow-red-600/30"
                 onClick={() => {
                   onGetStarted()
                   window.location.href = "/dashboard"
@@ -106,7 +104,7 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="h-14 px-8 text-lg font-semibold border-2 hover:bg-primary/5 hover:border-primary hover:scale-105 transition-all bg-transparent"
+                className="h-14 px-8 text-lg font-semibold border-2 hover:bg-primary/5 hover:border-primary hover:scale-105 transition-all bg-transparent dark:border-red-900/60 dark:hover:bg-red-900/10"
               >
                 <a href="/analytics">{t("hero.cta.secondary")}</a>
               </Button>
@@ -172,7 +170,7 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
               </Suspense>
             </Canvas>
 
-            <div className="absolute inset-0 -z-10 bg-gradient-radial from-primary/20 via-transparent to-transparent blur-3xl" />
+            <div className="absolute inset-0 -z-10 bg-gradient-radial from-red-600/20 via-transparent to-transparent blur-3xl" />
           </div>
         </div>
       </div>
