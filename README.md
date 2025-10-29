@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/mafalia-logo.png" alt="Mafalia Logo" width="200"/>
+  <img src="public/logo.svg" alt="Mafalia Logo" width="200"/>
   
   # Mafalia - Your Smart Finance
   
@@ -17,11 +17,11 @@
 
 ---
 
-## 🌟 Overview
+## Overview
 
-**Mafalia** is a cutting-edge AI-powered financial platform designed specifically for businesses in Senegal. It revolutionizes credit scoring and loan management by combining advanced artificial intelligence with real-time financial data analysis, Mobile Money integration, and transparent credit assessment.
+**Mafalia** is a cutting-edge AI-powered financial platform designed specifically for businesses in Senegal. It revolutionizes credit scoring and loan management by combining advanced artificial intelligence with real-time financial data analysis, Mobile Money integration, and transparent credit assessment. Built with v0 by Vercel to accelerate prototyping and UI generation.
 
-### 🎯 Key Highlights
+### Key Highlights
 
 - **AI Credit Scoring**: Intelligent credit rating system (AAA to BB) based on comprehensive business metrics
 - **Real-Time Analysis**: Instant financial health assessment with live data processing
@@ -32,9 +32,9 @@
 
 ---
 
-## ✨ Features
+## Features
 
-### 🏦 Credit Scoring Engine
+### Credit Scoring Engine
 - **Automated Credit Assessment**: AI-powered evaluation using 6 key categories
   - Revenue & Cash Flows (25%)
   - Margins & Profitability (15%)
@@ -46,35 +46,35 @@
 - **Loan Amount Calculation**: Automatic safe credit limit determination
 - **Real-Time Updates**: Dynamic score recalculation on data changes
 
-### 💰 Loan Management
+### Loan Management
 - **Loan Applications**: Streamlined application process with instant estimates
 - **Active Loan Tracking**: Monitor all loans with repayment progress
 - **Loan Calculator**: Interactive calculator with FCFA currency support
 - **Payment Schedules**: Detailed amortization tables
 - **Auto-Approval**: AI-driven loan approval based on credit score
 
-### 📊 Financial Analytics
+### Financial Analytics
 - **Revenue Tracking**: Monthly and annual revenue analysis
 - **Profit Margins**: Gross and net margin calculations
 - **Cash Flow Analysis**: Inflow/outflow monitoring with charts
 - **Loan Performance**: Track loan portfolio health
 - **Export Reports**: Download financial reports in multiple formats
 
-### 📱 Mobile Money Integration
+### Mobile Money Integration
 - **Multi-Provider Support**: M-Pesa, Orange Money, MTN Mobile Money, Wave
 - **Transaction History**: Complete transaction logs with search
 - **Send Money**: Quick money transfers with fee calculation
 - **Balance Tracking**: Real-time account balance monitoring
 - **Flow Analysis**: Inflow/outflow ratio tracking for credit scoring
 
-### 🧾 Client Receivables Management
+### Client Receivables Management
 - **Invoice Tracking**: Monitor all outstanding client payments
 - **Aging Reports**: 0-30, 31-60, 61-90, 90+ days categorization
 - **Payment Reminders**: Automated alerts for overdue payments
 - **Doubtful Debt Tracking**: Identify and manage risky receivables
 - **Quick Invoice Creation**: Fast invoice generation with payment terms
 
-### 🎨 User Experience
+### User Experience
 - **3D FCFA Symbol**: Stunning 3D dollar sign animation on landing page
 - **Smooth Animations**: Framer Motion powered transitions
 - **Responsive Design**: Perfect on mobile, tablet, and desktop
@@ -83,7 +83,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
@@ -214,7 +214,7 @@ const score01 = computeScore(tailored, { avg_revenue_6_12m: 0.7, tx_count: 0.5 }
 
 ---
 
-## 🎨 Design System
+## Design System
 
 ### Color Palette
 - **Primary**: Mafalia Red (#E31E24)
@@ -231,7 +231,7 @@ const score01 = computeScore(tailored, { avg_revenue_6_12m: 0.7, tx_count: 0.5 }
 
 ---
 
-## 🌍 Localization
+## Localization
 
 The platform supports full English and French localization:
 
@@ -242,12 +242,12 @@ const { t } = useLanguage()
 \`\`\`
 
 ### Supported Languages
-- 🇬🇧 English
-- 🇫🇷 Français
+- English
+- Français
 
 ---
 
-## 📱 Pages & Routes
+## Pages & Routes
 
 | Route | Description |
 |-------|-------------|
@@ -288,7 +288,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with [v0.app](https://v0.app) by Vercel
 - Deployed on [Vercel](https://vercel.com)
@@ -298,7 +298,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  <p>Made with ❤️ for businesses in Senegal</p>
+  <p>Made with love for businesses in Senegal</p>
   <p>
     <a href="https://vercel.com/utachicodes-projects/v0-finance-platform-saa-s">Live Demo</a> •
     <a href="https://v0.app/chat/projects/7TCyoGUFuA6">Build on v0</a> •

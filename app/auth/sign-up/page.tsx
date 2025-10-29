@@ -31,11 +31,14 @@ export default function SignUpPage() {
     setError(null)
 
     try {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+      const redirectUrl = process.env.NEXT_PUBLIC_SUPABASE_REDIRECT_URL ?? (siteUrl ? `${siteUrl}/auth/update-password` : `${window.location.origin}/auth/update-password`)
+
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
+          emailRedirectTo: redirectUrl,
           data: {
             name,
             role,
