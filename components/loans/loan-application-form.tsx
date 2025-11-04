@@ -19,6 +19,7 @@ export function LoanApplicationForm() {
     purpose: "",
     term: "",
     description: "",
+    documents: [] as File[],
   })
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -88,6 +89,18 @@ export function LoanApplicationForm() {
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={4}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="documents">Upload Documents</Label>
+            <Input
+              id="documents"
+              type="file"
+              multiple
+              onChange={(e) =>
+                setFormData({ ...formData, documents: e.target.files ? Array.from(e.target.files) : [] })
+              }
             />
           </div>
 

@@ -3,6 +3,7 @@ import { LoanApplicationForm } from "@/components/loans/loan-application-form"
 import { ActiveLoansTable } from "@/components/loans/active-loans-table"
 import { LoanCalculator } from "@/components/loans/loan-calculator"
 import { AppLayout } from "@/components/app-layout"
+import { LoanStatusTracker } from "@/components/loans/loan-status-tracker"
 
 export default function LoansPage() {
   return (
@@ -14,8 +15,9 @@ export default function LoansPage() {
             <ActiveLoansTable />
             <LoanApplicationForm />
           </div>
-          <div>
+          <div className="space-y-6">
             <LoanCalculator />
+            <LoanStatusTracker />
           </div>
         </div>
       </div>

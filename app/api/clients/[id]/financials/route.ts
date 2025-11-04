@@ -22,7 +22,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
   // Audit log
   await logAudit({
-    endpoint: `/api/lenders/restaurants/${id}/financials`,
+    endpoint: `/api/clients/${id}/financials`,
     method: "GET",
     resourceId: id,
   })
