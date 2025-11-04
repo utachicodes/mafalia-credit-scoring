@@ -17,6 +17,7 @@ export default function LoginPage() {
   const [institution, setInstitution] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [phone, setPhone] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -30,6 +31,9 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      if (password !== confirmPassword) {
+        throw new Error("Les mots de passe ne correspondent pas")
+      }
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -93,7 +97,13 @@ export default function LoginPage() {
                     </button>
                   </div>
                 </div>
-                
+                <div className="grid gap-2">
+                  <Label htmlFor="confirmPassword">Mot de passe à nouveau</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input id="confirmPassword" type={showPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="pl-10 pr-10" />
+                  </div>
+                </div>
                 <div className="grid gap-2">
                   <Label htmlFor="phone">Numéro de téléphone</Label>
                   <div className="relative">
