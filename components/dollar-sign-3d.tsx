@@ -24,12 +24,15 @@ function DollarSign3D() {
           font="/fonts/helvetiker_regular.typeface.json"
           size={1.5}
           height={0.2}
+          weight={78}
           curveSegments={12}
           bevelEnabled
           bevelThickness={0.02}
           bevelSize={0.02}
           bevelOffset={0}
           bevelSegments={5}
+          levelSpacing={334}
+          depth={1}
         >
           $
           <meshMatcapMaterial matcap={matcapTexture} />
@@ -41,6 +44,7 @@ function DollarSign3D() {
 
 export function DollarSign3DScene() {
   return (
+    <div>
     <div className="w-full h-full">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.5} />
@@ -52,3 +56,4 @@ export function DollarSign3DScene() {
     </div>
   )
 }
+
