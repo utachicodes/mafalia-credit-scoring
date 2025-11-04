@@ -6,6 +6,7 @@ import { CreditRatingBreakdown } from "@/components/dashboard/credit-rating-brea
 import { ConfigurableScoreCard } from "@/components/dashboard/configurable-score-card"
 import { AppLayout } from "@/components/app-layout"
 import { PremiumCTA } from "@/components/premium-cta"
+import { Analytics } from "@/components/dashboard/analytics"
 
 export default function DashboardPage() {
   return (
@@ -15,6 +16,8 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
           <p className="text-muted-foreground mt-1">Welcome back! Here's your financial overview.</p>
         </div>
+
+        <Analytics />
 
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
