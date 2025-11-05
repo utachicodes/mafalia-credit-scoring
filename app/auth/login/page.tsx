@@ -115,6 +115,12 @@ export default function LoginPage() {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Connexion..." : (<span className="inline-flex items-center gap-2">Se connecter <ArrowRight className="h-4 w-4" /></span>)}
                 </Button>
+                <p className="text-center text-sm text-muted-foreground">
+                  Don&apos;t have an account?{" "}
+                  <Link href="/auth/register" className="text-primary underline-offset-4 hover:underline">
+                    Register
+                  </Link>
+                </p>
                 <p className="text-center text-sm text-muted-foreground">En vous connectant, vous acceptez nos conditions.</p>
               </form>
             </CardContent>
