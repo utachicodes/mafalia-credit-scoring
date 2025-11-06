@@ -3,7 +3,7 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Mesh } from 'three'
-import { OrbitControls, Text3D, Center, useMatcapTexture } from '@react-three/drei'
+import { OrbitControls, Text3D, Center } from '@react-three/drei'
 
 function DollarSign3D() {
   const meshRef = useRef<Mesh>(null!)
@@ -14,8 +14,6 @@ function DollarSign3D() {
       meshRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1
     }
   })
-
-  const [matcapTexture] = useMatcapTexture('7B7BDA_4D43BC_5496CF_1F78DA', 1024)
 
   return (
     <mesh ref={meshRef}>
@@ -35,7 +33,7 @@ function DollarSign3D() {
           depth={1}
         >
           $
-          <meshMatcapMaterial matcap={matcapTexture} />
+          <meshStandardMaterial color="#4D43BC" metalness={0.8} roughness={0.2} emissive="#1F78DA" emissiveIntensity={0.15} />
         </Text3D>
       </Center>
     </mesh>
