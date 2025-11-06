@@ -20,20 +20,20 @@ function DollarSign3D() {
       <Center>
         <Text3D
           font="/fonts/helvetiker_regular.typeface.json"
-          size={1.5}
-          height={0.2}
+          size={3}
+          height={0.3}
           weight={78}
           curveSegments={12}
           bevelEnabled
-          bevelThickness={0.02}
-          bevelSize={0.02}
+          bevelThickness={0.05}
+          bevelSize={0.05}
           bevelOffset={0}
           bevelSegments={5}
           levelSpacing={334}
-          depth={1}
+          depth={1.5}
         >
           $
-          <meshStandardMaterial color="#E31E24" metalness={0.8} roughness={0.2} emissive="#E31E24" emissiveIntensity={0.1} />
+          <meshStandardMaterial color="#E31E24" metalness={0.9} roughness={0.1} emissive="#E31E24" emissiveIntensity={0.2} />
         </Text3D>
       </Center>
     </mesh>
@@ -43,12 +43,13 @@ function DollarSign3D() {
 export function DollarSign3DScene() {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }} className="bg-transparent">
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <directionalLight position={[-10, -10, -5]} intensity={0.5} />
+      <Canvas camera={{ position: [0, 0, 6], fov: 50 }} className="bg-transparent">
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[10, 10, 5]} intensity={1.2} />
+        <directionalLight position={[-10, -10, -5]} intensity={0.6} />
+        <pointLight position={[0, 0, 5]} intensity={0.5} />
         <DollarSign3D />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
+        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.8} />
       </Canvas>
     </div>
   )

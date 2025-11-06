@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { FileText, Download } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
+import { useToast } from "@/components/ui/use-toast"
 
 type ReportKey = "financialSummary" | "loanPortfolio" | "cashFlowStatement" | "taxReport"
 
@@ -12,6 +13,14 @@ const REPORT_KEYS: ReportKey[] = ["financialSummary", "loanPortfolio", "cashFlow
 
 export function ExportReports() {
   const { t } = useLanguage()
+  const { toast } = useToast()
+
+  const handleDownload = (report: { key: string; name: string; format: string }) => {
+    toast({
+      title: t("common.success"),
+      description: `${report.name} (${report.format}) ${t("analytics.downloadSuccess")}`,
+    })
+  }
 
   const reports = useMemo(
     () =>
@@ -42,7 +51,12 @@ export function ExportReports() {
                 <div className="text-xs text-muted-foreground">{report.description}</div>
               </div>
             </div>
-            <Button size="sm" variant="ghost" aria-label={`${t("analytics.download")} ${report.name} (${report.format})`}>
+            <Button
+              size="sm"
+              variant="ghost"
+              aria-label={`${t("analytics.download")} ${report.name} (${report.format})`}
+              onClick={() => handleDownload(report)}
+            >
               <Download className="h-4 w-4" />
             </Button>
           </div>

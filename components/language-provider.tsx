@@ -107,7 +107,9 @@ const baseTranslations = {
       description: "Manage and track all your transactions",
       transactions: "transactions",
       filters: "Filters",
+      filterDescription: "Filter loans by status and type",
       exportAll: "Export All",
+      exportSuccess: "Loans exported successfully",
       noTransactions: "No transactions found",
       due: "Due",
       viewAll: "View All Loans",
@@ -163,6 +165,8 @@ const baseTranslations = {
     viewDetails: "View Details",
     export: "Export",
     manage: "Manage",
+    all: "All",
+    reset: "Reset",
     months: {
       short: {
         jan: "Jan",
@@ -249,10 +253,12 @@ const baseTranslations = {
       expansion: "Business Expansion",
       other: "Other",
     },
+    exportSuccess: "Loans exported successfully",
   },
   analytics: {
     subtitle: "Track your financial performance and insights",
     download: "Export",
+    downloadSuccess: "downloaded successfully",
     range: {
       lastMonth: "Last Month",
       last3Months: "Last 3 Months",
@@ -338,6 +344,20 @@ const baseTranslations = {
     description: "Your linked mobile money accounts",
     balance: "Balance",
     transactions: "Transactions",
+    sync: "Sync",
+    addProvider: {
+      button: "Add Provider",
+      title: "Add Mobile Money Provider",
+      description: "Connect a new mobile money account to track transactions",
+      typeLabel: "Provider Type",
+      typePlaceholder: "Select provider type",
+      nameLabel: "Provider Name",
+      namePlaceholder: "e.g. Wave, Orange Money",
+      accountLabel: "Account Number",
+      accountPlaceholder: "+221 77 123 45 67",
+      submit: "Add Provider",
+      other: "Other",
+    },
     overview: {
       totalBalance: "Total Balance",
       incoming: "Incoming",
@@ -346,6 +366,38 @@ const baseTranslations = {
       thisMonth: "This month",
       transactionsCount: "{count} transactions",
     },
+  },
+  notifications: {
+    title: "Notifications",
+    empty: "No notifications",
+    markAllRead: "Mark all as read",
+    markRead: "Mark as read",
+    clearAll: "Clear all",
+    loanApproved: {
+      title: "Loan Approved",
+      message: "Your loan application L-001 has been approved",
+    },
+    paymentReceived: {
+      title: "Payment Received",
+      message: "You received 50,000 FCFA from Mamadou Ndiaye",
+    },
+    paymentDue: {
+      title: "Payment Due Soon",
+      message: "Your next payment of 1,250 FCFA is due in 3 days",
+    },
+  },
+  profile: {
+    viewProfile: "View Profile",
+    settings: "Settings",
+    changePassword: "Change Password",
+    changePasswordDescription: "Update your account password",
+    currentPassword: "Current Password",
+    newPassword: "New Password",
+    confirmPassword: "Confirm Password",
+    passwordChanged: "Password changed successfully",
+    editInstitution: "Edit Institution/Company",
+    loginHistory: "Login History",
+    updated: "Profile updated successfully",
   },
   onboarding: {
     header: {
@@ -555,7 +607,9 @@ const translations: Record<Language, TranslationDictionary> = {
         description: "Gérez et suivez toutes vos transactions",
         transactions: "transactions",
         filters: "Filtres",
+        filterDescription: "Filtrer les prêts par statut et type",
         exportAll: "Exporter tout",
+        exportSuccess: "Prêts exportés avec succès",
         noTransactions: "Aucune transaction trouvée",
         due: "Échéance",
         viewAll: "Voir tous les prêts",
@@ -616,6 +670,8 @@ const translations: Record<Language, TranslationDictionary> = {
       viewDetails: "Voir les détails",
       export: "Exporter",
       manage: "Gérer",
+      all: "Tous",
+      reset: "Réinitialiser",
       months: {
         short: {
           jan: "janv.",
@@ -706,6 +762,7 @@ const translations: Record<Language, TranslationDictionary> = {
     analytics: {
       subtitle: "Suivez vos performances financières et vos insights",
       download: "Exporter",
+      downloadSuccess: "téléchargé avec succès",
       range: {
         lastMonth: "Dernier mois",
         last3Months: "3 derniers mois",
@@ -791,6 +848,20 @@ const translations: Record<Language, TranslationDictionary> = {
       description: "Vos comptes Mobile Money liés",
       balance: "Solde",
       transactions: "Transactions",
+      sync: "Synchroniser",
+      addProvider: {
+        button: "Ajouter un fournisseur",
+        title: "Ajouter un fournisseur Mobile Money",
+        description: "Connectez un nouveau compte Mobile Money pour suivre les transactions",
+        typeLabel: "Type de fournisseur",
+        typePlaceholder: "Sélectionner le type",
+        nameLabel: "Nom du fournisseur",
+        namePlaceholder: "Ex: Wave, Orange Money",
+        accountLabel: "Numéro de compte",
+        accountPlaceholder: "+221 77 123 45 67",
+        submit: "Ajouter",
+        other: "Autre",
+      },
       overview: {
         totalBalance: "Solde total",
         incoming: "Entrées",
@@ -799,6 +870,38 @@ const translations: Record<Language, TranslationDictionary> = {
         thisMonth: "Ce mois-ci",
         transactionsCount: "{count} transactions",
       },
+    },
+    notifications: {
+      title: "Notifications",
+      empty: "Aucune notification",
+      markAllRead: "Tout marquer comme lu",
+      markRead: "Marquer comme lu",
+      clearAll: "Tout effacer",
+      loanApproved: {
+        title: "Prêt approuvé",
+        message: "Votre demande de prêt L-001 a été approuvée",
+      },
+      paymentReceived: {
+        title: "Paiement reçu",
+        message: "Vous avez reçu 50 000 FCFA de Mamadou Ndiaye",
+      },
+      paymentDue: {
+        title: "Paiement à venir",
+        message: "Votre prochain paiement de 1 250 FCFA est dû dans 3 jours",
+      },
+    },
+    profile: {
+      viewProfile: "Voir le profil",
+      settings: "Paramètres",
+      changePassword: "Changer le mot de passe",
+      changePasswordDescription: "Mettez à jour le mot de passe de votre compte",
+      currentPassword: "Mot de passe actuel",
+      newPassword: "Nouveau mot de passe",
+      confirmPassword: "Confirmer le mot de passe",
+      passwordChanged: "Mot de passe modifié avec succès",
+      editInstitution: "Modifier l'institution/entreprise",
+      loginHistory: "Historique de connexion",
+      updated: "Profil mis à jour avec succès",
     },
     onboarding: {
       header: {

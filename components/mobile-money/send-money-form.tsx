@@ -9,8 +9,10 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Send } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
+import { useToast } from "@/components/ui/use-toast"
 
 export function SendMoneyForm() {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     provider: "",
     recipient: "",
@@ -20,7 +22,13 @@ export function SendMoneyForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // In a real app, this would call an API
     console.log("Send money:", formData)
+    toast({
+      title: "Money Sent",
+      description: `Sending ${formatCFA(Number.parseInt(formData.amount, 10) || 0)} to ${formData.recipient} via ${formData.provider}`,
+    })
+    setFormData({ provider: "", recipient: "", amount: "", note: "" })
   }
 
   return (

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -7,9 +8,23 @@ import { Filter, Download } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
 import { useLanguage } from "@/components/language-provider"
 import { formatDateForLanguage } from "@/lib/date-utils"
+import { useToast } from "@/components/ui/use-toast"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 
 export function RecentLoansTable() {
   const { t, language } = useLanguage()
+  const { toast } = useToast()
+  const [filterOpen, setFilterOpen] = useState(false)
+  const [filters, setFilters] = useState({ status: "all", type: "all" })
 
   const loans = [
     { id: "L-001", amount: 25000000, status: "active" as const, dueDate: "2025-12-15", currency: "FCFA", type: "Business" },
@@ -30,6 +45,41 @@ export function RecentLoansTable() {
     }
   }
 
+  const handleExport = () => {
+    const csv = [
+      ["ID", "Amount", "Currency", "Status", "Date", "Type"].join(","),
+      ...loans.map((loan) =>
+        [loan.id, loan.amount, loan.currency, loan.status, loan.dueDate, loan.type].join(",")
+      ),
+    ].join("\n")
+
+    const blob = new Blob([csv], { type: "text/csv" })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `loans-${new Date().toISOString().split("T")[0]}.csv`
+    a.click()
+    window.URL.revokeObjectURL(url)
+
+    toast({
+      title: t("common.success"),
+      description: t("dashboard.recentLoans.exportSuccess"),
+    })
+  }
+
+  const handleView = (loanId: string) => {
+    toast({
+      title: t("dashboard.recentLoans.table.view"),
+      description: `Viewing details for ${loanId}`,
+    })
+  }
+
+  const filteredLoans = loans.filter((loan) => {
+    if (filters.status !== "all" && loan.status !== filters.status) return false
+    if (filters.type !== "all" && loan.type !== filters.type) return false
+    return true
+  })
+
   return (
     <Card className="border-border/50 shadow-sm hover:shadow-md transition-smooth">
       <CardHeader>
@@ -37,15 +87,60 @@ export function RecentLoansTable() {
           <div>
             <CardTitle>{t("dashboard.recentLoans.title")}</CardTitle>
             <CardDescription>
-              {t("dashboard.recentLoans.description")} ({loans.length} {t("dashboard.recentLoans.transactions")})
+              {t("dashboard.recentLoans.description")} ({filteredLoans.length} {t("dashboard.recentLoans.transactions")})
             </CardDescription>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Filter className="h-4 w-4" />
-              {t("dashboard.recentLoans.filters")}
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
+            <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Filter className="h-4 w-4" />
+                  {t("dashboard.recentLoans.filters")}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>{t("dashboard.recentLoans.filters")}</DialogTitle>
+                  <DialogDescription>{t("dashboard.recentLoans.filterDescription")}</DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label>{t("dashboard.recentLoans.table.status")}</Label>
+                    <Select value={filters.status} onValueChange={(value) => setFilters({ ...filters, status: value })}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">{t("common.all")}</SelectItem>
+                        <SelectItem value="active">{t("dashboard.recentLoans.status.active")}</SelectItem>
+                        <SelectItem value="pending">{t("dashboard.recentLoans.status.pending")}</SelectItem>
+                        <SelectItem value="completed">{t("dashboard.recentLoans.status.completed")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>{t("dashboard.recentLoans.table.type")}</Label>
+                    <Select value={filters.type} onValueChange={(value) => setFilters({ ...filters, type: value })}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">{t("common.all")}</SelectItem>
+                        <SelectItem value="Business">Business</SelectItem>
+                        <SelectItem value="Personal">Personal</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={() => setFilters({ status: "all", type: "all" })}>
+                    {t("common.reset")}
+                  </Button>
+                  <Button onClick={() => setFilterOpen(false)}>{t("common.apply")}</Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+            <Button variant="outline" size="sm" className="gap-2" onClick={handleExport}>
               <Download className="h-4 w-4" />
               {t("dashboard.recentLoans.exportAll")}
             </Button>
@@ -53,7 +148,7 @@ export function RecentLoansTable() {
         </div>
       </CardHeader>
       <CardContent>
-        {loans.length === 0 ? (
+        {filteredLoans.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">{t("dashboard.recentLoans.noTransactions")}</div>
         ) : (
           <div className="overflow-x-auto">
@@ -70,7 +165,7 @@ export function RecentLoansTable() {
                 </tr>
               </thead>
               <tbody>
-                {loans.map((loan) => (
+                {filteredLoans.map((loan) => (
                   <tr key={loan.id} className="border-b border-border/30 hover:bg-muted/30 transition-colors">
                     <td className="py-3 px-4 text-sm font-medium text-foreground">{loan.id}</td>
                     <td className="py-3 px-4 text-sm text-foreground">{formatCFA(loan.amount)}</td>
@@ -83,7 +178,7 @@ export function RecentLoansTable() {
                     <td className="py-3 px-4 text-sm text-muted-foreground">{formatDateForLanguage(loan.dueDate, language)}</td>
                     <td className="py-3 px-4 text-sm text-muted-foreground">{loan.type}</td>
                     <td className="py-3 px-4">
-                      <Button variant="ghost" size="sm" className="h-8">
+                      <Button variant="ghost" size="sm" className="h-8" onClick={() => handleView(loan.id)}>
                         {t("dashboard.recentLoans.table.view")}
                       </Button>
                     </td>

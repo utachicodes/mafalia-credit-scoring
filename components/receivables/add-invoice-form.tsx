@@ -19,7 +19,9 @@ export function AddInvoiceForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // In a real app, this would call an API
     console.log("New invoice:", formData)
+    alert(`Invoice created for ${formData.client}: ${formData.amount} FCFA`)
   }
 
   return (

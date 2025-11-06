@@ -35,6 +35,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useMemo, useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
+import { NotificationsDropdown } from "@/components/notifications-dropdown"
+import { ProfileDropdown } from "@/components/profile-dropdown"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface DashboardSidebarProps {
   children: React.ReactNode
@@ -45,6 +48,7 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
   const { language, setLanguage, t } = useLanguage()
   const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [userName, setUserName] = useState("John Doe")
   const [userEmail, setUserEmail] = useState("john@example.com")
   const [userInitials, setUserInitials] = useState("JD")
@@ -103,35 +107,59 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
   return (
     <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 border-r border-border/40 bg-muted/30">
+      <aside className={`hidden lg:flex flex-col border-r border-border/40 bg-muted/30 transition-all duration-300 ${sidebarCollapsed ? "w-16" : "w-64"}`}>
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-border/40">
-          <Link href="/" className="flex items-center gap-2 shrink-0 group">
-            <Image
-              src="/mafalia-logo.png"
-              alt="Mafalia"
-              width={120}
-              height={48}
-              className="h-9 w-auto transition-transform group-hover:scale-105"
-            />
-          </Link>
-        </div>
-
-        {/* Primary Action Button */}
-        <div className="p-4 border-b border-border/40">
-          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
-            <Link href="/loans/requests">
-              <CreditCard className="h-4 w-4 mr-2" />
-              {t("loans.header.newApplication")}
+        <div className="h-16 flex items-center justify-between px-6 border-b border-border/40">
+          {!sidebarCollapsed && (
+            <Link href="/" className="flex items-center gap-2 shrink-0 group">
+              <Image
+                src="/mafalia-logo.png"
+                alt="Mafalia"
+                width={120}
+                height={48}
+                className="h-9 w-auto transition-transform group-hover:scale-105"
+              />
             </Link>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
         </div>
 
+        {/* Primary Action Button */}
+        {!sidebarCollapsed && (
+          <div className="p-4 border-b border-border/40">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" asChild>
+              <Link href="/loans/requests">
+                <CreditCard className="h-4 w-4 mr-2" />
+                {t("loans.header.newApplication")}
+              </Link>
+            </Button>
+          </div>
+        )}
+        {sidebarCollapsed && (
+          <div className="p-4 border-b border-border/40">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" asChild size="icon">
+              <Link href="/loans/requests">
+                <CreditCard className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        )}
+
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-          <div className="px-3 mb-2">
-            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t("nav.navigation")}</span>
-          </div>
+          {!sidebarCollapsed && (
+            <div className="px-3 mb-2">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t("nav.navigation")}</span>
+            </div>
+          )}
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
@@ -141,76 +169,36 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
                 href={item.href}
                 className={`
                   flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-smooth
+                  ${sidebarCollapsed ? "justify-center" : ""}
                   ${
                     isActive
                       ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-md"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-[1.02]"
                   }
                 `}
+                title={sidebarCollapsed ? item.label : undefined}
               >
                 <Icon className="h-5 w-5" />
-                <span>{item.label}</span>
+                {!sidebarCollapsed && <span>{item.label}</span>}
               </Link>
             )
           })}
         </nav>
 
         {/* Bottom Actions */}
-        <div className="border-t border-border/40 p-4 space-y-2">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-            <Input
-              placeholder={t("navigation.searchPlaceholder")}
-              className="pl-9 h-9 bg-muted/50 border-border/50 focus:bg-background transition-all duration-200"
-              aria-label={t("navigation.searchPlaceholder")}
-            />
+        {!sidebarCollapsed && (
+          <div className="border-t border-border/40 p-4 space-y-2">
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+              <Input
+                placeholder={t("navigation.searchPlaceholder")}
+                className="pl-9 h-9 bg-muted/50 border-border/50 focus:bg-background transition-all duration-200"
+                aria-label={t("navigation.searchPlaceholder")}
+              />
+            </div>
           </div>
-
-          {/* Language Switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-full justify-start h-9 hover:bg-muted/50 transition-all duration-200"
-                aria-label={t("navigation.toggleLanguage")}
-              >
-                <Globe className="h-4 w-4 mr-2" aria-hidden="true" />
-                <span className="flex-1 text-left">{languageLabels[language]}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem onClick={() => setLanguage("en")} className="cursor-pointer">
-                {languageLabels.en} {language === "en" && "✓"}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage("fr")} className="cursor-pointer">
-                {languageLabels.fr} {language === "fr" && "✓"}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Theme Switcher */}
-          <Button
-            variant="ghost"
-            className="w-full justify-start h-9 hover:bg-muted/50 transition-all duration-200 relative"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label={t("navigation.toggleTheme")}
-          >
-            <Sun className="h-4 w-4 mr-2 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" aria-hidden="true" />
-            <Moon className="absolute h-4 w-4 mr-2 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" aria-hidden="true" />
-            <span className="flex-1 text-left">{t("navigation.toggleTheme")}</span>
-          </Button>
-
-          {/* Sign Out */}
-          <Button
-            variant="ghost"
-            className="w-full justify-start h-9 hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
-            onClick={handleSignOut}
-          >
-            <LogOut className="h-4 w-4 mr-2" aria-hidden="true" />
-            <span className="flex-1 text-left">{t("auth.signOut")}</span>
-          </Button>
-        </div>
+        )}
       </aside>
 
       {/* Mobile Header */}
@@ -287,7 +275,7 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:ml-0 pt-16 lg:pt-0">
+      <div className={`flex-1 flex flex-col lg:ml-0 pt-16 lg:pt-0 transition-all duration-300`}>
         {/* Top Header Bar */}
         <header className="sticky top-0 z-40 h-16 border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 lg:block hidden">
           <div className="h-full px-6 flex items-center justify-between">
@@ -304,27 +292,45 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
             </div>
 
             <div className="flex items-center gap-2">
-              {/* Notifications */}
+              {/* Language Switcher */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 hover:bg-muted/50 transition-all duration-200"
+                    aria-label={t("navigation.toggleLanguage")}
+                  >
+                    <Globe className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={() => setLanguage("en")} className="cursor-pointer">
+                    {languageLabels.en} {language === "en" && "✓"}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage("fr")} className="cursor-pointer">
+                    {languageLabels.fr} {language === "fr" && "✓"}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Theme Switcher */}
               <Button
                 variant="ghost"
                 size="icon"
                 className="h-9 w-9 hover:bg-muted/50 transition-all duration-200 relative"
-                aria-label={t("navigation.notifications")}
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label={t("navigation.toggleTheme")}
               >
-                <Bell className="h-4 w-4" aria-hidden="true" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" aria-hidden="true" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" aria-hidden="true" />
               </Button>
 
+              {/* Notifications */}
+              <NotificationsDropdown />
+
               {/* User Profile */}
-              <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md ring-2 ring-background hover:shadow-lg transition-all duration-200 cursor-pointer hover:scale-105">
-                  <span className="text-xs font-semibold text-primary-foreground">{userInitials}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-foreground">{userName}</span>
-                  <span className="text-xs text-muted-foreground">{userEmail}</span>
-                </div>
-              </div>
+              <ProfileDropdown userName={userName} userEmail={userEmail} userInitials={userInitials} />
             </div>
           </div>
         </header>

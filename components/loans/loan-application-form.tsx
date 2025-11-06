@@ -27,7 +27,9 @@ export function LoanApplicationForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // In a real app, this would call an API
     console.log("Loan application submitted:", formData)
+    alert(`Loan application submitted: ${formData.amount} FCFA for ${formData.term} months`)
   }
 
   return (

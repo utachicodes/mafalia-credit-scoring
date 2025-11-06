@@ -3,10 +3,19 @@
 import { useMemo, useState } from "react";
 import { clients, loanRequests } from "@/lib/mock-data";
 import type { Client } from "@/lib/domain-types";
+import { AppLayout } from "@/components/app-layout";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/components/language-provider";
+import { formatCFA } from "@/lib/currency-utils";
 
 type TypeFilter = Client["type"] | "all";
 
 export default function LenderDashboardPage() {
+  const { t } = useLanguage();
   const [type, setType] = useState<TypeFilter>("all");
   const [minAmount, setMinAmount] = useState<number | "">("");
   const [maxAmount, setMaxAmount] = useState<number | "">("");
@@ -29,82 +38,120 @@ export default function LenderDashboardPage() {
       });
   }, [type, minAmount, maxAmount, startDate, endDate]);
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "approved":
+        return <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 border-0">Approved</Badge>;
+      case "rejected":
+        return <Badge className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border-0">Rejected</Badge>;
+      default:
+        return <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400 border-0">Pending</Badge>;
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6 page-enter">
-      <div className="animate-fade-in">
-        <h1 className="text-2xl font-semibold">Lender Dashboard</h1>
-      </div>
+    <AppLayout>
+      <div className="space-y-6 page-enter">
+        <div className="animate-fade-in">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("nav.lenders")}</h1>
+          <p className="text-muted-foreground mt-1">Lender dashboard and loan management</p>
+        </div>
 
-      <div className="grid gap-4 md:grid-cols-5 border rounded-lg p-4">
-        <div className="space-y-1">
-          <div className="text-xs text-muted-foreground">Type</div>
-          <select value={type} onChange={(e) => setType(e.target.value as TypeFilter)} className="border rounded px-2 py-1">
-            <option value="all">All</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="fast_food">Fast food</option>
-            <option value="hotel">Hotel</option>
-            <option value="glacier">Glacier</option>
-            <option value="other">Other</option>
-          </select>
+        <div className="animate-slide-up animate-stagger-1">
+          <Card className="border-border/50 shadow-sm">
+            <CardHeader>
+              <CardTitle>Filters</CardTitle>
+              <CardDescription>Filter loan requests by various criteria</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 md:grid-cols-5">
+                <div className="space-y-2">
+                  <Label>Type</Label>
+                  <Select value={type} onValueChange={(v) => setType(v as TypeFilter)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="restaurant">Restaurant</SelectItem>
+                      <SelectItem value="fast_food">Fast food</SelectItem>
+                      <SelectItem value="hotel">Hotel</SelectItem>
+                      <SelectItem value="glacier">Glacier</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Min Amount</Label>
+                  <Input type="number" value={minAmount as any} onChange={(e) => setMinAmount(e.target.value === "" ? "" : Number(e.target.value))} placeholder="0" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Max Amount</Label>
+                  <Input type="number" value={maxAmount as any} onChange={(e) => setMaxAmount(e.target.value === "" ? "" : Number(e.target.value))} placeholder="0" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Start Date</Label>
+                  <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>End Date</Label>
+                  <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-        <div className="space-y-1">
-          <div className="text-xs text-muted-foreground">Min amount</div>
-          <input type="number" value={minAmount as any} onChange={(e) => setMinAmount(e.target.value === "" ? "" : Number(e.target.value))} className="border rounded px-2 py-1 w-full"/>
-        </div>
-        <div className="space-y-1">
-          <div className="text-xs text-muted-foreground">Max amount</div>
-          <input type="number" value={maxAmount as any} onChange={(e) => setMaxAmount(e.target.value === "" ? "" : Number(e.target.value))} className="border rounded px-2 py-1 w-full"/>
-        </div>
-        <div className="space-y-1">
-          <div className="text-xs text-muted-foreground">Start date</div>
-          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="border rounded px-2 py-1 w-full"/>
-        </div>
-        <div className="space-y-1">
-          <div className="text-xs text-muted-foreground">End date</div>
-          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border rounded px-2 py-1 w-full"/>
-        </div>
-      </div>
 
-      <div className="border rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-muted">
-            <tr>
-              <th className="text-left p-3">Client</th>
-              <th className="text-left p-3">Type</th>
-              <th className="text-left p-3">Amount</th>
-              <th className="text-left p-3">Term</th>
-              <th className="text-left p-3">Status</th>
-              <th className="text-left p-3">Date</th>
-              <th className="text-left p-3">Reports</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(({ lr, client }) => (
-              <tr key={lr.id} className="border-t">
-                <td className="p-3">{client.name}</td>
-                <td className="p-3">{client.type}</td>
-                <td className="p-3">{lr.amount.toLocaleString()} FCFA</td>
-                <td className="p-3">{lr.termMonths} mois</td>
-                <td className="p-3">{lr.status}</td>
-                <td className="p-3">{lr.createdAt}</td>
-                <td className="p-3">
-                  <div className="flex gap-3">
-                    <a className="underline" href={`/api/loan-requests/${lr.id}/report`} target="_blank">JSON</a>
-                    <a className="underline" href={`/api/loan-requests/${lr.id}/report.csv`} target="_blank">CSV</a>
-                    <a className="underline" href={`/reports/loan/${lr.id}`} target="_blank">Print</a>
-                    <a className="underline" href={`/api/clients/${client.id}/financials`} target="_blank">6M</a>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {rows.length === 0 && (
-              <tr>
-                <td className="p-3" colSpan={7}>No results</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <div className="animate-slide-up animate-stagger-2">
+          <Card className="border-border/50 shadow-sm hover:shadow-md transition-smooth">
+            <CardHeader>
+              <CardTitle>Loan Requests</CardTitle>
+              <CardDescription>{rows.length} loan requests found</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border/50">
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Client</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Type</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Amount</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Term</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Status</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Date</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Reports</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map(({ lr, client }) => (
+                      <tr key={lr.id} className="border-b border-border/30 hover:bg-muted/30 transition-colors">
+                        <td className="py-3 px-4 text-sm font-medium text-foreground">{client.name}</td>
+                        <td className="py-3 px-4 text-sm text-muted-foreground">{client.type}</td>
+                        <td className="py-3 px-4 text-sm text-foreground">{formatCFA(lr.amount)}</td>
+                        <td className="py-3 px-4 text-sm text-muted-foreground">{lr.termMonths} months</td>
+                        <td className="py-3 px-4">{getStatusBadge(lr.status)}</td>
+                        <td className="py-3 px-4 text-sm text-muted-foreground">{lr.createdAt}</td>
+                        <td className="py-3 px-4">
+                          <div className="flex gap-2">
+                            <a className="text-sm text-primary hover:underline" href={`/api/loan-requests/${lr.id}/report`} target="_blank">JSON</a>
+                            <a className="text-sm text-primary hover:underline" href={`/api/loan-requests/${lr.id}/report.csv`} target="_blank">CSV</a>
+                            <a className="text-sm text-primary hover:underline" href={`/reports/loan/${lr.id}`} target="_blank">Print</a>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {rows.length === 0 && (
+                      <tr>
+                        <td colSpan={7} className="py-12 text-center text-muted-foreground">No results found</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </AppLayout>
   );
 }
