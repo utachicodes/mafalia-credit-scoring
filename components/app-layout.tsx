@@ -75,7 +75,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0 group">
               <Image
-                src="/logo.svg"
+                src="/mafalia-logo.png"
                 alt="Mafalia"
                 width={120}
                 height={48}

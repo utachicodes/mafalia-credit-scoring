@@ -44,7 +44,6 @@ function DollarSign3D() {
 
 export function DollarSign3DScene() {
   return (
-    <div>
     <div className="w-full h-full">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.5} />

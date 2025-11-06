@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   description: "AI-powered credit scoring and loan management platform for businesses",
   generator: "v0.app",
   icons: {
-    icon: "/logo.svg",
-    shortcut: "/logo.svg",
-    apple: "/logo.svg",
+    icon: "/mafalia-logo.png",
+    shortcut: "/mafalia-logo.png",
+    apple: "/mafalia-logo.png",
   },
 }
 

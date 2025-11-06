@@ -30,8 +30,8 @@ export function LoanCalculator() {
           </div>
           <div className="flex-1">
             <CardTitle className="flex items-center gap-2">
-              {t("loans.calculator.title")}
-              <Image src="/logo.svg" alt="" width={20} height={20} className="object-contain" />
+              Loan Calculator
+              <Image src="/mafalia-logo.png" alt="" width={20} height={20} className="object-contain" />
             </CardTitle>
             <CardDescription>{t("loans.calculator.description")}</CardDescription>
           </div>

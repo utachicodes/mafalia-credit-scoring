@@ -90,7 +90,7 @@ export default function LenderDashboardPage() {
                     <a className="underline" href={`/api/loan-requests/${lr.id}/report`} target="_blank">JSON</a>
                     <a className="underline" href={`/api/loan-requests/${lr.id}/report.csv`} target="_blank">CSV</a>
                     <a className="underline" href={`/reports/loan/${lr.id}`} target="_blank">Print</a>
-                    <a className="underline" href={`/api/lenders/restaurants/${client.id}/financials`} target="_blank">6M</a>
+                    <a className="underline" href={`/api/clients/${client.id}/financials`} target="_blank">6M</a>
                   </div>
                 </td>
               </tr>
