@@ -11,8 +11,8 @@ export function FeaturesSection() {
   const features = [
     {
       icon: Brain,
-      title: t("features.credit.title"),
-      description: t("features.credit.desc"),
+      title: "Notation de crédit",
+      description: "Évaluez le risque de manière fiable et transparente.",
       gradient: "from-primary/20 to-primary/5",
       iconColor: "text-primary",
     },
@@ -60,8 +60,8 @@ export function FeaturesSection() {
     },
     {
       icon: TrendingUp,
-      title: "Prédictions IA",
-      description: "Anticipez vos flux de trésorerie et optimisez votre gestion financière avec l'IA prédictive",
+      title: "Analyses avancées",
+      description: "Anticipez vos flux de trésorerie et optimisez votre gestion financière.",
       gradient: "from-pink-500/20 to-pink-500/5",
       iconColor: "text-pink-500",
     },
@@ -92,19 +92,14 @@ export function FeaturesSection() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="group border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-2 cursor-pointer overflow-hidden"
+              className="border-border transition-colors duration-200 overflow-hidden"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-              />
               <CardHeader className="relative">
-                <div
-                  className={`inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${feature.gradient} ${feature.iconColor} mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
-                >
+                <div className={`inline-flex h-14 w-14 items-center justify-center rounded-xl bg-muted ${feature.iconColor} mb-4`}>
                   <feature.icon className="h-7 w-7" />
                 </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">{feature.title}</CardTitle>
+                <CardTitle className="text-xl">{feature.title}</CardTitle>
               </CardHeader>
               <CardContent className="relative">
                 <CardDescription className="text-base leading-relaxed">{feature.description}</CardDescription>

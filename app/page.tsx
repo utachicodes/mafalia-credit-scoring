@@ -15,7 +15,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation showContent={showContent} />
+      <Navigation showContent={false} />
       <main>
         <HeroSection showContent={showContent} onGetStarted={() => setShowContent(true)} />
         <PartnersStrip />
