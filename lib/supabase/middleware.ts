@@ -6,6 +6,25 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
+  // Permanently bypass middleware for API routes and static/public assets
+  // This prevents redirects that return HTML for JSON/asset requests
+  const pathname = request.nextUrl.pathname
+  const isApiRoute = pathname.startsWith("/api")
+  const isNextAsset = pathname.startsWith("/_next")
+  const isFavicon = pathname === "/favicon.ico"
+  const isPublicAsset =
+    // common public directories
+    pathname.startsWith("/fonts") ||
+    pathname.startsWith("/images") ||
+    pathname.startsWith("/icons") ||
+    pathname.startsWith("/assets") ||
+    // any path that looks like a file (has an extension)
+    /\.[^/]+$/.test(pathname)
+
+  if (isApiRoute || isNextAsset || isFavicon || isPublicAsset) {
+    return supabaseResponse
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
