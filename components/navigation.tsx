@@ -48,7 +48,9 @@ export function Navigation({ showContent = false }: NavigationProps) {
                   const target = e.target as HTMLImageElement;
                   target.onerror = null;
                   target.src = '';
-                  target.parentElement!.innerHTML = '<span class="text-foreground font-bold text-xl">Mafalia</span>';
+                  if (target.parentElement) {
+                    target.parentElement.innerHTML = '<span class="text-foreground font-bold text-xl">Mafalia</span>';
+                  }
                 }}
               />
             </div>

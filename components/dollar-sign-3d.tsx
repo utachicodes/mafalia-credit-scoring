@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Mesh } from 'three'
 import { OrbitControls, Text3D, Center } from '@react-three/drei'
 
@@ -41,9 +41,57 @@ function DollarSign3D() {
 }
 
 export function DollarSign3DScene() {
+  const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    const handleContextLost = (e: Event) => {
+      e.preventDefault()
+      console.warn('WebGL context lost')
+      setHasError(true)
+    }
+
+    const handleContextRestored = () => {
+      console.log('WebGL context restored')
+      setHasError(false)
+    }
+
+    // Wait for canvas to be available
+    const timer = setTimeout(() => {
+      const canvas = document.querySelector('canvas')
+      if (canvas) {
+        canvas.addEventListener('webglcontextlost', handleContextLost)
+        canvas.addEventListener('webglcontextrestored', handleContextRestored)
+      }
+    }, 100)
+
+    return () => {
+      clearTimeout(timer)
+      const canvas = document.querySelector('canvas')
+      if (canvas) {
+        canvas.removeEventListener('webglcontextlost', handleContextLost)
+        canvas.removeEventListener('webglcontextrestored', handleContextRestored)
+      }
+    }
+  }, [])
+
+  if (hasError) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="text-6xl font-bold text-primary">$</div>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 6], fov: 50 }} className="bg-transparent">
+      <Canvas 
+        camera={{ position: [0, 0, 6], fov: 50 }} 
+        className="bg-transparent"
+        onError={(error) => {
+          console.error('Canvas error:', error)
+          setHasError(true)
+        }}
+      >
         <ambientLight intensity={0.7} />
         <directionalLight position={[10, 10, 5]} intensity={1.2} />
         <directionalLight position={[-10, -10, -5]} intensity={0.6} />

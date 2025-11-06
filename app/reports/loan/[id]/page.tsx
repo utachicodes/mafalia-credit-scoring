@@ -21,8 +21,21 @@ export default function LoanReportPage() {
     (async () => {
       try {
         const res = await fetch(`/api/loan-requests/${id}/report`);
+        if (!res.ok) {
+          console.error(`API error: ${res.status} ${res.statusText}`);
+          setLoading(false);
+          return;
+        }
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          console.error("Response is not JSON");
+          setLoading(false);
+          return;
+        }
         const json = await res.json();
         setData(json);
+      } catch (error) {
+        console.error("Failed to fetch report:", error);
       } finally {
         setLoading(false);
       }
