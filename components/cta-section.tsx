@@ -13,10 +13,10 @@ export function CTASection() {
         <div className="rounded-2xl border border-border bg-background p-10 md:p-14 text-center">
           <div className="mx-auto max-w-3xl space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-              Ready to get started with Mafalia?
+              Prêt à démarrer avec Mafalia ?
             </h2>
             <p className="text-base md:text-lg text-muted-foreground">
-              {"Set up scoring and loan workflows in minutes. No fluff, just the tools you need."}
+              Configurez vos critères de scoring et vos workflows de prêts en quelques minutes.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Button size="lg" className="gap-2">

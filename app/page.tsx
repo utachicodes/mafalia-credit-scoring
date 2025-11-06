@@ -3,28 +3,28 @@
 import { useState } from "react"
 import { HeroSection } from "@/components/hero-section"
 import { FeaturesSection } from "@/components/features-section"
-import { StatsSection } from "@/components/stats-section"
 import { CTASection } from "@/components/cta-section"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { PartnersStrip } from "@/components/partners-strip"
+import { PricingSection } from "@/components/pricing-section"
+import { ContactSection } from "@/components/contact-section"
 
 export default function HomePage() {
-  const [showContent, setShowContent] = useState(false)
+  const [showContent, setShowContent] = useState(true)
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation showContent={showContent} />
       <main>
         <HeroSection showContent={showContent} onGetStarted={() => setShowContent(true)} />
-        {showContent && (
-          <>
-            <FeaturesSection />
-            <StatsSection />
-            <CTASection />
-          </>
-        )}
+        <PartnersStrip />
+        <FeaturesSection />
+        <PricingSection />
+        <CTASection />
+        <ContactSection />
       </main>
-      {showContent && <Footer />}
+      <Footer />
     </div>
   )
 }

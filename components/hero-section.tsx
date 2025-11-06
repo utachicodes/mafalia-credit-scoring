@@ -20,22 +20,18 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
+      {/* Softer, subtler background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-background to-background pointer-events-none" />
       
       <div className="container mx-auto px-4 py-16 lg:py-24 relative z-10">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-5">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
-                Notation de{" "}
-                <span className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 bg-clip-text text-transparent">
-                  Crédit par IA
-                </span>
+                Crédit d'entreprise, simple et fiable
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
-                Révolutionnez le financement de votre entreprise avec une notation de crédit intelligente, des analyses en temps réel et une gestion de prêts transparente.
+                Notation de crédit intelligente, gestion des prêts et intégrations Mobile Money (Orange Money, Wave).
               </p>
             </div>
 
@@ -46,11 +42,11 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Zap className="h-4 w-4 text-primary" />
-                <span>Décision en 2min</span>
+                <span>Paiements rapides</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Brain className="h-4 w-4 text-primary" />
-                <span>IA Avancée</span>
+                <span>Notation de crédit IA</span>
               </div>
             </div>
 
@@ -63,16 +59,17 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
                   window.location.href = "/dashboard"
                 }}
               >
-                Commencer →
+                Créer un compte
                 <ArrowRight className="h-5 w-5" />
               </Button>
               <Button size="lg" variant="outline" className="h-12 px-6 text-base" asChild>
-                <a href="/analytics">En savoir plus</a>
+                <a href="#pricing">Tarifs transparents</a>
               </Button>
             </div>
           </div>
 
-          <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] flex items-center justify-center">
+          {/* Keep the dollar sign minimal and only on large screens */}
+          <div className="relative w-full h-[420px] lg:h-[520px] xl:h-[620px] hidden lg:flex items-center justify-center">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl" />
             <DollarSign3DScene />
           </div>
