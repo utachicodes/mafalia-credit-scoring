@@ -54,14 +54,14 @@ export default function LenderDashboardPage() {
       <div className="space-y-6 page-enter">
         <div className="animate-fade-in">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("nav.lenders")}</h1>
-          <p className="text-muted-foreground mt-1">Lender dashboard and loan management</p>
+          <p className="text-muted-foreground mt-1">Tableau de bord prêteur et gestion des prêts</p>
         </div>
 
         <div className="animate-slide-up animate-stagger-1">
           <Card className="border-border/50 shadow-sm">
             <CardHeader>
-              <CardTitle>Filters</CardTitle>
-              <CardDescription>Filter loan requests by various criteria</CardDescription>
+              <CardTitle>Filtres</CardTitle>
+              <CardDescription>Filtrer les demandes de prêt selon différents critères</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-5">
@@ -72,29 +72,29 @@ export default function LenderDashboardPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="all">Tous</SelectItem>
                       <SelectItem value="restaurant">Restaurant</SelectItem>
-                      <SelectItem value="fast_food">Fast food</SelectItem>
-                      <SelectItem value="hotel">Hotel</SelectItem>
+                      <SelectItem value="fast_food">Restauration rapide</SelectItem>
+                      <SelectItem value="hotel">Hôtel</SelectItem>
                       <SelectItem value="glacier">Glacier</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      <SelectItem value="other">Autre</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Min Amount</Label>
+                  <Label>Montant min</Label>
                   <Input type="number" value={minAmount as any} onChange={(e) => setMinAmount(e.target.value === "" ? "" : Number(e.target.value))} placeholder="0" />
                 </div>
                 <div className="space-y-2">
-                  <Label>Max Amount</Label>
+                  <Label>Montant max</Label>
                   <Input type="number" value={maxAmount as any} onChange={(e) => setMaxAmount(e.target.value === "" ? "" : Number(e.target.value))} placeholder="0" />
                 </div>
                 <div className="space-y-2">
-                  <Label>Start Date</Label>
+                  <Label>Date de début</Label>
                   <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>End Date</Label>
+                  <Label>Date de fin</Label>
                   <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                 </div>
               </div>
@@ -105,8 +105,8 @@ export default function LenderDashboardPage() {
         <div className="animate-slide-up animate-stagger-2">
           <Card className="border-border/50 shadow-sm hover:shadow-md transition-smooth">
             <CardHeader>
-              <CardTitle>Loan Requests</CardTitle>
-              <CardDescription>{rows.length} loan requests found</CardDescription>
+              <CardTitle>Demandes de prêt</CardTitle>
+              <CardDescription>{rows.length} demandes trouvées</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -115,11 +115,11 @@ export default function LenderDashboardPage() {
                     <tr className="border-b border-border/50">
                       <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Client</th>
                       <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Type</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Amount</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Term</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Status</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Montant</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Durée</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Statut</th>
                       <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Date</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Reports</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Rapports</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -128,21 +128,21 @@ export default function LenderDashboardPage() {
                         <td className="py-3 px-4 text-sm font-medium text-foreground">{client.name}</td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{client.type}</td>
                         <td className="py-3 px-4 text-sm text-foreground">{formatCFA(lr.amount)}</td>
-                        <td className="py-3 px-4 text-sm text-muted-foreground">{lr.termMonths} months</td>
+                        <td className="py-3 px-4 text-sm text-muted-foreground">{lr.termMonths} mois</td>
                         <td className="py-3 px-4">{getStatusBadge(lr.status)}</td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{lr.createdAt}</td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
                             <a className="text-sm text-primary hover:underline" href={`/api/loan-requests/${lr.id}/report`} target="_blank">JSON</a>
                             <a className="text-sm text-primary hover:underline" href={`/api/loan-requests/${lr.id}/report.csv`} target="_blank">CSV</a>
-                            <a className="text-sm text-primary hover:underline" href={`/reports/loan/${lr.id}`} target="_blank">Print</a>
+                            <a className="text-sm text-primary hover:underline" href={`/reports/loan/${lr.id}`} target="_blank">Imprimer</a>
                           </div>
                         </td>
                       </tr>
                     ))}
                     {rows.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="py-12 text-center text-muted-foreground">No results found</td>
+                        <td colSpan={7} className="py-12 text-center text-muted-foreground">Aucun résultat</td>
                       </tr>
                     )}
                   </tbody>

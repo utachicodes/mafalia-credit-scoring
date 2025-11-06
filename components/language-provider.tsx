@@ -521,6 +521,20 @@ const translations: Record<Language, TranslationDictionary> = {
   en: baseTranslations,
   fr: {
     ...baseTranslations,
+    profile: {
+      ...baseTranslations.profile,
+      viewProfile: "Voir le profil",
+      settings: "Paramètres",
+      changePassword: "Changer le mot de passe",
+      changePasswordDescription: "Mettre à jour le mot de passe du compte",
+      currentPassword: "Mot de passe actuel",
+      newPassword: "Nouveau mot de passe",
+      confirmPassword: "Confirmer le mot de passe",
+      passwordChanged: "Mot de passe modifié avec succès",
+      editInstitution: "Modifier l'institution/entreprise",
+      loginHistory: "Historique de connexion",
+      updated: "Profil mis à jour avec succès",
+    },
     nav: {
       home: "Accueil",
       dashboard: "Tableau de bord",
