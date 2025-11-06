@@ -1,12 +1,14 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
+import { useLanguage } from "@/components/language-provider"
 
-export default async function AuthErrorPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error: string }>
-}) {
-  const params = await searchParams
+export default function AuthErrorPage() {
+  const { t } = useLanguage()
+  const searchParams = useSearchParams()
+  const errorCode = searchParams.get("error")
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 bg-background">
@@ -17,13 +19,13 @@ export default async function AuthErrorPage({
           </div>
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">Erreur d'authentification</CardTitle>
+              <CardTitle className="text-2xl">{t("auth.error.title")}</CardTitle>
             </CardHeader>
             <CardContent>
-              {params?.error ? (
-                <p className="text-sm text-muted-foreground">Code d'erreur: {params.error}</p>
+              {errorCode ? (
+                <p className="text-sm text-muted-foreground">{t("auth.error.code", { code: errorCode })}</p>
               ) : (
-                <p className="text-sm text-muted-foreground">Une erreur s'est produite lors de l'authentification.</p>
+                <p className="text-sm text-muted-foreground">{t("auth.error.fallback")}</p>
               )}
             </CardContent>
           </Card>

@@ -18,6 +18,11 @@ export function Navigation({ showContent = false }: NavigationProps) {
   const { language, setLanguage, t } = useLanguage()
   const { theme, setTheme } = useTheme()
 
+  const languageLabels: Record<typeof language, string> = {
+    en: "English",
+    fr: "Français",
+  }
+
   const navItems = [
     { href: "/", label: t("nav.home") },
     { href: "/dashboard", label: t("nav.dashboard") },
@@ -67,16 +72,21 @@ export function Navigation({ showContent = false }: NavigationProps) {
             {/* Language Switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-primary/10 transition-colors">
-                  <Globe className="h-5 w-5" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-primary/10 transition-colors"
+                  aria-label={t("navigation.toggleLanguage")}
+                >
+                  <Globe className="h-5 w-5" aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setLanguage("en")}>
-                  English {language === "en" && "✓"}
+                  {languageLabels.en} {language === "en" && "✓"}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setLanguage("fr")}>
-                  Français {language === "fr" && "✓"}
+                  {languageLabels.fr} {language === "fr" && "✓"}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -87,16 +97,25 @@ export function Navigation({ showContent = false }: NavigationProps) {
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="hover:bg-primary/10 transition-colors"
+              aria-label={t("navigation.toggleTheme")}
             >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" aria-hidden="true" />
+              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" aria-hidden="true" />
             </Button>
 
             {showContent && <Button className="hidden md:inline-flex">{t("hero.cta.primary")}</Button>}
 
             {showContent && (
-              <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? t("navigation.closeMenu") : t("navigation.openMenu")}
+                aria-expanded={isOpen}
+                aria-controls="mafalia-landing-mobile-nav"
+              >
+                {isOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
               </Button>
             )}
           </div>
@@ -105,7 +124,7 @@ export function Navigation({ showContent = false }: NavigationProps) {
         {/* Mobile Menu */}
         {isOpen && showContent && (
           <div className="border-t border-border py-4 md:hidden">
-            <div className="flex flex-col gap-4">
+            <div id="mafalia-landing-mobile-nav" className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}

@@ -51,7 +51,7 @@ export function CreditScoreCard() {
               <CardTitle className="text-2xl">{t("dashboard.credit.score")}</CardTitle>
               <CardDescription className="flex items-center gap-1">
                 <Sparkles className="h-3 w-3" />
-                AI-powered credit assessment
+                {t("dashboard.credit.assessmentSubtitle")}
               </CardDescription>
             </div>
           </div>
@@ -71,42 +71,44 @@ export function CreditScoreCard() {
             >
               {scoreResult.rating}
             </div>
-            <div className="text-sm text-muted-foreground">Rating</div>
+            <div className="text-sm text-muted-foreground">{t("dashboard.credit.rating")}</div>
             <Badge variant="outline" className="mt-1 text-xs">
-              {scoreResult.riskLevel} Risk
+              {t("dashboard.credit.riskLevel", { risk: scoreResult.riskLevel })}
             </Badge>
           </div>
         </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Score Progress</span>
+            <span className="text-muted-foreground">{t("dashboard.credit.scoreProgress")}</span>
             <span className="font-medium text-foreground">{scoreResult.finalScore} / 100</span>
           </div>
           <Progress value={scorePercentage} className="h-3 transition-all duration-1000" />
         </div>
 
         <div className="rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 p-4 border border-primary/20">
-          <div className="text-sm text-muted-foreground mb-1">Recommended Credit Amount</div>
+          <div className="text-sm text-muted-foreground mb-1">{t("dashboard.credit.recommendedAmount")}</div>
           <div className="text-2xl font-bold text-primary">{formatCFA(scoreResult.recommendedCreditAmount)}</div>
-          <div className="text-xs text-muted-foreground mt-1">Max: {formatCFA(scoreResult.maxCreditAmount)}</div>
+          <div className="text-xs text-muted-foreground mt-1">
+            {t("dashboard.credit.maxAmount")}: {formatCFA(scoreResult.maxCreditAmount)}
+          </div>
         </div>
 
         <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
           <div className="group hover:scale-105 transition-transform">
-            <div className="text-sm text-muted-foreground">Revenue & Flow</div>
+            <div className="text-sm text-muted-foreground">{t("dashboard.credit.revenueFlow")}</div>
             <div className="text-lg font-semibold text-foreground">
               {Math.round(scoreResult.categoryScores.revenueAndCashFlow)}%
             </div>
           </div>
           <div className="group hover:scale-105 transition-transform">
-            <div className="text-sm text-muted-foreground">Profitability</div>
+            <div className="text-sm text-muted-foreground">{t("dashboard.credit.profitability")}</div>
             <div className="text-lg font-semibold text-foreground">
               {Math.round(scoreResult.categoryScores.marginsAndProfitability)}%
             </div>
           </div>
           <div className="group hover:scale-105 transition-transform">
-            <div className="text-sm text-muted-foreground">Debt Ratio</div>
+            <div className="text-sm text-muted-foreground">{t("dashboard.credit.debtRatio")}</div>
             <div className="text-lg font-semibold text-foreground">
               {Math.round(scoreResult.categoryScores.debtAndRepayment)}%
             </div>
@@ -116,7 +118,7 @@ export function CreditScoreCard() {
         <div className="flex items-start gap-2 rounded-lg bg-primary/5 p-4 hover:bg-primary/10 transition-colors">
           <Info className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
           <div className="text-sm text-muted-foreground">
-            <div className="font-semibold text-foreground mb-1">Positive Factors:</div>
+            <div className="font-semibold text-foreground mb-1">{t("dashboard.credit.positiveFactors")}</div>
             <ul className="list-disc list-inside space-y-1">
               {scoreResult.factors.positive.map((factor: string, i: number) => (
                 <li key={i}>{factor}</li>

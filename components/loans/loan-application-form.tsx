@@ -14,6 +14,9 @@ import { formatCFA } from "@/lib/currency-utils"
 
 export function LoanApplicationForm() {
   const { t } = useLanguage()
+  const termOptions = ["12", "18", "24", "36", "48"]
+  const purposeOptions = ["workingCapital", "equipment", "inventory", "expansion", "other"] as const
+
   const [formData, setFormData] = useState({
     amount: "",
     purpose: "",
@@ -29,18 +32,18 @@ export function LoanApplicationForm() {
   return (
     <Card className="border-border">
       <CardHeader>
-        <CardTitle>Apply for New Loan</CardTitle>
-        <CardDescription>Fill out the form to submit a loan application</CardDescription>
+        <CardTitle>{t("loans.application.title")}</CardTitle>
+        <CardDescription>{t("loans.application.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="amount">Loan Amount (FCFA)</Label>
+              <Label htmlFor="amount">{t("loans.application.amountLabel")}</Label>
               <Input
                 id="amount"
                 type="number"
-                placeholder="5000000"
+                placeholder={t("loans.application.amountPlaceholder") ?? undefined}
                 value={formData.amount}
                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                 required
@@ -48,43 +51,43 @@ export function LoanApplicationForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="term">Loan Term (months)</Label>
+              <Label htmlFor="term">{t("loans.application.termLabel")}</Label>
               <Select value={formData.term} onValueChange={(value) => setFormData({ ...formData, term: value })}>
                 <SelectTrigger id="term">
-                  <SelectValue placeholder="Select term" />
+                  <SelectValue placeholder={t("loans.application.termPlaceholder") ?? undefined} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="12">12 months</SelectItem>
-                  <SelectItem value="18">18 months</SelectItem>
-                  <SelectItem value="24">24 months</SelectItem>
-                  <SelectItem value="36">36 months</SelectItem>
-                  <SelectItem value="48">48 months</SelectItem>
+                  {termOptions.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {t(`loans.termOptions.${value}`)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="purpose">Loan Purpose</Label>
+            <Label htmlFor="purpose">{t("loans.application.purposeLabel")}</Label>
             <Select value={formData.purpose} onValueChange={(value) => setFormData({ ...formData, purpose: value })}>
               <SelectTrigger id="purpose">
-                <SelectValue placeholder="Select purpose" />
+                <SelectValue placeholder={t("loans.application.purposePlaceholder") ?? undefined} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="working-capital">Working Capital</SelectItem>
-                <SelectItem value="equipment">Equipment Purchase</SelectItem>
-                <SelectItem value="inventory">Inventory Financing</SelectItem>
-                <SelectItem value="expansion">Business Expansion</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                {purposeOptions.map((value) => (
+                  <SelectItem key={value} value={value}>
+                    {t(`loans.purposeOptions.${value}`)}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t("loans.application.descriptionLabel")}</Label>
             <Textarea
               id="description"
-              placeholder="Provide details about how you plan to use the loan..."
+              placeholder={t("loans.application.descriptionPlaceholder") ?? undefined}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={4}
@@ -93,11 +96,11 @@ export function LoanApplicationForm() {
 
           <div className="rounded-lg bg-muted/50 p-4 space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Estimated Interest Rate</span>
-              <span className="font-semibold text-foreground">12.5% APR</span>
+              <span className="text-muted-foreground">{t("loans.summary.interestRate")}</span>
+              <span className="font-semibold text-foreground">12.5% {t("loans.summary.interestSuffix")}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Estimated Monthly Payment</span>
+              <span className="text-muted-foreground">{t("loans.summary.monthlyPayment")}</span>
               <span className="font-semibold text-foreground">
                 {formatCFA(
                   formData.amount && formData.term
@@ -107,13 +110,13 @@ export function LoanApplicationForm() {
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Your Credit Rating</span>
+              <span className="text-muted-foreground">{t("loans.summary.creditRating")}</span>
               <span className="font-semibold text-primary">AAA</span>
             </div>
           </div>
 
           <Button type="submit" className="w-full">
-            Submit Application
+            {t("loans.application.submit")}
           </Button>
         </form>
       </CardContent>

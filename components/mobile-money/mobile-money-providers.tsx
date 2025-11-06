@@ -5,8 +5,10 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Smartphone, CheckCircle2, Settings } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
+import { useLanguage } from "@/components/language-provider"
 
 export function MobileMoneyProviders() {
+  const { t } = useLanguage()
   const providers = [
     {
       name: "Wave",
@@ -37,8 +39,8 @@ export function MobileMoneyProviders() {
   return (
     <Card className="border-border">
       <CardHeader>
-        <CardTitle>Connected Providers</CardTitle>
-        <CardDescription>Your linked mobile money accounts</CardDescription>
+        <CardTitle>{t("mobileMoney.title")}</CardTitle>
+        <CardDescription>{t("mobileMoney.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -56,24 +58,24 @@ export function MobileMoneyProviders() {
                 </div>
                 <Badge variant="default" className="gap-1">
                   <CheckCircle2 className="h-3 w-3" />
-                  {provider.status}
+                  {t(`dashboard.status.${provider.status}`)}
                 </Badge>
               </div>
 
               <div className="space-y-2 pt-2 border-t border-border">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Balance</span>
+                  <span className="text-sm text-muted-foreground">{t("mobileMoney.balance")}</span>
                   <span className="text-lg font-bold text-foreground">{formatCFA(provider.balance)}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Transactions</span>
+                  <span className="text-sm text-muted-foreground">{t("mobileMoney.transactions")}</span>
                   <span className="text-sm font-medium text-foreground">{provider.transactions}</span>
                 </div>
               </div>
 
               <Button variant="outline" size="sm" className="w-full gap-2 bg-transparent">
                 <Settings className="h-4 w-4" />
-                Manage
+                {t("common.manage")}
               </Button>
             </div>
           ))}

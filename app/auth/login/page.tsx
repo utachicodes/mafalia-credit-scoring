@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useLanguage } from "@/components/language-provider"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -14,6 +15,7 @@ import Image from "next/image"
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Building2, Phone } from "lucide-react"
 
 export default function LoginPage() {
+  const { t } = useLanguage()
   const [institution, setInstitution] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -32,7 +34,7 @@ export default function LoginPage() {
 
     try {
       if (password !== confirmPassword) {
-        throw new Error("Les mots de passe ne correspondent pas")
+        throw new Error(t("auth.common.passwordMismatch"))
       }
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -42,7 +44,8 @@ export default function LoginPage() {
       router.push("/dashboard")
       router.refresh()
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      const fallbackMessage = t("auth.common.genericError")
+      setError(error instanceof Error ? error.message || fallbackMessage : fallbackMessage)
     } finally {
       setIsLoading(false)
     }
@@ -55,8 +58,8 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent pointer-events-none" />
         <div className="relative z-10 max-w-md text-center space-y-6">
           <Image src="/logo.svg" alt="Mafalia" width={160} height={54} className="mx-auto" />
-          <h2 className="text-2xl md:text-3xl font-semibold">Votre finance, plus simple.</h2>
-          <p className="text-muted-foreground">Accédez à votre tableau de bord, suivez vos flux, et obtenez un scoring précis.</p>
+          <h2 className="text-2xl md:text-3xl font-semibold">{t("auth.login.brandTitle")}</h2>
+          <p className="text-muted-foreground">{t("auth.login.brandDescription")}</p>
         </div>
       </div>
 
@@ -65,57 +68,108 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <Card className="border-border/60 shadow-lg">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl">Connexion</CardTitle>
-              <CardDescription>Entrez les informations de votre institution de crédit pour accéder</CardDescription>
+              <CardTitle className="text-2xl">{t("auth.login.title")}</CardTitle>
+              <CardDescription>{t("auth.login.description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-5">
                 <div className="grid gap-2">
-                  <Label htmlFor="institution">Institution de Crédit</Label>
+                  <Label htmlFor="institution">{t("auth.login.institutionLabel")}</Label>
                   <div className="relative">
                     <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="institution" type="text" placeholder="Ex: Al Rahma" required value={institution} onChange={(e) => setInstitution(e.target.value)} className="pl-10" />
+                    <Input
+                      id="institution"
+                      type="text"
+                      placeholder={t("auth.login.institutionPlaceholder") ?? undefined}
+                      required
+                      value={institution}
+                      onChange={(e) => setInstitution(e.target.value)}
+                      className="pl-10"
+                    />
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("auth.login.emailLabel")}</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="email" type="email" placeholder="vous@exemple.com" required value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder={t("auth.login.emailPlaceholder") ?? undefined}
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10"
+                    />
                   </div>
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Mot de passe</Label>
-                    <Link href="/auth/reset-password" className="text-xs text-primary underline-offset-4 hover:underline">Mot de passe oublié ?</Link>
+                    <Label htmlFor="password">{t("auth.login.passwordLabel")}</Label>
+                    <Link href="/auth/reset-password" className="text-xs text-primary underline-offset-4 hover:underline">
+                      {t("auth.login.forgotPassword")}
+                    </Link>
                   </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="password" type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10 pr-10" />
-                    <button type="button" onClick={() => setShowPassword((s) => !s)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((s) => !s)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                    >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="confirmPassword">Mot de passe à nouveau</Label>
+                  <Label htmlFor="confirmPassword">{t("auth.login.confirmPasswordLabel")}</Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="confirmPassword" type={showPassword ? "text" : "password"} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="pl-10 pr-10" />
+                    <Input
+                      id="confirmPassword"
+                      type={showPassword ? "text" : "password"}
+                      required
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="phone">Numéro de téléphone</Label>
+                  <Label htmlFor="phone">{t("auth.login.phoneLabel")}</Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="phone" type="tel" placeholder="Ex: +221 77 123 45 67" required value={phone} onChange={(e) => setPhone(e.target.value)} className="pl-10" />
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder={t("auth.login.phonePlaceholder") ?? undefined}
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="pl-10"
+                    />
                   </div>
                 </div>
                 {error && <p className="text-sm text-destructive">{error}</p>}
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Connexion..." : (<span className="inline-flex items-center gap-2">Se connecter <ArrowRight className="h-4 w-4" /></span>)}
+                  {isLoading ? (
+                    t("auth.login.submitting")
+                  ) : (
+                    <span className="inline-flex items-center gap-2">
+                      {t("auth.login.submit")}
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                  )}
                 </Button>
-                <p className="text-center text-sm text-muted-foreground">En vous connectant, vous acceptez nos conditions.</p>
+                <p className="text-center text-sm text-muted-foreground">{t("auth.login.terms")}</p>
               </form>
             </CardContent>
           </Card>

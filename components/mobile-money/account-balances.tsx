@@ -3,11 +3,16 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Wallet, TrendingUp, ArrowUpRight, ArrowDownRight } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
+import { useLanguage } from "@/components/language-provider"
 
 export function AccountBalances() {
+  const { t } = useLanguage()
+
+  const pendingTransactions = 5
+
   const balances = [
     {
-      label: "Total Balance",
+      label: t("mobileMoney.overview.totalBalance"),
       value: 45280,
       change: `+${formatCFA(2340)}`,
       trend: "up",
@@ -16,27 +21,27 @@ export function AccountBalances() {
       bgColor: "bg-primary/10",
     },
     {
-      label: "Incoming",
+      label: t("mobileMoney.overview.incoming"),
       value: 12450,
-      change: "This month",
+      change: t("mobileMoney.overview.thisMonth"),
       trend: "neutral",
       icon: ArrowDownRight,
       color: "text-green-600 dark:text-green-400",
       bgColor: "bg-green-600/10 dark:bg-green-400/10",
     },
     {
-      label: "Outgoing",
+      label: t("mobileMoney.overview.outgoing"),
       value: 8920,
-      change: "This month",
+      change: t("mobileMoney.overview.thisMonth"),
       trend: "neutral",
       icon: ArrowUpRight,
       color: "text-chart-3",
       bgColor: "bg-chart-3/10",
     },
     {
-      label: "Pending",
+      label: t("mobileMoney.overview.pending"),
       value: 3150,
-      change: "5 transactions",
+      change: t("mobileMoney.overview.transactionsCount", { count: pendingTransactions }),
       trend: "neutral",
       icon: TrendingUp,
       color: "text-chart-4",

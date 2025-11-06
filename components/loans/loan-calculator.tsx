@@ -7,8 +7,10 @@ import { Slider } from "@/components/ui/slider"
 import { Calculator } from "lucide-react"
 import { formatCFA, formatCFAShort } from "@/lib/currency-utils"
 import Image from "next/image"
+import { useLanguage } from "@/components/language-provider"
 
 export function LoanCalculator() {
+  const { t, language } = useLanguage()
   const [amount, setAmount] = useState(5000000) // 5M FCFA
   const [term, setTerm] = useState(24)
   const [rate, setRate] = useState(12.5)
@@ -28,17 +30,19 @@ export function LoanCalculator() {
           </div>
           <div className="flex-1">
             <CardTitle className="flex items-center gap-2">
-              Loan Calculator
+              {t("loans.calculator.title")}
               <Image src="/logo.svg" alt="" width={20} height={20} className="object-contain" />
             </CardTitle>
-            <CardDescription>Estimate your payments</CardDescription>
+            <CardDescription>{t("loans.calculator.description")}</CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Loan Amount: {formatCFAShort(amount)}</Label>
+            <Label className="text-sm font-medium">
+              {t("loans.application.amountLabel")}: {formatCFAShort(amount)}
+            </Label>
             <Slider
               value={[amount]}
               onValueChange={(value) => setAmount(value[0])}
@@ -48,13 +52,15 @@ export function LoanCalculator() {
               className="w-full"
             />
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>500K</span>
-              <span>50M</span>
+              <span>{t("loans.calculator.amountMin")}</span>
+              <span>{t("loans.calculator.amountMax")}</span>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Term: {term} months</Label>
+            <Label className="text-sm font-medium">
+              {t("loans.application.termLabel")}: {term} {language === "fr" ? "mois" : "months"}
+            </Label>
             <Slider
               value={[term]}
               onValueChange={(value) => setTerm(value[0])}
@@ -64,13 +70,15 @@ export function LoanCalculator() {
               className="w-full"
             />
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>6 months</span>
-              <span>60 months</span>
+              <span>{t("loans.calculator.termMin")}</span>
+              <span>{t("loans.calculator.termMax")}</span>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Interest Rate: {rate}%</Label>
+            <Label className="text-sm font-medium">
+              {t("loans.summary.interestRate")}: {rate}%
+            </Label>
             <Slider
               value={[rate]}
               onValueChange={(value) => setRate(value[0])}
@@ -88,21 +96,21 @@ export function LoanCalculator() {
 
         <div className="space-y-4 pt-4 border-t border-border">
           <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/15 hover:to-primary/10 transition-all">
-            <span className="text-sm font-medium text-muted-foreground">Monthly Payment</span>
+            <span className="text-sm font-medium text-muted-foreground">{t("loans.summary.monthlyPayment")}</span>
             <span className="text-2xl font-bold text-primary">{formatCFAShort(Math.round(monthlyPayment))}</span>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm p-2 rounded hover:bg-muted/50 transition-colors">
-              <span className="text-muted-foreground">Total Payment</span>
+              <span className="text-muted-foreground">{t("loans.totals.totalPayment")}</span>
               <span className="font-semibold text-foreground">{formatCFA(Math.round(totalPayment))}</span>
             </div>
             <div className="flex items-center justify-between text-sm p-2 rounded hover:bg-muted/50 transition-colors">
-              <span className="text-muted-foreground">Total Interest</span>
+              <span className="text-muted-foreground">{t("loans.totals.totalInterest")}</span>
               <span className="font-semibold text-foreground">{formatCFA(Math.round(totalInterest))}</span>
             </div>
             <div className="flex items-center justify-between text-sm p-2 rounded hover:bg-muted/50 transition-colors">
-              <span className="text-muted-foreground">Principal</span>
+              <span className="text-muted-foreground">{t("loans.totals.principal")}</span>
               <span className="font-semibold text-foreground">{formatCFA(amount)}</span>
             </div>
           </div>

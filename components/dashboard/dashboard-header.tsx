@@ -26,7 +26,7 @@ export function DashboardHeader() {
                 {t("nav.loans")}
               </Link>
               <Link href="/loans/requests" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Loan Requests
+                {t("nav.loanRequests")}
               </Link>
               <Link href="/analytics" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                 {t("nav.analytics")}
@@ -35,25 +35,25 @@ export function DashboardHeader() {
                 {t("nav.receivables")}
               </Link>
               <Link href="/mobile-money" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Mobile Money
+                {t("nav.mobileMoney")}
               </Link>
               <Link href="/transactions" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Transactions
+                {t("nav.transactions")}
               </Link>
               <Link href="/kyc" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                KYC
+                {t("nav.kyc")}
               </Link>
               <Link href="/security" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Sécurité
+                {t("nav.security")}
               </Link>
               <Link href="/clients" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Clients
+                {t("nav.clients")}
               </Link>
               <Link href="/lenders" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Lenders
+                {t("nav.lenders")}
               </Link>
               <Link href="/scoring" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Scoring
+                {t("nav.scoring")}
               </Link>
             </nav>
           </div>
@@ -61,12 +61,16 @@ export function DashboardHeader() {
           <div className="flex items-center gap-2">
             <div className="hidden md:flex items-center gap-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search..." className="pl-9 w-64" />
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <Input
+                  placeholder={t("navigation.searchPlaceholder")}
+                  className="pl-9 w-64"
+                  aria-label={t("navigation.searchPlaceholder")}
+                />
               </div>
             </div>
-            <Button variant="ghost" size="icon">
-              <Bell className="h-5 w-5" />
+            <Button variant="ghost" size="icon" aria-label={t("navigation.notifications")}>
+              <Bell className="h-5 w-5" aria-hidden="true" />
             </Button>
             <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
               <span className="text-sm font-medium text-primary-foreground">JD</span>

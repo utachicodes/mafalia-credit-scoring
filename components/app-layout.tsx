@@ -31,7 +31,7 @@ import {
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -43,21 +43,29 @@ export function AppLayout({ children }: AppLayoutProps) {
   const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const navItems = [
-    { href: "/dashboard", label: t("nav.dashboard"), icon: LayoutDashboard },
-    { href: "/loans", label: t("nav.loans"), icon: CreditCard },
-    { href: "/analytics", label: t("nav.analytics"), icon: TrendingUp },
-    { href: "/receivables", label: t("nav.receivables"), icon: Receipt },
-    { href: "/mobile-money", label: "Mobile Money", icon: Smartphone },
-    { href: "/onboarding", label: "Inscription", icon: UserPlus },
-    { href: "/loans/requests", label: "Demandes", icon: FileText },
-    { href: "/transactions", label: "Transactions", icon: Receipt },
-    { href: "/clients", label: "Clients", icon: Users },
-    { href: "/lenders", label: "Prêteurs", icon: Building2 },
-    { href: "/scoring", label: "Notation", icon: Target },
-    { href: "/kyc", label: "KYC", icon: CheckCircle },
-    { href: "/security", label: "Sécurité", icon: Shield },
-  ]
+  const languageLabels: Record<typeof language, string> = {
+    en: "English",
+    fr: "Français",
+  }
+
+  const navItems = useMemo(
+    () => [
+      { href: "/dashboard", label: t("nav.dashboard"), icon: LayoutDashboard },
+      { href: "/loans", label: t("nav.loans"), icon: CreditCard },
+      { href: "/analytics", label: t("nav.analytics"), icon: TrendingUp },
+      { href: "/receivables", label: t("nav.receivables"), icon: Receipt },
+      { href: "/mobile-money", label: t("nav.mobileMoney"), icon: Smartphone },
+      { href: "/onboarding", label: t("nav.onboarding"), icon: UserPlus },
+      { href: "/loans/requests", label: t("nav.loanRequests"), icon: FileText },
+      { href: "/transactions", label: t("nav.transactions"), icon: Receipt },
+      { href: "/clients", label: t("nav.clients"), icon: Users },
+      { href: "/lenders", label: t("nav.lenders"), icon: Building2 },
+      { href: "/scoring", label: t("nav.scoring"), icon: Target },
+      { href: "/kyc", label: t("nav.kyc"), icon: CheckCircle },
+      { href: "/security", label: t("nav.security"), icon: Shield },
+    ],
+    [t],
+  )
 
   return (
     <div className="min-h-screen bg-background">
@@ -102,8 +110,13 @@ export function AppLayout({ children }: AppLayoutProps) {
               {/* More dropdown for additional items */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    Plus
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-muted-foreground hover:text-foreground"
+                    aria-label={t("nav.more")}
+                  >
+                    {t("nav.more")}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -126,26 +139,32 @@ export function AppLayout({ children }: AppLayoutProps) {
             <div className="flex items-center gap-2">
               {/* Search */}
               <div className="hidden md:flex items-center relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
                 <Input
-                  placeholder="Rechercher..."
+                  placeholder={t("navigation.searchPlaceholder")}
                   className="pl-9 w-48 lg:w-64 h-9 bg-muted/50 border-border/50 focus:bg-background transition-all duration-200"
+                  aria-label={t("navigation.searchPlaceholder")}
                 />
               </div>
 
               {/* Language Switcher */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-muted/50 transition-all duration-200">
-                    <Globe className="h-4 w-4" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 hover:bg-muted/50 transition-all duration-200"
+                    aria-label={t("navigation.toggleLanguage")}
+                  >
+                    <Globe className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={() => setLanguage("en")} className="cursor-pointer">
-                    English {language === "en" && "✓"}
+                    {languageLabels.en} {language === "en" && "✓"}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setLanguage("fr")} className="cursor-pointer">
-                    Français {language === "fr" && "✓"}
+                    {languageLabels.fr} {language === "fr" && "✓"}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -156,9 +175,10 @@ export function AppLayout({ children }: AppLayoutProps) {
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="h-9 w-9 hover:bg-muted/50 transition-all duration-200"
+                aria-label={t("navigation.toggleTheme")}
               >
-                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" aria-hidden="true" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" aria-hidden="true" />
               </Button>
 
               {/* Notifications */}
@@ -166,9 +186,11 @@ export function AppLayout({ children }: AppLayoutProps) {
                 variant="ghost"
                 size="icon"
                 className="h-9 w-9 hover:bg-muted/50 transition-all duration-200 relative"
+                aria-label={t("navigation.notifications")}
               >
-                <Bell className="h-4 w-4" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary animate-pulse" />
+                <Bell className="h-4 w-4" aria-hidden="true" />
+                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
+                <span className="sr-only">{t("navigation.notifications")}</span>
               </Button>
 
               {/* User Avatar */}
@@ -182,8 +204,11 @@ export function AppLayout({ children }: AppLayoutProps) {
                 size="icon"
                 className="lg:hidden h-9 w-9"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? t("navigation.closeMenu") : t("navigation.openMenu")}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mafalia-mobile-nav"
               >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {mobileMenuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
               </Button>
             </div>
           </div>
@@ -191,7 +216,10 @@ export function AppLayout({ children }: AppLayoutProps) {
 
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-border/40 bg-background/95 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
-            <nav className="container mx-auto px-4 py-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            <nav
+              id="mafalia-mobile-nav"
+              className="container mx-auto px-4 py-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto"
+            >
               {navItems.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href

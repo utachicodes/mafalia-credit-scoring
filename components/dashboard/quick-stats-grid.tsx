@@ -37,7 +37,7 @@ export function QuickStatsGrid() {
       bgColor: "bg-chart-3/10",
     },
     {
-      label: "Pending Approvals",
+      label: t("dashboard.pendingApprovals"),
       value: "3",
       change: "0",
       trend: "neutral",

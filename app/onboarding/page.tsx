@@ -48,10 +48,8 @@ export default function OnboardingPage() {
               <Building2 className="h-6 w-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Informations générales sur la société</h1>
-              <p className="text-muted-foreground">
-                Collectez les données d'identification de la personne morale pour l'inscription
-              </p>
+              <h1 className="text-3xl font-bold tracking-tight">{t("onboarding.header.title")}</h1>
+              <p className="text-muted-foreground">{t("onboarding.header.description")}</p>
             </div>
           </div>
         </div>
@@ -61,9 +59,9 @@ export default function OnboardingPage() {
           <CardHeader className="border-b border-border/50 bg-gradient-red-subtle">
             <CardTitle className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-primary" />
-              Formulaire d'inscription
+              {t("onboarding.form.cardTitle")}
             </CardTitle>
-            <CardDescription>Veuillez remplir tous les champs requis avec précision</CardDescription>
+            <CardDescription>{t("onboarding.form.cardDescription")}</CardDescription>
           </CardHeader>
           <CardContent className="p-6">
             <form onSubmit={handleSubmit} className="space-y-8">
@@ -71,7 +69,7 @@ export default function OnboardingPage() {
               <div className="space-y-6">
                 <div className="flex items-center gap-2 pb-2 border-b border-border/50">
                   <Building2 className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold">Identité de l'entreprise</h3>
+                  <h3 className="text-lg font-semibold">{t("onboarding.form.sections.companyIdentity")}</h3>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -79,79 +77,79 @@ export default function OnboardingPage() {
                   <div className="space-y-2">
                     <Label htmlFor="companyName" className="flex items-center gap-2 text-sm font-medium">
                       <Building2 className="h-4 w-4 text-primary" />
-                      Raison sociale *
+                      {t("onboarding.form.fields.companyName.label")}
                     </Label>
                     <Input
                       id="companyName"
-                      placeholder="Société Mafalia SAS"
+                      placeholder={t("onboarding.form.fields.companyName.placeholder") ?? undefined}
                       value={formData.companyName}
                       onChange={(e) => handleChange("companyName", e.target.value)}
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Nom officiel de l'entreprise</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.companyName.helper")}</p>
                   </div>
 
                   {/* Legal Form */}
                   <div className="space-y-2">
                     <Label htmlFor="legalForm" className="flex items-center gap-2 text-sm font-medium">
                       <Briefcase className="h-4 w-4 text-primary" />
-                      Forme juridique *
+                      {t("onboarding.form.fields.legalForm.label")}
                     </Label>
                     <Select value={formData.legalForm} onValueChange={(value) => handleChange("legalForm", value)}>
                       <SelectTrigger className="h-11 border-border/50 focus:border-primary">
-                        <SelectValue placeholder="Sélectionner..." />
+                        <SelectValue placeholder={t("onboarding.form.fields.legalForm.placeholder") ?? undefined} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="sarl">SARL</SelectItem>
-                        <SelectItem value="sa">SA</SelectItem>
-                        <SelectItem value="sas">SAS</SelectItem>
-                        <SelectItem value="gie">GIE</SelectItem>
-                        <SelectItem value="cooperative">Coopérative</SelectItem>
+                        <SelectItem value="sarl">{t("onboarding.form.fields.legalForm.options.sarl")}</SelectItem>
+                        <SelectItem value="sa">{t("onboarding.form.fields.legalForm.options.sa")}</SelectItem>
+                        <SelectItem value="sas">{t("onboarding.form.fields.legalForm.options.sas")}</SelectItem>
+                        <SelectItem value="gie">{t("onboarding.form.fields.legalForm.options.gie")}</SelectItem>
+                        <SelectItem value="cooperative">{t("onboarding.form.fields.legalForm.options.cooperative")}</SelectItem>
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-muted-foreground">SARL, SA, SAS, GIE, Coopérative, etc.</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.legalForm.helper")}</p>
                   </div>
 
                   {/* Registration Number */}
                   <div className="space-y-2">
                     <Label htmlFor="registrationNumber" className="flex items-center gap-2 text-sm font-medium">
                       <Hash className="h-4 w-4 text-primary" />
-                      Numéro d'immatriculation *
+                      {t("onboarding.form.fields.registrationNumber.label")}
                     </Label>
                     <Input
                       id="registrationNumber"
-                      placeholder="SN.DKR.2024.A.10842"
+                      placeholder={t("onboarding.form.fields.registrationNumber.placeholder") ?? undefined}
                       value={formData.registrationNumber}
                       onChange={(e) => handleChange("registrationNumber", e.target.value)}
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">RCCM ou équivalent</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.registrationNumber.helper")}</p>
                   </div>
 
                   {/* Tax ID (NINEA) */}
                   <div className="space-y-2">
                     <Label htmlFor="taxId" className="flex items-center gap-2 text-sm font-medium">
                       <Shield className="h-4 w-4 text-primary" />
-                      Numéro fiscal (NINEA) *
+                      {t("onboarding.form.fields.taxId.label")}
                     </Label>
                     <Input
                       id="taxId"
-                      placeholder="009876543N"
+                      placeholder={t("onboarding.form.fields.taxId.placeholder") ?? undefined}
                       value={formData.taxId}
                       onChange={(e) => handleChange("taxId", e.target.value)}
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Identifiant fiscal unique</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.taxId.helper")}</p>
                   </div>
 
                   {/* Creation Date */}
                   <div className="space-y-2">
                     <Label htmlFor="creationDate" className="flex items-center gap-2 text-sm font-medium">
                       <Calendar className="h-4 w-4 text-primary" />
-                      Date de création *
+                      {t("onboarding.form.fields.creationDate.label")}
                     </Label>
                     <Input
                       id="creationDate"
@@ -161,24 +159,24 @@ export default function OnboardingPage() {
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Date figurant au registre</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.creationDate.helper")}</p>
                   </div>
 
                   {/* Business Purpose */}
                   <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="businessPurpose" className="flex items-center gap-2 text-sm font-medium">
                       <Briefcase className="h-4 w-4 text-primary" />
-                      Objet social *
+                      {t("onboarding.form.fields.businessPurpose.label")}
                     </Label>
                     <Textarea
                       id="businessPurpose"
-                      placeholder="Services numériques et financiers"
+                      placeholder={t("onboarding.form.fields.businessPurpose.placeholder") ?? undefined}
                       value={formData.businessPurpose}
                       onChange={(e) => handleChange("businessPurpose", e.target.value)}
                       className="min-h-[100px] border-border/50 focus:border-primary transition-colors resize-none"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Activité principale de l'entreprise</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.businessPurpose.helper")}</p>
                   </div>
                 </div>
               </div>
@@ -187,7 +185,7 @@ export default function OnboardingPage() {
               <div className="space-y-6">
                 <div className="flex items-center gap-2 pb-2 border-b border-border/50">
                   <MapPin className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold">Coordonnées</h3>
+                  <h3 className="text-lg font-semibold">{t("onboarding.form.sections.contact")}</h3>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -195,70 +193,70 @@ export default function OnboardingPage() {
                   <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="address" className="flex items-center gap-2 text-sm font-medium">
                       <MapPin className="h-4 w-4 text-primary" />
-                      Adresse du siège social *
+                      {t("onboarding.form.fields.address.label")}
                     </Label>
                     <Textarea
                       id="address"
-                      placeholder="Immeuble Djaraf Jaraff, Point E, Dakar, Sénégal"
+                      placeholder={t("onboarding.form.fields.address.placeholder") ?? undefined}
                       value={formData.address}
                       onChange={(e) => handleChange("address", e.target.value)}
                       className="min-h-[80px] border-border/50 focus:border-primary transition-colors resize-none"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Adresse complète (ville, pays, code postal)</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.address.helper")}</p>
                   </div>
 
                   {/* Email */}
                   <div className="space-y-2">
                     <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
                       <Mail className="h-4 w-4 text-primary" />
-                      Email professionnel *
+                      {t("onboarding.form.fields.email.label")}
                     </Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="contact@mafalia.com"
+                      placeholder={t("onboarding.form.fields.email.placeholder") ?? undefined}
                       value={formData.email}
                       onChange={(e) => handleChange("email", e.target.value)}
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Email de contact officiel</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.email.helper")}</p>
                   </div>
 
                   {/* Phone */}
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="flex items-center gap-2 text-sm font-medium">
                       <Phone className="h-4 w-4 text-primary" />
-                      Téléphone professionnel *
+                      {t("onboarding.form.fields.phone.label")}
                     </Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="+221 78 209 2780"
+                      placeholder={t("onboarding.form.fields.phone.placeholder") ?? undefined}
                       value={formData.phone}
                       onChange={(e) => handleChange("phone", e.target.value)}
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">Numéro de la société</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.phone.helper")}</p>
                   </div>
 
                   {/* Website */}
                   <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="website" className="flex items-center gap-2 text-sm font-medium">
                       <Globe className="h-4 w-4 text-primary" />
-                      Site web (facultatif)
+                      {t("onboarding.form.fields.website.label")}
                     </Label>
                     <Input
                       id="website"
                       type="url"
-                      placeholder="www.mafalia.com"
+                      placeholder={t("onboarding.form.fields.website.placeholder") ?? undefined}
                       value={formData.website}
                       onChange={(e) => handleChange("website", e.target.value)}
                       className="h-11 border-border/50 focus:border-primary transition-colors"
                     />
-                    <p className="text-xs text-muted-foreground">URL de l'entreprise</p>
+                    <p className="text-xs text-muted-foreground">{t("onboarding.form.fields.website.helper")}</p>
                   </div>
                 </div>
               </div>
@@ -270,13 +268,13 @@ export default function OnboardingPage() {
                   variant="outline"
                   className="flex-1 h-12 border-border/50 hover:bg-muted/50 transition-all bg-transparent"
                 >
-                  Enregistrer comme brouillon
+                  {t("onboarding.form.actions.saveDraft")}
                 </Button>
                 <Button
                   type="submit"
                   className="flex-1 h-12 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all"
                 >
-                  Soumettre l'inscription
+                  {t("onboarding.form.actions.submit")}
                 </Button>
               </div>
             </form>
@@ -291,11 +289,8 @@ export default function OnboardingPage() {
                 <Shield className="h-5 w-5 text-primary" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-semibold">Sécurité et confidentialité</h4>
-                <p className="text-sm text-muted-foreground">
-                  Toutes vos informations sont cryptées et stockées en toute sécurité. Nous respectons les normes de
-                  conformité RGPD et les réglementations locales du Sénégal.
-                </p>
+                <h4 className="font-semibold">{t("onboarding.infoCard.title")}</h4>
+                <p className="text-sm text-muted-foreground">{t("onboarding.infoCard.description")}</p>
               </div>
             </div>
           </CardContent>

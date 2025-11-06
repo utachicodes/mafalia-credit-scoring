@@ -3,11 +3,14 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { TrendingUp, TrendingDown, DollarSign, Percent, Target, Activity } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
+import { useLanguage } from "@/components/language-provider"
 
 export function FinancialMetrics() {
+  const { t } = useLanguage()
+
   const metrics = [
     {
-      label: "Total Revenue",
+      label: t("analytics.metrics.totalRevenue"),
       value: 328500,
       change: "+12.5%",
       trend: "up",
@@ -16,7 +19,7 @@ export function FinancialMetrics() {
       bgColor: "bg-primary/10",
     },
     {
-      label: "Net Profit",
+      label: t("analytics.metrics.netProfit"),
       value: 89200,
       change: "+8.3%",
       trend: "up",
@@ -25,7 +28,7 @@ export function FinancialMetrics() {
       bgColor: "bg-green-600/10 dark:bg-green-400/10",
     },
     {
-      label: "Profit Margin",
+      label: t("analytics.metrics.profitMargin"),
       value: "27.2%",
       change: "-2.1%",
       trend: "down",
@@ -34,7 +37,7 @@ export function FinancialMetrics() {
       bgColor: "bg-chart-3/10",
     },
     {
-      label: "Operating Expenses",
+      label: t("analytics.metrics.operatingExpenses"),
       value: 239300,
       change: "+5.7%",
       trend: "up",
@@ -43,7 +46,7 @@ export function FinancialMetrics() {
       bgColor: "bg-chart-4/10",
     },
     {
-      label: "ROI",
+      label: t("analytics.metrics.roi"),
       value: "18.5%",
       change: "+3.2%",
       trend: "up",
@@ -52,7 +55,7 @@ export function FinancialMetrics() {
       bgColor: "bg-chart-2/10",
     },
     {
-      label: "Cash Flow",
+      label: t("analytics.metrics.cashFlow"),
       value: 125400,
       change: "+15.8%",
       trend: "up",

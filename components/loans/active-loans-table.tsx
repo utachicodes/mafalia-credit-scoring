@@ -7,8 +7,12 @@ import { Progress } from "@/components/ui/progress"
 import { Eye, MoreVertical } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { formatCFA } from "@/lib/currency-utils"
+import { formatDateForLanguage } from "@/lib/date-utils"
+import { useLanguage } from "@/components/language-provider"
 
 export function ActiveLoansTable() {
+  const { t, language } = useLanguage()
+
   const loans = [
     {
       id: "L-2025-001",
@@ -17,8 +21,8 @@ export function ActiveLoansTable() {
       outstanding: 18500,
       rate: 12.5,
       term: 24,
-      status: "active",
-      nextPayment: "Jan 15, 2026",
+      status: "active" as const,
+      nextPayment: "2026-01-15",
       paymentAmount: 1250,
     },
     {
@@ -28,8 +32,8 @@ export function ActiveLoansTable() {
       outstanding: 0,
       rate: 11.0,
       term: 18,
-      status: "pending",
-      nextPayment: "-",
+      status: "pending" as const,
+      nextPayment: null,
       paymentAmount: 0,
     },
     {
@@ -39,8 +43,8 @@ export function ActiveLoansTable() {
       outstanding: 22000,
       rate: 13.0,
       term: 36,
-      status: "active",
-      nextPayment: "Jan 20, 2026",
+      status: "active" as const,
+      nextPayment: "2026-01-20",
       paymentAmount: 950,
     },
     {
@@ -50,8 +54,8 @@ export function ActiveLoansTable() {
       outstanding: 5000,
       rate: 12.0,
       term: 24,
-      status: "active",
-      nextPayment: "Jan 10, 2026",
+      status: "active" as const,
+      nextPayment: "2026-01-10",
       paymentAmount: 1100,
     },
   ]
@@ -72,8 +76,8 @@ export function ActiveLoansTable() {
   return (
     <Card className="border-border">
       <CardHeader>
-        <CardTitle>Active Loans</CardTitle>
-        <CardDescription>Overview of your current loan portfolio</CardDescription>
+        <CardTitle>{t("dashboard.activeLoans.title")}</CardTitle>
+        <CardDescription>{t("dashboard.activeLoans.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -87,11 +91,11 @@ export function ActiveLoansTable() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-foreground">{loan.id}</span>
-                      <Badge variant={getStatusColor(loan.status)}>{loan.status}</Badge>
+                      <Badge variant={getStatusColor(loan.status)}>{t(`dashboard.status.${loan.status}`)}</Badge>
                     </div>
                     <div className="text-2xl font-bold text-foreground">{formatCFA(loan.amount)}</div>
                     <div className="text-sm text-muted-foreground">
-                      {loan.rate}% APR • {loan.term} months
+                      {loan.rate}% {t("loans.summary.interestSuffix")} • {loan.term} {language === "fr" ? "mois" : "months"}
                     </div>
                   </div>
                   <DropdownMenu>
@@ -103,10 +107,10 @@ export function ActiveLoansTable() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
                         <Eye className="h-4 w-4 mr-2" />
-                        View Details
+                        {t("dashboard.quickActions.viewDetails")}
                       </DropdownMenuItem>
-                      <DropdownMenuItem>Make Payment</DropdownMenuItem>
-                      <DropdownMenuItem>Download Statement</DropdownMenuItem>
+                      <DropdownMenuItem>{t("dashboard.quickActions.makePayment")}</DropdownMenuItem>
+                      <DropdownMenuItem>{t("dashboard.quickActions.downloadStatement")}</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -115,7 +119,7 @@ export function ActiveLoansTable() {
                   <>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Repayment Progress</span>
+                        <span className="text-muted-foreground">{t("dashboard.activeLoans.repaymentProgress")}</span>
                         <span className="font-medium text-foreground">
                           {formatCFA(loan.disbursed - loan.outstanding)} / {formatCFA(loan.disbursed)}
                         </span>
@@ -125,13 +129,17 @@ export function ActiveLoansTable() {
 
                     <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border">
                       <div>
-                        <div className="text-sm text-muted-foreground">Outstanding</div>
+                        <div className="text-sm text-muted-foreground">{t("dashboard.activeLoans.outstanding")}</div>
                         <div className="text-lg font-semibold text-foreground">{formatCFA(loan.outstanding)}</div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">Next Payment</div>
+                        <div className="text-sm text-muted-foreground">{t("dashboard.activeLoans.nextPayment")}</div>
                         <div className="text-lg font-semibold text-foreground">{formatCFA(loan.paymentAmount)}</div>
-                        <div className="text-xs text-muted-foreground">{loan.nextPayment}</div>
+                        {loan.nextPayment && (
+                          <div className="text-xs text-muted-foreground">
+                            {formatDateForLanguage(loan.nextPayment, language)}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </>
@@ -139,9 +147,9 @@ export function ActiveLoansTable() {
 
                 {loan.status === "pending" && (
                   <div className="flex items-center justify-between pt-2 border-t border-border">
-                    <span className="text-sm text-muted-foreground">Application under review</span>
+                    <span className="text-sm text-muted-foreground">{t("dashboard.quickActions.applicationUnderReview")}</span>
                     <Button size="sm" variant="outline">
-                      Check Status
+                      {t("dashboard.quickActions.checkStatus")}
                     </Button>
                   </div>
                 )}

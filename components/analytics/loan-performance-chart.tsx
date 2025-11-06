@@ -1,39 +1,55 @@
 "use client"
 
+import { useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { useLanguage } from "@/components/language-provider"
 
-const chartData = [
-  { month: "Jul", disbursed: 85000, repaid: 62000, outstanding: 145000 },
-  { month: "Aug", disbursed: 92000, repaid: 68000, outstanding: 169000 },
-  { month: "Sep", disbursed: 78000, repaid: 71000, outstanding: 176000 },
-  { month: "Oct", disbursed: 105000, repaid: 75000, outstanding: 206000 },
-  { month: "Nov", disbursed: 88000, repaid: 79000, outstanding: 215000 },
-  { month: "Dec", disbursed: 115000, repaid: 85000, outstanding: 245000 },
+const rawChartData = [
+  { month: "jul", disbursed: 85000, repaid: 62000, outstanding: 145000 },
+  { month: "aug", disbursed: 92000, repaid: 68000, outstanding: 169000 },
+  { month: "sep", disbursed: 78000, repaid: 71000, outstanding: 176000 },
+  { month: "oct", disbursed: 105000, repaid: 75000, outstanding: 206000 },
+  { month: "nov", disbursed: 88000, repaid: 79000, outstanding: 215000 },
+  { month: "dec", disbursed: 115000, repaid: 85000, outstanding: 245000 },
 ]
 
-const chartConfig = {
-  disbursed: {
-    label: "Disbursed",
-    color: "hsl(var(--primary))",
-  },
-  repaid: {
-    label: "Repaid",
-    color: "hsl(var(--chart-2))",
-  },
-  outstanding: {
-    label: "Outstanding",
-    color: "hsl(var(--chart-4))",
-  },
-}
-
 export function LoanPerformanceChart() {
+  const { t } = useLanguage()
+
+  const chartConfig = useMemo(
+    () => ({
+      disbursed: {
+        label: t("analytics.charts.loanPerformance.labels.disbursed"),
+        color: "hsl(var(--primary))",
+      },
+      repaid: {
+        label: t("analytics.charts.loanPerformance.labels.repaid"),
+        color: "hsl(var(--chart-2))",
+      },
+      outstanding: {
+        label: t("analytics.charts.loanPerformance.labels.outstanding"),
+        color: "hsl(var(--chart-4))",
+      },
+    }),
+    [t],
+  )
+
+  const chartData = useMemo(
+    () =>
+      rawChartData.map((item) => ({
+        ...item,
+        month: t(`common.months.short.${item.month}`),
+      })),
+    [t],
+  )
+
   return (
     <Card className="border-border">
       <CardHeader>
-        <CardTitle>Loan Portfolio Performance</CardTitle>
-        <CardDescription>Track disbursements, repayments, and outstanding balances</CardDescription>
+        <CardTitle>{t("analytics.charts.loanPerformance.title")}</CardTitle>
+        <CardDescription>{t("analytics.charts.loanPerformance.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[400px] w-full">
