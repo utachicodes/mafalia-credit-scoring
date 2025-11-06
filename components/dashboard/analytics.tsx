@@ -14,8 +14,26 @@ export function Analytics() {
 
   useEffect(() => {
     fetch("/api/analytics")
-      .then((res) => res.json())
-      .then((data) => setData(data))
+      .then((res) => {
+        if (!res.ok) {
+          console.error(`API error: ${res.status} ${res.statusText}`)
+          return
+        }
+        const contentType = res.headers.get("content-type")
+        if (!contentType || !contentType.includes("application/json")) {
+          console.error("Response is not JSON")
+          return
+        }
+        return res.json()
+      })
+      .then((data) => {
+        if (data) {
+          setData(data)
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch analytics:", error)
+      })
   }, [])
 
   const kpiData = [

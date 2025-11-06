@@ -42,6 +42,7 @@ function DollarSign3D() {
 
 export function DollarSign3DScene() {
   const [hasError, setHasError] = useState(false)
+  const canvasRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleContextLost = (e: Event) => {
@@ -57,20 +58,26 @@ export function DollarSign3DScene() {
 
     // Wait for canvas to be available
     const timer = setTimeout(() => {
-      const canvas = document.querySelector('canvas')
+      const canvas = canvasRef.current?.querySelector('canvas')
       if (canvas) {
         canvas.addEventListener('webglcontextlost', handleContextLost)
         canvas.addEventListener('webglcontextrestored', handleContextRestored)
       }
-    }, 100)
+    }, 200)
+
+    // Also listen on window for context lost events (global handler)
+    window.addEventListener('webglcontextlost', handleContextLost)
+    window.addEventListener('webglcontextrestored', handleContextRestored)
 
     return () => {
       clearTimeout(timer)
-      const canvas = document.querySelector('canvas')
+      const canvas = canvasRef.current?.querySelector('canvas')
       if (canvas) {
         canvas.removeEventListener('webglcontextlost', handleContextLost)
         canvas.removeEventListener('webglcontextrestored', handleContextRestored)
       }
+      window.removeEventListener('webglcontextlost', handleContextLost)
+      window.removeEventListener('webglcontextrestored', handleContextRestored)
     }
   }, [])
 
@@ -83,13 +90,20 @@ export function DollarSign3DScene() {
   }
 
   return (
-    <div className="w-full h-full">
+    <div ref={canvasRef} className="w-full h-full">
       <Canvas 
         camera={{ position: [0, 0, 6], fov: 50 }} 
         className="bg-transparent"
         onError={(error) => {
           console.error('Canvas error:', error)
           setHasError(true)
+        }}
+        gl={{ 
+          preserveDrawingBuffer: false,
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: false
         }}
       >
         <ambientLight intensity={0.7} />
