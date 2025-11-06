@@ -61,16 +61,16 @@ function generateLast6MonthsTransactions(): Txn[] {
 
 export default function TransactionsPage() {
   const { t } = useLanguage()
-  const [provider, setProvider] = useState<string>("")
-  const [type, setType] = useState<string>("")
+  const [provider, setProvider] = useState<string>("all")
+  const [type, setType] = useState<string>("all")
   const [search, setSearch] = useState("")
 
   const data = useMemo(() => generateLast6MonthsTransactions(), [])
 
   const filtered = useMemo(() => {
     return data.filter((tx) => {
-      if (provider && tx.provider !== provider) return false
-      if (type && tx.type !== (type as Txn["type"])) return false
+      if (provider !== "all" && tx.provider !== provider) return false
+      if (type !== "all" && tx.type !== (type as Txn["type"])) return false
       if (search) {
         const s = search.toLowerCase()
         if (!tx.counterparty.toLowerCase().includes(s) && !tx.id.toLowerCase().includes(s)) return false
@@ -111,7 +111,7 @@ export default function TransactionsPage() {
                 <SelectValue placeholder="Opérateur" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous</SelectItem>
+                <SelectItem value="all">Tous</SelectItem>
                 <SelectItem value="Wave">Wave</SelectItem>
                 <SelectItem value="Orange Money">Orange Money</SelectItem>
                 <SelectItem value="Free Money">Free Money</SelectItem>
@@ -125,7 +125,7 @@ export default function TransactionsPage() {
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous</SelectItem>
+                <SelectItem value="all">Tous</SelectItem>
                 <SelectItem value="received">Reçus</SelectItem>
                 <SelectItem value="sent">Envoyés</SelectItem>
               </SelectContent>

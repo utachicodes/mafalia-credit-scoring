@@ -54,7 +54,7 @@ export default function KYCPage() {
           <ShieldCheck className="h-6 w-6 text-primary" />
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("nav.kyc")}</h1>
-            <p className="text-muted-foreground mt-1">KYC Registration - BCEAO Compliance</p>
+            <p className="text-muted-foreground mt-1">KYC Registration for BCEAO Compliance</p>
           </div>
         </div>
 
@@ -62,7 +62,7 @@ export default function KYCPage() {
           <Card className="border-border/50 shadow-sm hover:shadow-md transition-smooth">
             <CardHeader>
               <CardTitle>Required Information</CardTitle>
-              <CardDescription>BCEAO KYC Compliance — provide accurate information</CardDescription>
+              <CardDescription>Please provide accurate information for BCEAO KYC compliance</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmit} className="space-y-8">
