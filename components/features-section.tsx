@@ -75,15 +75,11 @@ export function FeaturesSection() {
 
       <div className="container mx-auto px-4">
         <div className="text-center space-y-6 mb-20 animate-in fade-in slide-in-from-bottom duration-700">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            <Zap className="h-4 w-4" />
-            Crédit & Financement
-          </div>
           <h2 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
             {t("features.title")}
           </h2>
           <p className="text-pretty text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Des outils simples et fiables pour évaluer le risque, gérer les prêts et piloter votre activité — avec Orange
+            Des outils simples et fiables pour évaluer le risque, gérer les prêts et piloter votre activité. Avec Orange
             Money, Wave et autres intégrations.
           </p>
         </div>
