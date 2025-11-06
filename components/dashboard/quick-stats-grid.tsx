@@ -50,29 +50,18 @@ export function QuickStatsGrid() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, index) => (
-        <Card key={index} className="border-border">
-          <CardContent className="pt-6">
+        <Card key={index} className="border-border/50 shadow-sm bg-card hover:shadow-md transition-smooth hover:scale-[1.02] cursor-pointer">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${stat.bgColor}`}>
-                <stat.icon className={`h-5 w-5 ${stat.color}`} />
-              </div>
-              <div
-                className={`text-sm font-medium ${
-                  stat.trend === "up"
-                    ? "text-green-600 dark:text-green-400"
-                    : stat.trend === "down"
-                      ? "text-red-600 dark:text-red-400"
-                      : "text-muted-foreground"
-                }`}
-              >
-                {stat.change}
+              <div className={`flex h-12 w-12 items-center justify-center rounded-lg ${stat.bgColor}`}>
+                <stat.icon className={`h-6 w-6 ${stat.color}`} />
               </div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-bold text-foreground">
+              <div className="text-3xl font-bold text-foreground">
                 {typeof stat.value === "number" ? formatCFA(stat.value) : stat.value}
               </div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
+              <div className="text-sm font-medium text-muted-foreground">{stat.label}</div>
             </div>
           </CardContent>
         </Card>

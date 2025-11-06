@@ -93,8 +93,8 @@ export default function TransactionsPage() {
   const months = Object.keys(groupByMonth)
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex items-center gap-2 text-muted-foreground">
+    <div className="container mx-auto px-4 py-8 space-y-6 page-enter">
+      <div className="animate-fade-in flex items-center gap-2 text-muted-foreground">
         <Calendar className="h-5 w-5" />
         <h1 className="text-2xl font-bold">Historique des transactions (6 mois)</h1>
       </div>

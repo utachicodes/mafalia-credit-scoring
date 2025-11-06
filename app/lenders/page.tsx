@@ -30,8 +30,10 @@ export default function LenderDashboardPage() {
   }, [type, minAmount, maxAmount, startDate, endDate]);
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <h1 className="text-2xl font-semibold">Lender Dashboard</h1>
+    <div className="container mx-auto px-4 py-8 space-y-6 page-enter">
+      <div className="animate-fade-in">
+        <h1 className="text-2xl font-semibold">Lender Dashboard</h1>
+      </div>
 
       <div className="grid gap-4 md:grid-cols-5 border rounded-lg p-4">
         <div className="space-y-1">

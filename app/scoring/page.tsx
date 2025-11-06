@@ -14,11 +14,13 @@ export default function ScoringPage() {
   const finalScore100 = Math.round(finalScore01 * 100);
 
   return (
-    <div className="p-6 max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-semibold">Credit Scoring Preview</h1>
-      <p className="text-sm text-muted-foreground">
-        Saisissez des sous-scores [0,1] pour chaque critère. Les pondérations sont normalisées si la somme ≠ 100%.
-      </p>
+    <div className="p-6 max-w-3xl mx-auto space-y-6 page-enter">
+      <div className="animate-fade-in">
+        <h1 className="text-2xl font-semibold">Credit Scoring Preview</h1>
+        <p className="text-sm text-muted-foreground">
+          Saisissez des sous-scores [0,1] pour chaque critère. Les pondérations sont normalisées si la somme ≠ 100%.
+        </p>
+      </div>
 
       <div>
         <button

@@ -66,10 +66,8 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
             </div>
           </div>
 
-          <div className="relative w-full h-[320px] md:h-[420px] lg:h-[480px] rounded-xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/20 rounded-xl">
-              <DollarSign3DScene />
-            </div>
+          <div className="relative w-full h-[320px] md:h-[420px] lg:h-[480px]">
+            <DollarSign3DScene />
           </div>
         </div>
       </div>

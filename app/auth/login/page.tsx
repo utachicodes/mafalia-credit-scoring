@@ -12,15 +12,14 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import Image from "next/image"
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Building2, Phone } from "lucide-react"
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Building2, User } from "lucide-react"
 
 export default function LoginPage() {
   const { t } = useLanguage()
   const [institution, setInstitution] = useState("")
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [phone, setPhone] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -33,14 +32,23 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      if (password !== confirmPassword) {
-        throw new Error(t("auth.common.passwordMismatch"))
-      }
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
       if (error) throw error
+      
+      // Update user metadata with name and institution
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: {
+          name,
+          institution,
+        },
+      })
+      if (updateError) {
+        console.warn("Failed to update user metadata:", updateError)
+      }
+      
       router.push("/dashboard")
       router.refresh()
     } catch (error: unknown) {
@@ -92,6 +100,21 @@ export default function LoginPage() {
                   </div>
                 </div>
                 <div className="grid gap-2">
+                  <Label htmlFor="name">{t("auth.login.nameLabel")}</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder={t("auth.login.namePlaceholder") ?? undefined}
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-2">
                   <Label htmlFor="email">{t("auth.login.emailLabel")}</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -127,38 +150,10 @@ export default function LoginPage() {
                       type="button"
                       onClick={() => setShowPassword((s) => !s)}
                       className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="confirmPassword">{t("auth.login.confirmPasswordLabel")}</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="confirmPassword"
-                      type={showPassword ? "text" : "password"}
-                      required
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="pl-10 pr-10"
-                    />
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="phone">{t("auth.login.phoneLabel")}</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder={t("auth.login.phonePlaceholder") ?? undefined}
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="pl-10"
-                    />
                   </div>
                 </div>
                 {error && <p className="text-sm text-destructive">{error}</p>}

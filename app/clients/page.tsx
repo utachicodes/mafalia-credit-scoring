@@ -31,8 +31,8 @@ export default function ClientsPage() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div>
+      <div className="space-y-6 page-enter">
+        <div className="animate-fade-in">
           <h1 className="text-3xl font-bold tracking-tight">Clients</h1>
           <p className="text-muted-foreground mt-1">Manage your business clients and their financial data</p>
         </div>
@@ -55,9 +55,11 @@ export default function ClientsPage() {
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {clients.map((c) => (
-              <Link key={c.id} href={`/clients/${c.id}`}>
-                <Card className="hover:shadow-lg transition-all hover:scale-[1.02] cursor-pointer">
+            {clients.map((c, index) => {
+              const staggerClass = index === 0 ? "animate-stagger-1" : index === 1 ? "animate-stagger-2" : index === 2 ? "animate-stagger-3" : "animate-stagger-4"
+              return (
+              <Link key={c.id} href={`/clients/${c.id}`} className={`animate-slide-up ${staggerClass}`}>
+                <Card className="hover:shadow-lg transition-smooth hover:scale-[1.02] cursor-pointer border-border/50">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Building2 className="h-5 w-5 text-primary" />
@@ -79,7 +81,7 @@ export default function ClientsPage() {
                   </CardContent>
                 </Card>
               </Link>
-            ))}
+            )})}
           </div>
         )}
       </div>

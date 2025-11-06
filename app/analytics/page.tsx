@@ -10,19 +10,31 @@ import { AppLayout } from "@/components/app-layout"
 export default function AnalyticsPage() {
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <AnalyticsHeader />
-        <FinancialMetrics />
-        <div className="grid gap-6 lg:grid-cols-2">
-          <RevenueChart />
-          <ProfitMarginChart />
+      <div className="space-y-6 page-enter">
+        <div className="animate-fade-in">
+          <AnalyticsHeader />
         </div>
-        <LoanPerformanceChart />
+        <div className="animate-slide-up animate-stagger-1">
+          <FinancialMetrics />
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="animate-slide-up animate-stagger-2">
+            <RevenueChart />
+          </div>
+          <div className="animate-slide-up animate-stagger-3">
+            <ProfitMarginChart />
+          </div>
+        </div>
+        <div className="animate-slide-up animate-stagger-4">
+          <LoanPerformanceChart />
+        </div>
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 animate-slide-up animate-stagger-1">
             <MonthlyComparison />
           </div>
-          <ExportReports />
+          <div className="animate-slide-up animate-stagger-2">
+            <ExportReports />
+          </div>
         </div>
       </div>
     </AppLayout>

@@ -8,16 +8,26 @@ import { AppLayout } from "@/components/app-layout"
 export default function ReceivablesPage() {
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <ReceivablesHeader />
-        <ReceivablesOverview />
+      <div className="space-y-6 page-enter">
+        <div className="animate-fade-in">
+          <ReceivablesHeader />
+        </div>
+        <div className="animate-slide-up animate-stagger-1">
+          <ReceivablesOverview />
+        </div>
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <ClientReceivablesTable />
+            <div className="animate-slide-up animate-stagger-2">
+              <ClientReceivablesTable />
+            </div>
           </div>
           <div className="space-y-6">
-            <AgingReport />
-            <AddInvoiceForm />
+            <div className="animate-slide-up animate-stagger-2">
+              <AgingReport />
+            </div>
+            <div className="animate-slide-up animate-stagger-3">
+              <AddInvoiceForm />
+            </div>
           </div>
         </div>
       </div>

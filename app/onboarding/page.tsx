@@ -40,9 +40,9 @@ export default function OnboardingPage() {
 
   return (
     <AppLayout>
-      <div className="max-w-5xl mx-auto space-y-6">
+      <div className="max-w-5xl mx-auto space-y-6 page-enter">
         {/* Header */}
-        <div className="space-y-2">
+        <div className="animate-fade-in space-y-2">
           <div className="flex items-center gap-3">
             <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
               <Building2 className="h-6 w-6 text-primary-foreground" />
@@ -55,7 +55,7 @@ export default function OnboardingPage() {
         </div>
 
         {/* Form Card */}
-        <Card className="border-border/50 shadow-xl">
+        <Card className="border-border/50 shadow-xl animate-slide-up animate-stagger-1">
           <CardHeader className="border-b border-border/50 bg-gradient-red-subtle">
             <CardTitle className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-primary" />
@@ -282,7 +282,7 @@ export default function OnboardingPage() {
         </Card>
 
         {/* Info Card */}
-        <Card className="border-primary/20 bg-gradient-red-subtle">
+        <Card className="border-primary/20 bg-gradient-red-subtle animate-slide-up animate-stagger-2">
           <CardContent className="p-6">
             <div className="flex gap-4">
               <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">

@@ -44,8 +44,8 @@ export default function SecurityStandardsPage() {
   ]
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
-      <div className="flex items-center gap-2 text-muted-foreground">
+    <div className="container mx-auto px-4 py-8 space-y-6 page-enter">
+      <div className="animate-fade-in flex items-center gap-2 text-muted-foreground">
         <Shield className="h-5 w-5" />
         <h1 className="text-2xl font-bold">Normes de sécurité (Sénégal)</h1>
       </div>
@@ -67,8 +67,10 @@ export default function SecurityStandardsPage() {
       </Card>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {items.map((s, i) => (
-          <Card key={i} className="border-border">
+        {items.map((s, i) => {
+          const staggerClass = i === 0 ? "animate-stagger-1" : i === 1 ? "animate-stagger-2" : i === 2 ? "animate-stagger-3" : "animate-stagger-4"
+          return (
+          <Card key={i} className={`border-border animate-slide-up ${staggerClass} hover:shadow-md transition-smooth hover:scale-[1.02]`}>
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
@@ -88,7 +90,7 @@ export default function SecurityStandardsPage() {
               </ul>
             </CardContent>
           </Card>
-        ))}
+        )})}
       </div>
     </div>
   )

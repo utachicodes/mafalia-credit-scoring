@@ -33,6 +33,7 @@ const baseTranslations = {
     kyc: "KYC",
     security: "Security",
     more: "More",
+    navigation: "Navigation",
   },
   navigation: {
     searchPlaceholder: "Search…",
@@ -73,6 +74,11 @@ const baseTranslations = {
   },
   dashboard: {
     welcome: "Welcome back",
+    infoBanner: {
+      title: "Improved Dashboard!",
+      description: "Discover new features: real-time analytics, organization management, and push notifications.",
+      close: "Close banner",
+    },
     credit: {
       score: "Credit Score",
       rating: "Credit Rating",
@@ -98,9 +104,23 @@ const baseTranslations = {
     pendingApprovals: "Pending Approvals",
     recentLoans: {
       title: "Recent Loans",
-      description: "Your latest loan applications",
+      description: "Manage and track all your transactions",
+      transactions: "transactions",
+      filters: "Filters",
+      exportAll: "Export All",
+      noTransactions: "No transactions found",
       due: "Due",
       viewAll: "View All Loans",
+      table: {
+        id: "ID Transaction",
+        amount: "Amount",
+        currency: "Currency",
+        status: "Status",
+        date: "Date",
+        type: "Type",
+        actions: "Actions",
+        view: "View",
+      },
       status: {
         active: "Active",
         pending: "Pending",
@@ -413,6 +433,7 @@ const baseTranslations = {
       passwordMismatch: "Passwords do not match",
       genericError: "An error occurred",
     },
+    signOut: "Sign Out",
     login: {
       brandTitle: "Your finance, simplified.",
       brandDescription:
@@ -421,12 +442,11 @@ const baseTranslations = {
       description: "Enter your lending institution details to access Mafalia",
       institutionLabel: "Credit institution *",
       institutionPlaceholder: "e.g. Al Rahma",
+      nameLabel: "Full name *",
+      namePlaceholder: "e.g. John Doe",
       emailLabel: "Email *",
       emailPlaceholder: "you@example.com",
       passwordLabel: "Password *",
-      confirmPasswordLabel: "Confirm password *",
-      phoneLabel: "Phone number *",
-      phonePlaceholder: "e.g. +221 77 123 45 67",
       forgotPassword: "Forgot password?",
       submit: "Sign in",
       submitting: "Signing in...",
@@ -466,6 +486,7 @@ const translations: Record<Language, TranslationDictionary> = {
       kyc: "KYC",
       security: "Sécurité",
       more: "Plus",
+      navigation: "Navigation",
     },
     navigation: {
       searchPlaceholder: "Rechercher…",
@@ -506,6 +527,11 @@ const translations: Record<Language, TranslationDictionary> = {
     },
     dashboard: {
       welcome: "Bon retour",
+      infoBanner: {
+        title: "Tableau de bord amélioré!",
+        description: "Découvrez les nouvelles fonctionnalités: analytics en temps réel, gestion des organisations et notifications push.",
+        close: "Fermer la bannière",
+      },
       credit: {
         score: "Score de Crédit",
         rating: "Notation de Crédit",
@@ -526,9 +552,23 @@ const translations: Record<Language, TranslationDictionary> = {
       pendingApprovals: "Approbations en attente",
       recentLoans: {
         title: "Prêts récents",
-        description: "Vos dernières demandes de prêt",
+        description: "Gérez et suivez toutes vos transactions",
+        transactions: "transactions",
+        filters: "Filtres",
+        exportAll: "Exporter tout",
+        noTransactions: "Aucune transaction trouvée",
         due: "Échéance",
         viewAll: "Voir tous les prêts",
+        table: {
+          id: "ID Transaction",
+          amount: "Montant",
+          currency: "Devise",
+          status: "Statut",
+          date: "Date",
+          type: "Type",
+          actions: "Actions",
+          view: "Voir",
+        },
         status: {
           active: "Actif",
           pending: "En attente",
@@ -846,6 +886,7 @@ const translations: Record<Language, TranslationDictionary> = {
         passwordMismatch: "Les mots de passe ne correspondent pas",
         genericError: "Une erreur s'est produite",
       },
+      signOut: "Déconnexion",
       login: {
         brandTitle: "Votre finance, plus simple.",
         brandDescription:
@@ -854,12 +895,11 @@ const translations: Record<Language, TranslationDictionary> = {
         description: "Renseignez votre institution de crédit pour accéder à Mafalia",
         institutionLabel: "Institution de crédit *",
         institutionPlaceholder: "Ex: Al Rahma",
+        nameLabel: "Nom complet *",
+        namePlaceholder: "Ex: Jean Dupont",
         emailLabel: "Email *",
         emailPlaceholder: "vous@exemple.com",
         passwordLabel: "Mot de passe *",
-        confirmPasswordLabel: "Mot de passe à nouveau *",
-        phoneLabel: "Numéro de téléphone *",
-        phonePlaceholder: "Ex: +221 77 123 45 67",
         forgotPassword: "Mot de passe oublié ?",
         submit: "Se connecter",
         submitting: "Connexion...",

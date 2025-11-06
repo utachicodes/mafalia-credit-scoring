@@ -33,7 +33,7 @@ function DollarSign3D() {
           depth={1}
         >
           $
-          <meshStandardMaterial color="#4D43BC" metalness={0.8} roughness={0.2} emissive="#1F78DA" emissiveIntensity={0.15} />
+          <meshStandardMaterial color="#E31E24" metalness={0.8} roughness={0.2} emissive="#E31E24" emissiveIntensity={0.1} />
         </Text3D>
       </Center>
     </mesh>
@@ -43,8 +43,8 @@ function DollarSign3D() {
 export function DollarSign3DScene() {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-        <ambientLight intensity={0.5} />
+      <Canvas camera={{ position: [0, 0, 5], fov: 45 }} className="bg-transparent">
+        <ambientLight intensity={0.6} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} />
         <DollarSign3D />

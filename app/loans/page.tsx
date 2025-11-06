@@ -8,16 +8,26 @@ import { LoanStatusTracker } from "@/components/loans/loan-status-tracker"
 export default function LoansPage() {
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <LoansHeader />
+      <div className="space-y-6 page-enter">
+        <div className="animate-fade-in">
+          <LoansHeader />
+        </div>
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <ActiveLoansTable />
-            <LoanApplicationForm />
+            <div className="animate-slide-up animate-stagger-1">
+              <ActiveLoansTable />
+            </div>
+            <div className="animate-slide-up animate-stagger-2">
+              <LoanApplicationForm />
+            </div>
           </div>
           <div className="space-y-6">
-            <LoanCalculator />
-            <LoanStatusTracker />
+            <div className="animate-slide-up animate-stagger-1">
+              <LoanCalculator />
+            </div>
+            <div className="animate-slide-up animate-stagger-2">
+              <LoanStatusTracker />
+            </div>
           </div>
         </div>
       </div>
