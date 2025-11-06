@@ -96,10 +96,10 @@ export default function TransactionsPage() {
   return (
     <AppLayout>
       <div className="space-y-6 page-enter">
-      <div className="animate-fade-in flex items-center gap-2 text-muted-foreground">
-        <Calendar className="h-5 w-5" />
-        <h1 className="text-2xl font-bold">Historique des transactions (6 mois)</h1>
-      </div>
+        <div className="animate-fade-in flex items-center gap-2 text-muted-foreground">
+          <Calendar className="h-5 w-5" />
+          <h1 className="text-2xl font-bold">Historique des transactions (6 mois)</h1>
+        </div>
 
       <Card className="border-border">
         <CardHeader>
@@ -193,6 +193,7 @@ export default function TransactionsPage() {
             </CardContent>
           </Card>
         ))}
+      </div>
       </div>
     </AppLayout>
   )

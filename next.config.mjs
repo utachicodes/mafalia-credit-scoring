@@ -6,6 +6,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    nodeMiddleware: true,
+  },
   images: {
     unoptimized: true,
   },
