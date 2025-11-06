@@ -19,12 +19,14 @@ export function CTASection() {
               Configurez vos critères de scoring et vos workflows de prêts en quelques minutes.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button size="lg" className="gap-2">
-                {t("hero.cta.primary")}
-                <ArrowRight className="h-4 w-4" />
+              <Button size="lg" className="gap-2" asChild>
+                <a href="/dashboard">
+                  {t("hero.cta.primary")}
+                  <ArrowRight className="h-4 w-4" />
+                </a>
               </Button>
-              <Button size="lg" variant="outline">
-                {t("hero.cta.secondary")}
+              <Button size="lg" variant="outline" asChild>
+                <a href="#contact">{t("hero.cta.secondary")}</a>
               </Button>
             </div>
           </div>

@@ -3,6 +3,12 @@
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/language-provider"
 import { ArrowRight, Shield, Zap, Brain } from "lucide-react"
+import dynamic from "next/dynamic"
+
+const DollarSign3DScene = dynamic(
+  () => import("@/components/dollar-sign-3d").then((mod) => mod.DollarSign3DScene),
+  { ssr: false }
+)
 
 interface HeroSectionProps {
   showContent: boolean
@@ -18,7 +24,7 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
       <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-background to-background pointer-events-none" />
       
       <div className="container mx-auto px-4 py-16 lg:py-24 relative z-10">
-        <div className="grid gap-12 lg:grid-cols-1 lg:gap-12 items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-5">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
@@ -60,6 +66,12 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
                 <a href="#pricing">Tarifs transparents</a>
               </Button>
             </div>
+          </div>
+
+          {/* Dollar sign 3D visual */}
+          <div className="relative w-full h-[420px] lg:h-[520px] xl:h-[620px] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+            <DollarSign3DScene />
           </div>
         </div>
       </div>

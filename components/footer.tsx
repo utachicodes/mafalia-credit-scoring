@@ -15,15 +15,14 @@ export function Footer() {
       { label: t("nav.receivables"), href: "/receivables" },
     ],
     company: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Careers", href: "/careers" },
-      { label: "Blog", href: "/blog" },
+      { label: "Onboarding", href: "/onboarding" },
+      { label: "Lenders", href: "/lenders" },
+      { label: "Clients", href: "/clients" },
+      { label: "Contact", href: "#contact" },
     ],
     legal: [
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
       { label: "Security", href: "/security" },
+      { label: "KYC", href: "/kyc" },
     ],
   }
 

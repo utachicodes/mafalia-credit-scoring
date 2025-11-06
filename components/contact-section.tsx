@@ -5,7 +5,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react"
 
 export function ContactSection() {
   return (
-    <section className="py-24 md:py-28">
+    <section id="contact" className="py-24 md:py-28">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">Parlons de votre projet</h2>
