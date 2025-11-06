@@ -26,32 +26,36 @@ interface Notification {
 
 export function NotificationsDropdown() {
   const { t, language } = useLanguage()
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: "1",
-      type: "success",
-      title: t("notifications.loanApproved.title"),
-      message: t("notifications.loanApproved.message"),
-      timestamp: new Date().toISOString(),
-      read: false,
-    },
-    {
-      id: "2",
-      type: "info",
-      title: t("notifications.paymentReceived.title"),
-      message: t("notifications.paymentReceived.message"),
-      timestamp: new Date(Date.now() - 3600000).toISOString(),
-      read: false,
-    },
-    {
-      id: "3",
-      type: "warning",
-      title: t("notifications.paymentDue.title"),
-      message: t("notifications.paymentDue.message"),
-      timestamp: new Date(Date.now() - 7200000).toISOString(),
-      read: false,
-    },
-  ])
+  const [notifications, setNotifications] = useState<Notification[]>([])
+
+  useEffect(() => {
+    setNotifications([
+      {
+        id: "1",
+        type: "success",
+        title: t("notifications.loanApproved.title"),
+        message: t("notifications.loanApproved.message"),
+        timestamp: new Date().toISOString(),
+        read: false,
+      },
+      {
+        id: "2",
+        type: "info",
+        title: t("notifications.paymentReceived.title"),
+        message: t("notifications.paymentReceived.message"),
+        timestamp: new Date(Date.now() - 3600000).toISOString(),
+        read: false,
+      },
+      {
+        id: "3",
+        type: "warning",
+        title: t("notifications.paymentDue.title"),
+        message: t("notifications.paymentDue.message"),
+        timestamp: new Date(Date.now() - 7200000).toISOString(),
+        read: false,
+      },
+    ])
+  }, [language, t])
 
   const unreadCount = notifications.filter((n) => !n.read).length
 
