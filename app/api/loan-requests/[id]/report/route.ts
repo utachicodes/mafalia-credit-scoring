@@ -3,8 +3,9 @@ import { createClient } from "@/lib/supabase/server"
 import { logAudit } from "@/lib/supabase/audit"
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const supabase = await createClient()
+  try {
+    const { id } = await params
+    const supabase = await createClient()
 
   // Check authentication and role
   const {
@@ -110,4 +111,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     summary,
     generatedAt: new Date().toISOString(),
   })
+  } catch (error) {
+    console.error("Loan report API error:", error)
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    )
+  }
 }

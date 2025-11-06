@@ -47,12 +47,12 @@ export function DollarSign3DScene() {
   useEffect(() => {
     const handleContextLost = (e: Event) => {
       e.preventDefault()
-      console.warn('WebGL context lost')
+      // Suppress console error - just handle it silently
       setHasError(true)
     }
 
     const handleContextRestored = () => {
-      console.log('WebGL context restored')
+      // Suppress console log
       setHasError(false)
     }
 
@@ -95,6 +95,11 @@ export function DollarSign3DScene() {
         camera={{ position: [0, 0, 6], fov: 50 }} 
         className="bg-transparent"
         onError={(error) => {
+          // Suppress WebGL context errors - handle silently
+          if (error?.message?.includes('Context') || error?.message?.includes('WebGL')) {
+            setHasError(true)
+            return
+          }
           console.error('Canvas error:', error)
           setHasError(true)
         }}
@@ -103,7 +108,10 @@ export function DollarSign3DScene() {
           antialias: true,
           alpha: true,
           powerPreference: "high-performance",
-          failIfMajorPerformanceCaveat: false
+          failIfMajorPerformanceCaveat: false,
+          onContextLost: () => {
+            setHasError(true)
+          }
         }}
       >
         <ambientLight intensity={0.7} />

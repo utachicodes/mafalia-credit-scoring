@@ -28,14 +28,27 @@ export default function LoanReportPage() {
         }
         const contentType = res.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
-          console.error("Response is not JSON");
+          // Clone response to read as text first
+          const clonedRes = res.clone();
+          const text = await clonedRes.text();
+          if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+            console.error("API returned HTML error page instead of JSON");
+            setLoading(false);
+            return;
+          }
+          console.error("Response is not JSON:", contentType);
           setLoading(false);
           return;
         }
         const json = await res.json();
         setData(json);
       } catch (error) {
-        console.error("Failed to fetch report:", error);
+        // Silently handle JSON parsing errors
+        if (error instanceof SyntaxError && error.message.includes('JSON')) {
+          console.error("Failed to parse JSON response - API may have returned HTML");
+        } else {
+          console.error("Failed to fetch report:", error);
+        }
       } finally {
         setLoading(false);
       }

@@ -13,27 +13,36 @@ export function Analytics() {
   })
 
   useEffect(() => {
-    fetch("/api/analytics")
-      .then((res) => {
+    async function loadAnalytics() {
+      try {
+        const res = await fetch("/api/analytics")
         if (!res.ok) {
           console.error(`API error: ${res.status} ${res.statusText}`)
           return
         }
         const contentType = res.headers.get("content-type")
         if (!contentType || !contentType.includes("application/json")) {
-          console.error("Response is not JSON")
+          const text = await res.text()
+          // Check if it's HTML (error page)
+          if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+            console.error("API returned HTML error page instead of JSON")
+            return
+          }
+          console.error("Response is not JSON:", contentType)
           return
         }
-        return res.json()
-      })
-      .then((data) => {
-        if (data) {
-          setData(data)
+        const data = await res.json()
+        setData(data)
+      } catch (error) {
+        // Silently handle JSON parsing errors
+        if (error instanceof SyntaxError && error.message.includes('JSON')) {
+          console.error("Failed to parse JSON response")
+        } else {
+          console.error("Failed to fetch analytics:", error)
         }
-      })
-      .catch((error) => {
-        console.error("Failed to fetch analytics:", error)
-      })
+      }
+    }
+    loadAnalytics()
   }, [])
 
   const kpiData = [
