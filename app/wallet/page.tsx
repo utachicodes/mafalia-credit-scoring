@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/components/ui/use-toast"
 import { useLanguage } from "@/components/language-provider"
 import { safeFetchJson } from "@/lib/safe-fetch"
+import { ArrowUpRight, ArrowDownLeft, PlusCircle, Download, Copy } from "lucide-react"
 
 type Wallet = {
   id: string
@@ -42,6 +43,7 @@ export default function WalletPage() {
   const [loading, setLoading] = useState(true)
   const [topUpOpen, setTopUpOpen] = useState(false)
   const [withdrawOpen, setWithdrawOpen] = useState(false)
+  const [transferOpen, setTransferOpen] = useState(false)
 
   // Top up form
   const [topUpAmount, setTopUpAmount] = useState(0)
@@ -55,6 +57,15 @@ export default function WalletPage() {
   const [wdIban, setWdIban] = useState("")
   const [wdAccountNumber, setWdAccountNumber] = useState("")
   const [wdNote, setWdNote] = useState("")
+  // Transfer form
+  const [trAmount, setTrAmount] = useState(0)
+  const [trRecipientEmail, setTrRecipientEmail] = useState("")
+  const [trNote, setTrNote] = useState("")
+
+  // Filters
+  const [filterType, setFilterType] = useState<string>("all")
+  const [filterStatus, setFilterStatus] = useState<string>("all")
+  const [search, setSearch] = useState("")
 
   const formatter = useMemo(
     () =>
@@ -127,11 +138,66 @@ export default function WalletPage() {
     toast({ title: t("common.success"), description: t("wallet.toasts.withdrawSuccess") })
   }
 
+  async function handleTransfer() {
+    const key = crypto.randomUUID()
+    const res = await safeFetchJson<{ wallet: Wallet }>("/api/wallet/transfer", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-idempotency-key": key },
+      body: JSON.stringify({ amount: Number(trAmount), currency: wallet?.currency || "XOF", recipientEmail: trRecipientEmail, note: trNote || undefined }),
+    })
+    if (res.error) {
+      toast({ title: t("common.error"), description: res.error })
+      return
+    }
+    if (res.data?.wallet) setWallet(res.data.wallet)
+    await refresh()
+    setTransferOpen(false)
+    setTrAmount(0)
+    setTrRecipientEmail("")
+    setTrNote("")
+    toast({ title: t("common.success"), description: t("wallet.toasts.transferSuccess") })
+  }
+
+  const filteredTxs = useMemo(() => {
+    return txs.filter((tx) => {
+      const typeOk = filterType === "all" || tx.type === filterType
+      const statusOk = filterStatus === "all" || tx.status === filterStatus
+      const s = search.trim().toLowerCase()
+      const text = `${tx.id} ${tx.note || ""}`.toLowerCase()
+      const searchOk = !s || text.includes(s)
+      return typeOk && statusOk && searchOk
+    })
+  }, [txs, filterType, filterStatus, search])
+
+  function exportCsv() {
+    const headers = ["id", "type", "status", "amount", "currency", "date", "note"]
+    const rows = filteredTxs.map((tx) => [tx.id, tx.type, tx.status, tx.amount, tx.currency, new Date(tx.createdAt).toISOString(), (tx.note || "").replace(/\n|\r/g, " ")])
+    const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n")
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `wallet-transactions-${Date.now()}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  async function copyId() {
+    if (!wallet?.id) return
+    await navigator.clipboard.writeText(wallet.id)
+    toast({ title: t("wallet.copied") })
+  }
+
   return (
     <AppLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold tracking-tight">{t("wallet.title")}</h1>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={exportCsv}>
+              <Download className="h-4 w-4 mr-2" /> {t("wallet.exportCsv")}
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -146,7 +212,9 @@ export default function WalletPage() {
               <div className="flex gap-2">
                 <Dialog open={topUpOpen} onOpenChange={setTopUpOpen}>
                   <DialogTrigger asChild>
-                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90">{t("wallet.actions.topUp")}</Button>
+                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                      <PlusCircle className="h-4 w-4 mr-2" /> {t("wallet.actions.topUp")}
+                    </Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
@@ -162,6 +230,13 @@ export default function WalletPage() {
                           onChange={(e) => setTopUpAmount(Number(e.target.value))}
                           placeholder={t("wallet.forms.amountPlaceholder")}
                         />
+                        <div className="flex gap-2 pt-1">
+                          {[10000, 25000, 50000, 100000].map((v) => (
+                            <Button key={v} size="sm" variant="secondary" onClick={() => setTopUpAmount(v)}>
+                              {v.toLocaleString()}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="note">{t("wallet.forms.noteLabel")}</Label>
@@ -177,7 +252,9 @@ export default function WalletPage() {
 
                 <Dialog open={withdrawOpen} onOpenChange={setWithdrawOpen}>
                   <DialogTrigger asChild>
-                    <Button variant="secondary">{t("wallet.actions.withdraw")}</Button>
+                    <Button variant="secondary">
+                      <ArrowUpRight className="h-4 w-4 mr-2" /> {t("wallet.actions.withdraw")}
+                    </Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
@@ -250,6 +327,43 @@ export default function WalletPage() {
                     </div>
                   </DialogContent>
                 </Dialog>
+
+                <Dialog open={transferOpen} onOpenChange={setTransferOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                      <ArrowDownLeft className="h-4 w-4 mr-2" /> {t("wallet.actions.transfer")}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{t("wallet.actions.transfer")}</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="tr-amount">{t("wallet.forms.amountLabel")}</Label>
+                        <Input
+                          id="tr-amount"
+                          type="number"
+                          value={trAmount}
+                          onChange={(e) => setTrAmount(Number(e.target.value))}
+                          placeholder={t("wallet.forms.amountPlaceholder")}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="tr-email">{t("wallet.forms.recipientEmailLabel")}</Label>
+                        <Input id="tr-email" type="email" value={trRecipientEmail} onChange={(e) => setTrRecipientEmail(e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="tr-note">{t("wallet.forms.noteLabel")}</Label>
+                        <Input id="tr-note" value={trNote} onChange={(e) => setTrNote(e.target.value)} />
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <Button variant="ghost" onClick={() => setTransferOpen(false)}>{t("common.cancel")}</Button>
+                        <Button onClick={handleTransfer}>{t("wallet.forms.submitTransfer")}</Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </Card>
@@ -259,12 +373,61 @@ export default function WalletPage() {
               <div className="text-sm text-muted-foreground">{t("wallet.currency")}</div>
               <div className="text-xl font-medium">{wallet?.currency || "XOF"}</div>
             </div>
+            <div className="mt-4 space-y-1">
+              <div className="text-sm text-muted-foreground">ID</div>
+              <div className="flex items-center gap-2">
+                <code className="text-xs break-all">{wallet?.id}</code>
+                <Button size="icon" variant="ghost" onClick={copyId} aria-label={t("wallet.copyId")}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
           </Card>
         </div>
 
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">{t("wallet.table.title")}</h2>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+            <div>
+              <h2 className="text-lg font-semibold">{t("wallet.table.title")}</h2>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="w-48">
+                <Label className="text-xs text-muted-foreground">{t("wallet.filters.type")}</Label>
+                <Select value={filterType} onValueChange={setFilterType}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("wallet.filters.allTypes")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("wallet.filters.allTypes")}</SelectItem>
+                    <SelectItem value="topup">{t("wallet.types.topup")}</SelectItem>
+                    <SelectItem value="transfer_in">{t("wallet.types.transfer_in")}</SelectItem>
+                    <SelectItem value="transfer_out">{t("wallet.types.transfer_out")}</SelectItem>
+                    <SelectItem value="withdraw">{t("wallet.types.withdraw")}</SelectItem>
+                    <SelectItem value="refund">{t("wallet.types.refund")}</SelectItem>
+                    <SelectItem value="adjustment">{t("wallet.types.adjustment")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="w-48">
+                <Label className="text-xs text-muted-foreground">{t("wallet.filters.status")}</Label>
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("wallet.filters.allStatuses")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("wallet.filters.allStatuses")}</SelectItem>
+                    <SelectItem value="pending">{t("wallet.status.pending")}</SelectItem>
+                    <SelectItem value="succeeded">{t("wallet.status.succeeded")}</SelectItem>
+                    <SelectItem value="failed">{t("wallet.status.failed")}</SelectItem>
+                    <SelectItem value="cancelled">{t("wallet.status.cancelled")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="w-64">
+                <Label className="text-xs text-muted-foreground">{t("wallet.filters.searchPlaceholder")}</Label>
+                <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t("wallet.filters.searchPlaceholder")} />
+              </div>
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -279,7 +442,7 @@ export default function WalletPage() {
                 </tr>
               </thead>
               <tbody>
-                {txs.map((tx) => (
+                {filteredTxs.map((tx) => (
                   <tr key={tx.id} className="border-t border-border/40">
                     <td className="py-2 pr-4 font-mono text-xs">{tx.id}</td>
                     <td className="py-2 pr-4">
@@ -301,7 +464,7 @@ export default function WalletPage() {
                     <td className="py-2 pr-4">{tx.note || ""}</td>
                   </tr>
                 ))}
-                {!txs.length && (
+                {!filteredTxs.length && (
                   <tr>
                     <td className="py-6 text-muted-foreground" colSpan={6}>
                       {loading ? t("common.loading") : ""}

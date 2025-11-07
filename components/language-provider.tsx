@@ -379,6 +379,9 @@ const baseTranslations = {
     balance: "Balance",
     availableBalance: "Available Balance",
     currency: "Currency",
+    exportCsv: "Export CSV",
+    copyId: "Copy ID",
+    copied: "Copied",
     actions: {
       topUp: "Top up",
       transfer: "Transfer",
@@ -401,6 +404,13 @@ const baseTranslations = {
       submitTopUp: "Confirm top up",
       submitTransfer: "Send transfer",
       submitWithdraw: "Request withdrawal",
+    },
+    filters: {
+      type: "Type",
+      status: "Status",
+      searchPlaceholder: "Search notes or reference…",
+      allTypes: "All types",
+      allStatuses: "All statuses",
     },
     table: {
       title: "Transactions",
@@ -962,6 +972,9 @@ const translations: Record<Language, TranslationDictionary> = {
       balance: "Solde",
       availableBalance: "Solde disponible",
       currency: "Devise",
+    exportCsv: "Exporter CSV",
+    copyId: "Copier l'ID",
+    copied: "Copié",
       actions: {
         topUp: "Recharger",
         transfer: "Transférer",
@@ -985,6 +998,13 @@ const translations: Record<Language, TranslationDictionary> = {
         submitTransfer: "Envoyer le transfert",
         submitWithdraw: "Demander le retrait",
       },
+    filters: {
+      type: "Type",
+      status: "Statut",
+      searchPlaceholder: "Rechercher une note ou référence…",
+      allTypes: "Tous les types",
+      allStatuses: "Tous les statuts",
+    },
       table: {
         title: "Transactions",
         id: "ID",
