@@ -21,6 +21,7 @@ import {
   Shield,
   CheckCircle,
   Receipt,
+  Wallet,
   Moon,
   Sun,
   Globe,
@@ -82,6 +83,7 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
   const navItems = useMemo(
     () => [
       { href: "/dashboard", label: t("nav.dashboard"), icon: LayoutDashboard },
+      { href: "/wallet", label: t("nav.wallet"), icon: Wallet },
       { href: "/loans", label: t("nav.loans"), icon: CreditCard },
       { href: "/analytics", label: t("nav.analytics"), icon: TrendingUp },
       { href: "/payouts", label: t("nav.payouts"), icon: Send },
