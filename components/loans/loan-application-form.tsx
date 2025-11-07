@@ -11,6 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { useLanguage } from "@/components/language-provider"
 import { formatCFA } from "@/lib/currency-utils"
+import { amortizationTotals, computeMonthlyPayment } from "@/lib/finance"
+import { createClient } from "@/lib/supabase/client"
+import { useEffect } from "react"
 
 export function LoanApplicationForm() {
   const { t } = useLanguage()
@@ -19,17 +22,30 @@ export function LoanApplicationForm() {
 
   const [formData, setFormData] = useState({
     amount: "",
+    interestRate: "", // % APR
     purpose: "",
     term: "",
     description: "",
     documents: [] as File[],
   })
 
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      const defaultRate = user?.user_metadata?.defaultInterestRate
+      if (defaultRate && !formData.interestRate) {
+        setFormData((prev) => ({ ...prev, interestRate: String(defaultRate) }))
+      }
+    })
+  }, [])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would call an API
     console.log("Loan application submitted:", formData)
-    alert(`Loan application submitted: ${formData.amount} FCFA for ${formData.term} months`)
+    alert(
+      `Loan application submitted: ${formData.amount} FCFA for ${formData.term} months @ ${formData.interestRate || "0"}% APR (2% platform fee applied)`,
+    )
   }
 
   return (
@@ -68,6 +84,18 @@ export function LoanApplicationForm() {
                 </SelectContent>
               </Select>
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="interest">{t("loans.application.interestLabel")}</Label>
+            <Input
+              id="interest"
+              type="number"
+              step="0.01"
+              placeholder={t("loans.application.interestPlaceholder") ?? undefined}
+              value={formData.interestRate}
+              onChange={(e) => setFormData({ ...formData, interestRate: e.target.value })}
+            />
           </div>
 
           <div className="space-y-2">
@@ -112,16 +140,55 @@ export function LoanApplicationForm() {
           <div className="rounded-lg bg-muted/50 p-4 space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">{t("loans.summary.interestRate")}</span>
-              <span className="font-semibold text-foreground">12.5% {t("loans.summary.interestSuffix")}</span>
+              <span className="font-semibold text-foreground">
+                {formData.interestRate || "0"}% {t("loans.summary.interestSuffix")}
+              </span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">{t("loans.summary.monthlyPayment")}</span>
               <span className="font-semibold text-foreground">
-                {formatCFA(
-                  formData.amount && formData.term
-                    ? Math.round((Number.parseInt(formData.amount, 10) * 1.125) / Number.parseInt(formData.term, 10))
-                    : 0
-                )}
+                {(() => {
+                  const P = Number.parseInt(formData.amount || "0", 10)
+                  const n = Number.parseInt(formData.term || "0", 10)
+                  const apr = Number.parseFloat(formData.interestRate || "0")
+                  return formatCFA(computeMonthlyPayment(P, apr, n))
+                })()}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">{t("loans.summary.totalRepayable")}</span>
+              <span className="font-semibold text-foreground">
+                {(() => {
+                  const P = Number.parseInt(formData.amount || "0", 10)
+                  const n = Number.parseInt(formData.term || "0", 10)
+                  const apr = Number.parseFloat(formData.interestRate || "0")
+                  const totals = amortizationTotals(P, apr, n, 2)
+                  return formatCFA(totals.totalRepayable)
+                })()}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">{t("loans.summary.platformInterest")}</span>
+              <span className="font-semibold text-foreground">
+                {(() => {
+                  const P = Number.parseInt(formData.amount || "0", 10)
+                  const n = Number.parseInt(formData.term || "0", 10)
+                  const apr = Number.parseFloat(formData.interestRate || "0")
+                  const totals = amortizationTotals(P, apr, n, 2)
+                  return formatCFA(totals.platformInterest)
+                })()}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">{t("loans.summary.lenderInterest")}</span>
+              <span className="font-semibold text-foreground">
+                {(() => {
+                  const P = Number.parseInt(formData.amount || "0", 10)
+                  const n = Number.parseInt(formData.term || "0", 10)
+                  const apr = Number.parseFloat(formData.interestRate || "0")
+                  const totals = amortizationTotals(P, apr, n, 2)
+                  return formatCFA(totals.lenderInterest)
+                })()}
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">

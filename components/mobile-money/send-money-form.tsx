@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Send } from "lucide-react"
 import { formatCFA } from "@/lib/currency-utils"
 import { useToast } from "@/components/ui/use-toast"
+import { safeFetch } from "@/lib/safe-fetch"
 
 export function SendMoneyForm() {
   const { toast } = useToast()
@@ -20,13 +21,48 @@ export function SendMoneyForm() {
     note: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, this would call an API
-    console.log("Send money:", formData)
+    const amount = Number.parseInt(formData.amount || "0", 10)
+    if (!Number.isFinite(amount) || amount <= 0) {
+      toast({ title: "Erreur", description: "Montant invalide" })
+      return
+    }
+    if (!formData.recipient) {
+      toast({ title: "Erreur", description: "Numéro destinataire requis" })
+      return
+    }
+    setSubmitting(true)
+    const idempotencyKey = crypto.randomUUID()
+    const payload = {
+      amount,
+      currency: "XOF",
+      destination: {
+        kind: "wallet",
+        walletNumber: formData.recipient,
+        walletProvider: formData.provider || undefined,
+      },
+      reference: formData.note || undefined,
+      metadata: { source: "ui-mobile-money" },
+    }
+    const res = await safeFetch<{ payout: { id: string; status: string } }>("/api/payouts", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-idempotency-key": idempotencyKey,
+      },
+      body: JSON.stringify(payload),
+    })
+    setSubmitting(false)
+    if (!res) {
+      toast({ title: "Erreur", description: "Echec de l’envoi de payout" })
+      return
+    }
     toast({
-      title: "Money Sent",
-      description: `Sending ${formatCFA(Number.parseInt(formData.amount, 10) || 0)} to ${formData.recipient} via ${formData.provider}`,
+      title: "Payout envoyé",
+      description: `#${res.payout.id} • ${formatCFA(amount)} à ${formData.recipient}`,
     })
     setFormData({ provider: "", recipient: "", amount: "", note: "" })
   }
@@ -101,9 +137,9 @@ export function SendMoneyForm() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full gap-2">
+          <Button type="submit" className="w-full gap-2" disabled={submitting}>
             <Send className="h-4 w-4" />
-            Send Money
+            {submitting ? "Envoi..." : "Send Money"}
           </Button>
         </form>
       </CardContent>
