@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { DollarSign, Users, TrendingUp, Award, Building2, Clock, CheckCircle, Globe } from "lucide-react"
-import Image from "next/image"
 
 export function StatsSection() {
   const stats = [
@@ -84,13 +83,10 @@ export function StatsSection() {
     <section className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-muted/30 to-background" />
 
-      <div className="absolute bottom-10 left-10 opacity-5">
-        <Image src="/mafalia-logo.png" alt="" width={300} height={120} className="w-64" />
-      </div>
 
       <div className="container mx-auto px-4 relative">
         <div className="text-center space-y-6 mb-16">
-          <h2 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">Mafalia en Chiffres</h2>
+          <h2 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">D-Credit en Chiffres</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             La confiance de milliers d'entreprises sénégalaises
           </p>

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/language-provider"
 import { useTheme } from "next-themes"
@@ -35,25 +34,7 @@ export function Navigation({ showContent = false }: NavigationProps) {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center">
-            <div className="relative h-12 w-40">
-              <Image 
-                src="/mafalia-logo.png" 
-                alt="Mafalia" 
-                fill
-                sizes="(max-width: 768px) 160px, 200px"
-                className="object-contain"
-                priority
-                onError={(e) => {
-                  // Fallback to text if image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null;
-                  target.src = '';
-                  if (target.parentElement) {
-                    target.parentElement.innerHTML = '<span class="text-foreground font-bold text-xl">Mafalia</span>';
-                  }
-                }}
-              />
-            </div>
+            <span className="text-foreground font-bold text-xl">D-Credit</span>
           </Link>
 
           {showContent && (
@@ -115,7 +96,7 @@ export function Navigation({ showContent = false }: NavigationProps) {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label={isOpen ? t("navigation.closeMenu") : t("navigation.openMenu")}
                 aria-expanded={isOpen}
-                aria-controls="mafalia-landing-mobile-nav"
+                aria-controls="dcredit-landing-mobile-nav"
               >
                 {isOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
               </Button>
@@ -126,7 +107,7 @@ export function Navigation({ showContent = false }: NavigationProps) {
         {/* Mobile Menu */}
         {isOpen && showContent && (
           <div className="border-t border-border py-4 md:hidden">
-            <div id="mafalia-landing-mobile-nav" className="flex flex-col gap-4">
+            <div id="dcredit-landing-mobile-nav" className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}

@@ -19,8 +19,8 @@ export function ContactSection() {
                 <Mail className="h-5 w-5 text-primary mt-1" />
                 <div>
                   <div className="font-medium">Email</div>
-                  <a className="text-muted-foreground hover:underline" href="mailto:contact@mafalia.com">
-                    contact@mafalia.com
+                  <a className="text-muted-foreground hover:underline" href="mailto:contact@d-credit.com">
+                    contact@d-credit.com
                   </a>
                 </div>
               </div>

@@ -14,7 +14,7 @@ export type CriterionId =
   | "business_type"
   | "location"
   | "reputation_reviews"
-  | "mafalia_engagement"
+  | "dcredit_engagement"
   | "market_stability"
   | "repayment_capacity";
 

@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import Image from "next/image"
 
 export default function AuthLoading() {
   return (
@@ -8,7 +7,7 @@ export default function AuthLoading() {
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
           <div className="flex justify-center mb-4">
-            <Image src="/mafalia-logo.png" alt="Mafalia" width={120} height={40} />
+            <span className="text-foreground font-bold text-2xl">D-Credit</span>
           </div>
           <Card>
             <CardHeader>

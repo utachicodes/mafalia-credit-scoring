@@ -59,7 +59,7 @@ export function buildScoreInputForClient(clientId: string): { inputs: ScoreInput
     business_type: 0.5,
     location: 0.5,
     reputation_reviews: 0.5,
-    mafalia_engagement: clamp01(engagement),
+    dcredit_engagement: clamp01(engagement),
     market_stability: 0.5,
     repayment_capacity: clamp01((avgRevenue > 0 ? (avgRevenue - avgExpenses) / avgRevenue : 0)),
   };

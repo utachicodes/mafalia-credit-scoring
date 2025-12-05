@@ -1,7 +1,6 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Image from "next/image"
 import { useLanguage } from "@/components/language-provider"
 
 export default function SignUpSuccessPage() {
@@ -12,7 +11,7 @@ export default function SignUpSuccessPage() {
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
           <div className="flex justify-center mb-4">
-            <Image src="/mafalia-logo.png" alt="Mafalia" width={120} height={40} />
+            <span className="text-foreground font-bold text-2xl">D-Credit</span>
           </div>
           <Card>
             <CardHeader>

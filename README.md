@@ -1,7 +1,5 @@
 <div align="center">
-  <img src="public/mafalia-logo.png" alt="Mafalia Logo" width="200"/>
-  
-  # Mafalia - Your Smart Finance
+  # D-Credit - Your Smart Finance
   
   ### AI-Powered Credit Scoring & Loan Management Platform for Senegal
   
@@ -19,7 +17,7 @@
 
 ## 🌟 Overview
 
-**Mafalia** is a cutting-edge AI-powered financial platform designed specifically for businesses in Senegal. It revolutionizes credit scoring and loan management by combining advanced artificial intelligence with real-time financial data analysis, Mobile Money integration, and transparent credit assessment.
+**D-Credit** is a cutting-edge AI-powered financial platform designed specifically for businesses in Senegal. It revolutionizes credit scoring and loan management by combining advanced artificial intelligence with real-time financial data analysis, Mobile Money integration, and transparent credit assessment.
 
 ### 🎯 Key Highlights
 
@@ -217,7 +215,7 @@ const score01 = computeScore(tailored, { avg_revenue_6_12m: 0.7, tx_count: 0.5 }
 ## 🎨 Design System
 
 ### Color Palette
-- **Primary**: Mafalia Red (#E31E24)
+- **Primary**: D-Credit Red (#E31E24)
 - **Background**: Black (#000000) / White (#FFFFFF)
 - **Accents**: Red gradients and subtle grays
 - **Success**: Green (#10B981)
@@ -281,10 +279,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-**Mafalia** - Your Smart Finance Partner
+**D-Credit** - Your Smart Finance Partner
 
 - **GitHub**: [@utachicodes](https://github.com/utachicodes)
-- **Email**: contact@mafalia.com
+- **Email**: contact@d-credit.com
 
 ---
 

@@ -489,7 +489,7 @@ const baseTranslations = {
       fields: {
         companyName: {
           label: "Legal name *",
-          placeholder: "Mafalia Corporation",
+          placeholder: "D-Credit Corporation",
           helper: "Official registered business name",
         },
         legalForm: {
@@ -530,7 +530,7 @@ const baseTranslations = {
         },
         email: {
           label: "Company email *",
-          placeholder: "contact@mafalia.com",
+          placeholder: "contact@d-credit.com",
           helper: "Official contact email",
         },
         phone: {
@@ -540,7 +540,7 @@ const baseTranslations = {
         },
         website: {
           label: "Website (optional)",
-          placeholder: "www.mafalia.com",
+          placeholder: "www.d-credit.com",
           helper: "Company URL",
         },
       },
@@ -566,7 +566,7 @@ const baseTranslations = {
       brandDescription:
         "Access your dashboard, track your cash flow, and obtain precise credit scoring for your institution.",
       title: "Sign in",
-      description: "Enter your lending institution details to access Mafalia",
+      description: "Enter your lending institution details to access D-Credit",
       institutionLabel: "Credit institution *",
       institutionPlaceholder: "e.g. Al Rahma",
       nameLabel: "Full name *",
@@ -1082,7 +1082,7 @@ const translations: Record<Language, TranslationDictionary> = {
         fields: {
           companyName: {
             label: "Raison sociale *",
-            placeholder: "Société Mafalia SAS",
+            placeholder: "Société D-Credit SAS",
             helper: "Nom officiel de l'entreprise",
           },
           legalForm: {
@@ -1123,7 +1123,7 @@ const translations: Record<Language, TranslationDictionary> = {
           },
           email: {
             label: "Email professionnel *",
-            placeholder: "contact@mafalia.com",
+            placeholder: "contact@dcredit.com",
             helper: "Email de contact officiel",
           },
           phone: {
@@ -1133,7 +1133,7 @@ const translations: Record<Language, TranslationDictionary> = {
           },
           website: {
             label: "Site web (facultatif)",
-            placeholder: "www.mafalia.com",
+            placeholder: "www.dcredit.com",
             helper: "URL de l'entreprise",
           },
         },
@@ -1159,7 +1159,7 @@ const translations: Record<Language, TranslationDictionary> = {
         brandDescription:
           "Accédez à votre tableau de bord, suivez vos flux de trésorerie et obtenez un scoring précis pour votre institution.",
         title: "Connexion",
-        description: "Renseignez votre institution de crédit pour accéder à Mafalia",
+        description: "Renseignez votre institution de crédit pour accéder à D-Credit",
         institutionLabel: "Institution de crédit *",
         institutionPlaceholder: "Ex: Al Rahma",
         nameLabel: "Nom complet *",
@@ -1214,7 +1214,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       return "fr"
     }
 
-    const stored = window.localStorage.getItem("mafalia-language") as Language | null
+    const stored = window.localStorage.getItem("dcredit-language") as Language | null
     if (stored === "en" || stored === "fr") {
       return stored
     }
@@ -1232,7 +1232,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const handleSetLanguage = (lang: Language) => {
     setLanguageState(lang)
     if (typeof window !== "undefined") {
-      window.localStorage.setItem("mafalia-language", lang)
+      window.localStorage.setItem("dcredit-language", lang)
     }
   }
 

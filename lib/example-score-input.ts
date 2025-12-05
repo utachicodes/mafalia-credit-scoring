@@ -17,7 +17,7 @@ export const exampleScoreInput: ScoreInput = {
   business_type: 0.5,
   location: 0.6,
   reputation_reviews: 0.7,
-  mafalia_engagement: 0.8,
+  dcredit_engagement: 0.8,
   market_stability: 0.5,
   repayment_capacity: 0.75,
 };

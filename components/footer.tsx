@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useLanguage } from "@/components/language-provider"
-import Image from "next/image"
 
 export function Footer() {
   const { t } = useLanguage()
@@ -33,7 +32,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Image src="/mafalia-logo.png" alt="Mafalia" width={140} height={40} className="h-10 w-auto object-contain" />
+              <span className="text-foreground font-bold text-xl">D-Credit</span>
             </div>
             <p className="text-sm text-muted-foreground">
               AI-powered credit scoring and loan management platform for modern businesses.
@@ -93,7 +92,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Mafalia. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} D-Credit. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -43,7 +43,7 @@ export default function SettingsPage() {
       <div className="space-y-6 page-enter max-w-3xl mx-auto">
         <div className="animate-fade-in">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Paramètres</h1>
-          <p className="text-muted-foreground mt-1">Personnalisez votre expérience Mafalia</p>
+          <p className="text-muted-foreground mt-1">Personnalisez votre expérience D-Credit</p>
         </div>
 
         <Card className="border-border/50 shadow-sm animate-slide-up">

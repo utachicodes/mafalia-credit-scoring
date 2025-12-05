@@ -11,7 +11,6 @@ import { useLanguage } from "@/components/language-provider"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import Image from "next/image"
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Building2, User } from "lucide-react"
 
 export default function LoginPage() {
@@ -65,7 +64,7 @@ export default function LoginPage() {
       <div className="relative hidden md:flex items-center justify-center p-10 bg-gradient-to-b from-primary/20 via-background to-background">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent pointer-events-none" />
         <div className="relative z-10 max-w-md text-center space-y-6">
-          <Image src="/mafalia-logo.png" alt="Mafalia" width={160} height={54} className="mx-auto" />
+          <span className="text-foreground font-bold text-2xl">D-Credit</span>
           <h2 className="text-2xl md:text-3xl font-semibold">{t("auth.login.brandTitle")}</h2>
           <p className="text-muted-foreground">{t("auth.login.brandDescription")}</p>
         </div>

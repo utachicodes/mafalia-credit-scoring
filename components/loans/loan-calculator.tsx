@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Calculator } from "lucide-react"
 import { formatCFA, formatCFAShort } from "@/lib/currency-utils"
-import Image from "next/image"
 import { useLanguage } from "@/components/language-provider"
 
 export function LoanCalculator() {
@@ -31,7 +30,6 @@ export function LoanCalculator() {
           <div className="flex-1">
             <CardTitle className="flex items-center gap-2">
               Loan Calculator
-              <Image src="/mafalia-logo.png" alt="" width={20} height={20} className="object-contain" />
             </CardTitle>
             <CardDescription>{t("loans.calculator.description")}</CardDescription>
           </div>

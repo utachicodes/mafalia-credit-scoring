@@ -13,7 +13,7 @@ export function CTASection() {
         <div className="rounded-2xl border border-border bg-background p-10 md:p-14 text-center">
           <div className="mx-auto max-w-3xl space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-              Prêt à démarrer avec Mafalia ?
+              Prêt à démarrer avec D-Credit ?
             </h2>
             <p className="text-base md:text-lg text-muted-foreground">
               Configurez vos critères de scoring et vos workflows de prêts en quelques minutes.

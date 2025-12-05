@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Bell, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import Image from "next/image"
 
 export function DashboardHeader() {
   const { t } = useLanguage()
@@ -16,7 +15,7 @@ export function DashboardHeader() {
         <div className="flex h-16 items-center justify-between gap-4">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/mafalia-logo.png" alt="Mafalia" width={100} height={40} className="h-8 w-auto" />
+              <span className="text-foreground font-bold text-lg">D-Credit</span>
             </Link>
             <nav className="hidden md:flex items-center gap-6">
               <Link href="/dashboard" className="text-sm font-medium text-foreground">

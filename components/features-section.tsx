@@ -3,7 +3,6 @@
 import { useLanguage } from "@/components/language-provider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { TrendingUp, Wallet, BarChart3, Smartphone, Brain, Shield, Zap, Globe } from "lucide-react"
-import Image from "next/image"
 
 export function FeaturesSection() {
   const { t } = useLanguage()
@@ -69,9 +68,6 @@ export function FeaturesSection() {
 
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
-      <div className="absolute top-10 right-10 opacity-5">
-        <Image src="/mafalia-logo.png" alt="" width={300} height={120} className="w-64" />
-      </div>
 
       <div className="container mx-auto px-4">
         <div className="text-center space-y-6 mb-20 animate-in fade-in slide-in-from-bottom duration-700">

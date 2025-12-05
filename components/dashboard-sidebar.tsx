@@ -4,7 +4,6 @@ import type React from "react"
 
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/language-provider"
 import { useTheme } from "next-themes"
@@ -116,13 +115,7 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
         <div className="h-16 flex items-center justify-between px-6 border-b border-border/40">
           {!sidebarCollapsed && (
             <Link href="/" className="flex items-center gap-2 shrink-0 group">
-              <Image
-                src="/mafalia-logo.png"
-                alt="Mafalia"
-                width={120}
-                height={48}
-                className="h-9 w-auto transition-transform group-hover:scale-105"
-              />
+              <span className="text-foreground font-bold text-lg">D-Credit</span>
             </Link>
           )}
           <Button
@@ -210,13 +203,7 @@ export function DashboardSidebar({ children }: DashboardSidebarProps) {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between gap-4">
             <Link href="/" className="flex items-center gap-2 shrink-0 group">
-              <Image
-                src="/mafalia-logo.png"
-                alt="Mafalia"
-                width={120}
-                height={48}
-                className="h-9 w-auto transition-transform group-hover:scale-105"
-              />
+              <span className="text-foreground font-bold text-lg">D-Credit</span>
             </Link>
 
             <div className="flex items-center gap-2">

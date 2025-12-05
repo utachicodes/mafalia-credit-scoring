@@ -48,7 +48,7 @@ export interface BusinessData {
   // Legal
   hasBusinessRegistration: boolean
   hasNINEA: boolean
-  usesMafalia: boolean
+  usesDCredit: boolean
 }
 
 export interface CreditScoreResult {
@@ -159,7 +159,7 @@ function calculateLegalAndToolsScore(data: BusinessData): number {
 
   if (data.hasBusinessRegistration) score += 40
   if (data.hasNINEA) score += 30
-  if (data.usesMafalia) score += 30
+  if (data.usesDCredit) score += 30
 
   return score
 }
@@ -325,6 +325,6 @@ export function generateSampleBusinessData(): BusinessData {
     repaymentHistory: "perfect",
     hasBusinessRegistration: true,
     hasNINEA: true,
-    usesMafalia: true,
+    usesDCredit: true,
   }
 }
