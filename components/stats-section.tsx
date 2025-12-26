@@ -86,7 +86,7 @@ export function StatsSection() {
 
       <div className="container mx-auto px-4 relative">
         <div className="text-center space-y-6 mb-16">
-          <h2 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">D-Credit en Chiffres</h2>
+          <h2 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">Mafalia en Chiffres</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             La confiance de milliers d'entreprises sénégalaises
           </p>

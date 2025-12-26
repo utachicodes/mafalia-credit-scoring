@@ -138,7 +138,7 @@ export const defaultCriteria: Criterion[] = [
   },
   {
     id: "dcredit_engagement",
-    label: "Engagement et utilisation de D-Credit",
+    label: "Engagement et utilisation de Mafalia",
     description: "Fréquence et qualité de l’utilisation",
     defaultWeight: 2.5,
     customizable: true,

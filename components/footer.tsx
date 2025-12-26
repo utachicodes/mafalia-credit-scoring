@@ -32,7 +32,8 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-foreground font-bold text-xl">D-Credit</span>
+              <img src="/mafalia-logo.png" alt="Mafalia" className="h-8 w-auto" />
+              <span className="text-foreground font-bold text-xl">Mafalia</span>
             </div>
             <p className="text-sm text-muted-foreground">
               AI-powered credit scoring and loan management platform for modern businesses.
@@ -92,7 +93,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} D-Credit. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Mafalia. All rights reserved.</p>
         </div>
       </div>
     </footer>

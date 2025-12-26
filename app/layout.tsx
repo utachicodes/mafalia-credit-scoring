@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 export const metadata: Metadata = {
-  title: "D-Credit - Your Smart Finance Platform",
+  title: "Mafalia - Your Smart Finance Platform",
   description: "AI-powered credit scoring and loan management platform for businesses",
   generator: "v0.app",
 }

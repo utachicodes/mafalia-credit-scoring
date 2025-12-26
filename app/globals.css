@@ -4,14 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* D-Credit red and white theme with premium finance aesthetics */
+  /* Mafalia red and white theme with premium finance aesthetics */
   --background: oklch(1 0 0); /* Pure white */
   --foreground: oklch(0.15 0 0); /* Near black */
   --card: oklch(0.99 0 0); /* Off-white */
   --card-foreground: oklch(0.15 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.52 0.22 25); /* D-Credit red #E31E24 */
+  --primary: oklch(0.52 0.22 25); /* Mafalia red #E31E24 */
   --primary-foreground: oklch(1 0 0); /* White text on red */
   --secondary: oklch(0.96 0.01 25); /* Light red tint */
   --secondary-foreground: oklch(0.15 0 0);
