@@ -1209,19 +1209,23 @@ function applyReplacements(message: string, replacements?: TranslationReplacemen
 }
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window === "undefined") {
-      return "fr"
-    }
+  // Always start with "fr" on both server and client to avoid hydration mismatch
+  const [language, setLanguageState] = useState<Language>("fr")
+  const [isHydrated, setIsHydrated] = useState(false)
 
+  // Load saved language preference after hydration
+  useEffect(() => {
     const stored = window.localStorage.getItem("mafalia-language") as Language | null
     if (stored === "en" || stored === "fr") {
-      return stored
+      setLanguageState(stored)
+    } else {
+      // Detect browser language only on client side
+      const browserLang = window.navigator.language.toLowerCase()
+      const detectedLang = browserLang.startsWith("fr") ? "fr" : "en"
+      setLanguageState(detectedLang)
     }
-
-    const browserLang = window.navigator.language.toLowerCase()
-    return browserLang.startsWith("fr") ? "fr" : "en"
-  })
+    setIsHydrated(true)
+  }, [])
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -1231,7 +1235,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const handleSetLanguage = (lang: Language) => {
     setLanguageState(lang)
-    if (typeof window !== "undefined") {
+    if (isHydrated) {
       window.localStorage.setItem("mafalia-language", lang)
     }
   }
