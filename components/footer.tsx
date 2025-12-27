@@ -31,9 +31,8 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               <img src="/mafalia-logo.png" alt="Mafalia" className="h-8 w-auto" />
-              <span className="text-foreground font-bold text-xl">Mafalia</span>
             </div>
             <p className="text-sm text-muted-foreground">
               AI-powered credit scoring and loan management platform for modern businesses.

@@ -83,7 +83,7 @@ export function HeroSection({ showContent, onGetStarted }: HeroSectionProps) {
           </div>
 
           {/* Dollar sign 3D visual */}
-          <div className="relative w-full h-[500px] lg:h-[600px] xl:h-[700px] flex items-center justify-center animate-in fade-in zoom-in-95 duration-700">
+          <div className="relative w-full h-[500px] lg:h-[600px] xl:h-[700px] flex items-center justify-center animate-in fade-in duration-700">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
             <DollarSign3DScene />
           </div>

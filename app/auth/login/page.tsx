@@ -64,9 +64,8 @@ export default function LoginPage() {
       <div className="relative hidden md:flex items-center justify-center p-10 bg-gradient-to-b from-primary/20 via-background to-background">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent pointer-events-none" />
         <div className="relative z-10 max-w-md text-center space-y-6">
-          <div className="flex items-center justify-center gap-2">
-            <img src="/mafalia-logo.png" alt="Mafalia" className="h-10 w-auto" />
-            <span className="text-foreground font-bold text-2xl">Mafalia</span>
+          <div className="flex items-center justify-center">
+            <img src="/mafalia-logo.png" alt="Mafalia" className="h-16 w-auto" />
           </div>
           <h2 className="text-2xl md:text-3xl font-semibold">{t("auth.login.brandTitle")}</h2>
           <p className="text-muted-foreground">{t("auth.login.brandDescription")}</p>

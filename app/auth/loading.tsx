@@ -6,9 +6,8 @@ export default function AuthLoading() {
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 bg-background">
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
-          <div className="flex justify-center items-center gap-2 mb-4">
-            <img src="/mafalia-logo.png" alt="Mafalia" className="h-8 w-auto" />
-            <span className="text-foreground font-bold text-2xl">Mafalia</span>
+          <div className="flex justify-center items-center mb-4">
+            <img src="/mafalia-logo.png" alt="Mafalia" className="h-10 w-auto" />
           </div>
           <Card>
             <CardHeader>
