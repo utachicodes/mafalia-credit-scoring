@@ -10,8 +10,10 @@ function DollarSign3D() {
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.2
-      meshRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1
+      // Smooth continuous rotation
+      meshRef.current.rotation.y += 0.005
+      meshRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.15
+      meshRef.current.rotation.z = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.05
     }
   })
 
@@ -20,20 +22,20 @@ function DollarSign3D() {
       <Center>
         <Text3D
           font="/fonts/helvetiker_regular.typeface.json"
-          size={6}
-          height={0.8}
+          size={12}
+          height={2}
           weight={78}
-          curveSegments={12}
+          curveSegments={16}
           bevelEnabled
-          bevelThickness={0.1}
-          bevelSize={0.1}
+          bevelThickness={0.3}
+          bevelSize={0.3}
           bevelOffset={0}
-          bevelSegments={5}
+          bevelSegments={8}
           levelSpacing={334}
-          depth={2}
+          depth={3}
         >
           $
-          <meshStandardMaterial color="#E31E24" metalness={0.9} roughness={0.1} emissive="#E31E24" emissiveIntensity={0.3} />
+          <meshStandardMaterial color="#E31E24" metalness={0.95} roughness={0.05} emissive="#E31E24" emissiveIntensity={0.4} />
         </Text3D>
       </Center>
     </mesh>
@@ -92,7 +94,7 @@ export function DollarSign3DScene() {
   return (
     <div ref={canvasRef} className="w-full h-full">
       <Canvas 
-        camera={{ position: [0, 0, 10], fov: 50 }} 
+        camera={{ position: [0, 0, 18], fov: 55 }} 
         className="bg-transparent"
         onError={(error) => {
           // Suppress WebGL context errors - handle silently
@@ -114,12 +116,13 @@ export function DollarSign3DScene() {
           }
         }}
       >
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[10, 10, 5]} intensity={1.2} />
-        <directionalLight position={[-10, -10, -5]} intensity={0.6} />
-        <pointLight position={[0, 0, 5]} intensity={0.5} />
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} />
+        <directionalLight position={[-10, -10, -5]} intensity={0.8} />
+        <pointLight position={[0, 0, 10]} intensity={0.8} />
+        <spotLight position={[0, 10, 0]} intensity={0.5} angle={0.6} penumbra={1} />
         <DollarSign3D />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.8} />
+        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.2} enablePan={false} />
       </Canvas>
     </div>
   )
