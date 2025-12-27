@@ -20,20 +20,20 @@ function DollarSign3D() {
       <Center>
         <Text3D
           font="/fonts/helvetiker_regular.typeface.json"
-          size={3}
-          height={0.3}
+          size={6}
+          height={0.8}
           weight={78}
           curveSegments={12}
           bevelEnabled
-          bevelThickness={0.05}
-          bevelSize={0.05}
+          bevelThickness={0.1}
+          bevelSize={0.1}
           bevelOffset={0}
           bevelSegments={5}
           levelSpacing={334}
-          depth={1.5}
+          depth={2}
         >
           $
-          <meshStandardMaterial color="#E31E24" metalness={0.9} roughness={0.1} emissive="#E31E24" emissiveIntensity={0.2} />
+          <meshStandardMaterial color="#E31E24" metalness={0.9} roughness={0.1} emissive="#E31E24" emissiveIntensity={0.3} />
         </Text3D>
       </Center>
     </mesh>
@@ -84,7 +84,7 @@ export function DollarSign3DScene() {
   if (hasError) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <div className="text-6xl font-bold text-primary">$</div>
+        <div className="text-9xl font-bold text-primary animate-pulse">$</div>
       </div>
     )
   }
@@ -92,7 +92,7 @@ export function DollarSign3DScene() {
   return (
     <div ref={canvasRef} className="w-full h-full">
       <Canvas 
-        camera={{ position: [0, 0, 6], fov: 50 }} 
+        camera={{ position: [0, 0, 10], fov: 50 }} 
         className="bg-transparent"
         onError={(error) => {
           // Suppress WebGL context errors - handle silently
